@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hand Bags - AURA</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#000000',
+                        accent: '#DB1215',
+                        topbar: '#F3E8D2',
+                        cardbg: '#F9F9F9'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-white text-primary font-sans antialiased overflow-x-hidden">
+
+    <!-- Top Bar -->
+    <div class="w-full bg-white border-b border-gray-100 py-2 px-4 sm:px-8 text-[10px] sm:text-[11px] font-medium text-gray-500 flex justify-between items-center flex-wrap gap-y-2">
+        <div class="flex items-center space-x-4 hidden sm:flex">
+            <a href="#" class="hover:text-black transition-colors"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-black transition-colors"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-black transition-colors"><i class="fab fa-twitter"></i></a>
+        </div>
+        <div class="text-center flex-grow text-[9px] sm:text-xs tracking-wider font-bold">
+            <span>FREE SHIPPING OVER Rs. 10,000 & FREE RETURNS</span>
+        </div>
+        <div class="flex items-center space-x-4 hidden sm:flex">
+            <a href="#" class="hover:text-black transition-colors">About</a>
+            <span class="text-gray-300">|</span>
+            <a href="#" class="hover:text-black transition-colors">Contact</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w-full bg-white px-4 sm:px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <a href="index.html" class="flex items-center space-x-2 cursor-pointer w-auto md:w-1/4">
+            <div class="text-2xl font-serif font-bold tracking-widest text-black">AURA</div>
+        </a>
+        
+        <!-- Mobile Menu Button -->
+        <button class="xl:hidden text-gray-700 hover:text-black text-xl transition-colors ml-auto mr-4">
+            <i class="fas fa-bars"></i>
+        </button>
+        
+        <nav class="hidden xl:flex space-x-6 text-[10px] font-bold tracking-widest uppercase flex-1 justify-center whitespace-nowrap">
+            <a href="index.html" class="hover:text-gray-600 transition-colors">HOME</a>
+            <a href="hand-bags.html" class="hover:text-gray-600 transition-colors">LADIES BAGS</a>
+            <a href="hand-bags.html" class="hover:text-gray-600 transition-colors">WALLETS</a>
+            <a href="hand-bags.html" class="hover:text-gray-600 transition-colors">BAGS PACK</a>
+        </nav>
+        
+        <div class="flex items-center space-x-4 sm:space-x-5 text-lg w-auto md:w-1/4 justify-end ml-auto xl:ml-0">
+            <button class="flex items-center border border-gray-300 rounded-full px-3 py-1 text-xs text-gray-500 hover:border-black transition-colors w-32 sm:w-40 justify-between">
+                <span>Search</span>
+                <i class="fas fa-search"></i>
+            </button>
+            <button class="hover:text-gray-600 transition-colors hidden sm:block"><i class="far fa-user"></i></button>
+            <button class="hover:text-gray-600 transition-colors relative">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold cart-counter-badge">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative w-full h-[250px] md:h-[400px] overflow-hidden bg-[#A38162]">
+        <img src="images/3.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-multiply">
+        
+        <div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 lg:px-24">
+            <p class="text-white text-sm md:text-lg font-medium opacity-90 mb-2"><a href="index.html" class="hover:underline">Home</a> / Collections / Hand Bags</p>
+            <h1 class="text-white text-4xl md:text-6xl font-bold tracking-wide">Hand Bags</h1>
+        </div>
+    </section>
+
+    <!-- Categories Strip -->
+    <div class="w-full py-8 md:py-10 px-4 flex justify-start lg:justify-center items-center overflow-x-auto no-scrollbar space-x-2 md:space-x-4 bg-white border-b border-gray-100">
+        <!-- Reusable block for each category -->
+        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='crossbody'; renderGrid();">
+            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
+                <img src="images/4.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+            </div>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black">Cross Body Bags</span>
+        </div>
+        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='handbag'; renderGrid();">
+            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
+                <img src="images/5.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+            </div>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black">Hand Bags</span>
+        </div>
+        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='shoulder'; renderGrid();">
+            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
+                <img src="images/6.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+            </div>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black border-b-2 border-transparent group-hover:border-black pb-0.5 transition-colors">Shoulder Bags</span>
+        </div>
+        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='tote'; renderGrid();">
+            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
+                <img src="images/8.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+            </div>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black">Tote Bags</span>
+        </div>
+    </div>
+
+    <!-- Filter & Sort Bar -->
+    <div class="w-full px-4 md:px-8 py-4 flex justify-between items-center bg-white border-b border-gray-100 mb-6 flex-wrap gap-4">
+        <div class="flex items-center space-x-4">
+            <button class="flex items-center space-x-2 text-xs font-bold px-4 py-2 hover:bg-gray-50 transition-colors rounded-sm shadow-sm border border-gray-200">
+                <i class="fas fa-sliders-h"></i>
+                <span>FILTER</span>
+            </button>
+            <div class="hidden sm:flex items-center border border-gray-200 px-3 py-2 hover:border-black transition-colors rounded-sm cursor-pointer relative min-w-[160px]">
+                <select id="category-filter" onchange="renderGrid()" class="w-full text-xs text-gray-700 outline-none cursor-pointer bg-transparent appearance-none pr-6 font-semibold">
+                    <option value="all">All Categories</option>
+                    <option value="handbag">Hand Bags</option>
+                    <option value="shoulder">Shoulder Bags</option>
+                    <option value="tote">Tote Bags</option>
+                    <option value="crossbody">Cross Body Bags</option>
+                </select>
+                <i class="fas fa-chevron-down text-[10px] absolute right-3 pointer-events-none text-gray-400"></i>
+            </div>
+        </div>
+        <div class="flex items-center border border-gray-200 px-3 py-2 hover:border-black transition-colors rounded-sm cursor-pointer relative min-w-[140px]">
+            <select class="w-full text-xs text-gray-700 outline-none cursor-pointer bg-transparent appearance-none pr-6">
+                <option>Featured</option>
+                <option>Best Selling</option>
+                <option>Alphabetically, A-Z</option>
+                <option>Price, low to high</option>
+            </select>
+            <i class="fas fa-chevron-down text-[10px] absolute right-3 pointer-events-none text-gray-400"></i>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <section class="w-full px-4 md:px-8 pb-12 relative">
+        <!-- Floating WhatsApp -->
+        <a href="#" class="fixed right-6 bottom-6 w-[52px] h-[52px] bg-[#25D366] text-white rounded-full flex items-center justify-center text-3xl shadow-xl z-50 hover:scale-110 transition-transform">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5">
+            <!-- Dynamic products will load here -->
+        </div>
+
+        <!-- Load More Button -->
+        <div class="w-full flex justify-center mt-12 mb-8">
+            <button class="border border-gray-300 text-gray-800 px-10 py-3 text-[11px] font-semibold tracking-widest hover:border-black hover:bg-black hover:text-white transition-all rounded-sm">Load more</button>
+        </div>
+    </section>
+
+    <!-- Toast -->
+    <div id="toast" class="fixed bottom-20 right-6 bg-[#111] text-white px-6 py-3.5 rounded-sm text-[13px] font-semibold tracking-wide opacity-0 translate-y-4 transition-all z-[999] flex items-center gap-3 pointer-events-none">
+        <i class="fas fa-check-circle text-green-400"></i><span id="toast-msg">Added!</span>
+    </div>
+
+    <script>
+        const products = [
+            { id:1, category:'handbag', brand:'JW PEI', name:'JW PEI Gabbi Ruched Hobo Bag — Black', price:18500, oldPrice:24000, images:['images/354d20ee-0277-43f9-b769-c50e5ee0febe.jpg'], isNew:true },
+            { id:2, category:'handbag', brand:'JW PEI', name:'JW PEI Kelly Mini Croc Embossed Bag — Black', price:22000, oldPrice:28000, images:['images/63bf56fe-e34f-4622-96f9-6be517405db2.jpg'], isNew:true },
+            { id:3, category:'handbag', brand:'JW PEI', name:'JW PEI Keyla Top Handbag — Brown Canvas', price:19500, oldPrice:null, images:['images/8dde9263-9850-43eb-a4e8-36cab650f23f.jpg'], isNew:true },
+            { id:4, category:'handbag', brand:'Louis Vuitton', name:'LV OnTheGo MM Monogram Tote', price:45000, oldPrice:55000, images:['images/a9427d3e-055e-4fa8-968c-fb5b80640c58.jpg'], isNew:false },
+            { id:5, category:'handbag', brand:'JW PEI', name:'JW PEI Olive Suede Set — Tote & Mini', price:28000, oldPrice:35000, images:['images/d125128e-94cd-459a-acc8-54418d67fd15.jpg'], isNew:true },
+            { id:6, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Tan Suede', price:16500, oldPrice:22000, images:['images/1bba8c2a-e74e-4071-8c84-f8b6b273d55e.jpg'], isNew:false },
+            { id:7, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Burgundy Leather', price:16500, oldPrice:22000, images:['images/318294ff-5fff-4742-8037-02ed40175681.jpg'], isNew:false },
+            { id:8, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Olive Leather', price:16500, oldPrice:22000, images:['images/8ef8ebf8-95f6-4317-9112-2a497bb03798.jpg'], isNew:false },
+            { id:9, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Dark Olive', price:16500, oldPrice:22000, images:['images/bdb82bb0-ce37-4221-8831-8633c95760c5.jpg'], isNew:false },
+            { id:10, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — Brown', price:12500, oldPrice:16000, images:['images/07359afe-1e29-461c-a29f-ed9eb9f52335.jpg'], isNew:false },
+            { id:11, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — White & Tan', price:12500, oldPrice:16000, images:['images/2b768352-9d7f-4e93-b9c3-87395ce593ce.jpg'], isNew:true },
+            { id:12, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Pink Blooms', price:13500, oldPrice:17000, images:['images/4bc836a2-028c-4e38-8f06-0ca963009c56.jpg'], isNew:true },
+            { id:13, category:'tote', brand:'ALDO', name:'ALDO Butterfly Print Tote — Blue', price:13500, oldPrice:17000, images:['images/9d99e60a-0804-474d-82f8-b13c6fad06a0.jpg'], isNew:true },
+            { id:14, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Multicolor', price:13500, oldPrice:17000, images:['images/d1dc1f4a-081e-4336-90ea-3d78b9ca05bd.jpg'], isNew:false },
+            { id:15, category:'tote', brand:'ALDO', name:'ALDO Leopard Chain Print Tote', price:13500, oldPrice:17000, images:['images/d3480c1e-ea64-45b5-901f-627818bd4ac9.jpg'], isNew:false },
+            { id:16, category:'tote', brand:'ALDO', name:'ALDO Monogram Print Tote — Rose & Black', price:13500, oldPrice:17000, images:['images/ec1f129c-7f4f-4120-aea8-f55b75243183.jpg'], isNew:true },
+            { id:17, category:'crossbody', brand:'Coach', name:'Coach Tabby Crossbody Set — Maroon', price:14000, oldPrice:18000, images:['images/6f681f9f-c267-4bb4-a273-c0cedcf07350.jpg'], isNew:false }
+        ];
+
+        let cartCount = 0;
+
+        function renderGrid() {
+            const filterCat = document.getElementById('category-filter').value;
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '';
+
+            const filtered = products.filter(p => filterCat === 'all' || p.category === filterCat);
+            
+            filtered.forEach(p => {
+                const disc = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : null;
+                const card = document.createElement('div');
+                card.className = 'group relative bg-[#F9F9F9] cursor-pointer transition-shadow hover:shadow-lg rounded-sm overflow-hidden flex flex-col h-full';
+                
+                card.innerHTML = `
+                    <a href="product-detail.html?id=${p.id}" class="flex flex-col h-full">
+                        ${disc ? `<div class="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">-${disc}%</div>` : ''}
+                        ${p.isNew ? `<div class="absolute top-2 right-2 bg-black text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">NEW</div>` : ''}
+                        
+                        <div class="relative overflow-hidden bg-[#F9F9F9] h-[160px] md:h-[220px] shrink-0 w-full">
+                            <img src="${p.images[0]}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <div class="p-3 pb-12 flex flex-col flex-1 items-center text-center">
+                            <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-widest mb-0.5">${p.brand}</p>
+                            <h3 class="text-[10px] md:text-[11px] font-bold uppercase tracking-wide text-black mb-1 w-full line-clamp-2 px-1 leading-snug">${p.name}</h3>
+                            <div class="flex items-center space-x-1 md:space-x-2 mt-auto text-xs w-full justify-center pt-2">
+                                <span class="font-bold text-black">Rs.${p.price.toLocaleString()}</span>
+                                ${p.oldPrice ? `<span class="text-gray-400 line-through text-[10px]">Rs.${p.oldPrice.toLocaleString()}</span>` : ''}
+                            </div>
+                        </div>
+                    </a>
+                    
+                    <button onclick="addToCart(event)" class="absolute bottom-3 right-3 w-8 h-8 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all shadow-sm z-20">
+                        <i class="fas fa-shopping-bag text-[11px]"></i>
+                    </button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function addToCart(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            cartCount++;
+            document.querySelectorAll('.cart-counter-badge').forEach(el => el.textContent = cartCount);
+            
+            const toast = document.getElementById('toast');
+            toast.style.opacity = '1';
+            toast.style.transform = 'translateY(0)';
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(16px)';
+            }, 2500);
+        }
+
+        window.addEventListener('DOMContentLoaded', renderGrid);
+    </script>
+</body>
+</html>

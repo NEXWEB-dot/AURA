@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">Product - AURA</title>
+    <meta name="description" content="Discover our premium luxury bags collection at AURA.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#000000',
+                        accent: '#DB1215',
+                        topbar: '#F3E8D2',
+                        surface: '#F5F5F5',
+                        darkRed: '#5E1B1C',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .zoom-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:1000; display:none; align-items:center; justify-content:center; }
+        .zoom-overlay.open { display:flex; }
+        .accordion-content { max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
+        .accordion-content.open { max-height:300px; }
+        #toast { position:fixed; bottom:80px; right:24px; background:#111; color:#fff; padding:14px 24px; border-radius:4px; font-size:13px; font-weight:600; letter-spacing:0.05em; opacity:0; transform:translateY(16px); transition:opacity 0.3s,transform 0.3s; z-index:999; display:flex; align-items:center; gap:10px; }
+        #toast.show { opacity:1; transform:translateY(0); }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
+        .fade-up { animation:fadeUp 0.5s ease forwards; }
+        .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+    </style>
+</head>
+<body class="bg-white text-primary font-sans antialiased overflow-x-hidden">
+
+    <!-- Top Bar -->
+    <div class="w-full bg-topbar py-2 px-4 sm:px-8 text-[11px] font-semibold text-black flex flex-col md:flex-row justify-between items-center gap-y-2">
+        <div class="flex items-center space-x-3 w-full md:w-1/3">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+        </div>
+        <div class="text-center w-full md:w-1/3 tracking-wide"><span>Free Shipping all Over Pakistan</span></div>
+        <div class="flex items-center justify-end space-x-2 w-full md:w-1/3">
+            <a href="#" class="hover:text-gray-600">About</a><span class="text-gray-400">|</span>
+            <a href="#" class="hover:text-gray-600">Contact</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="w-full bg-white px-4 sm:px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm border-b border-gray-100">
+        <a href="index.html"><div class="text-2xl font-serif font-bold tracking-widest">AURA</div></a>
+        <button class="xl:hidden text-gray-700 text-xl ml-auto mr-4"><i class="fas fa-bars"></i></button>
+        <nav class="hidden xl:flex space-x-6 text-[10px] font-bold tracking-widest uppercase flex-1 justify-center whitespace-nowrap">
+            <a href="index.html" class="hover:text-gray-600">HOME</a>
+            <a href="hand-bags.html" class="hover:text-gray-600">LADIES BAGS</a>
+            <a href="hand-bags.html" class="hover:text-gray-600">WALLETS</a>
+            <a href="hand-bags.html" class="hover:text-gray-600">BAGS PACK</a>
+        </nav>
+        <div class="flex items-center space-x-4 text-lg ml-auto xl:ml-0">
+            <button class="hover:text-gray-600 hidden sm:block"><i class="far fa-user"></i></button>
+            <button class="hover:text-gray-600 relative" id="cart-btn">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold" id="cart-count">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <div class="w-full px-4 sm:px-8 py-3 text-xs text-gray-500 border-b border-gray-100 bg-white">
+        <a href="index.html" class="hover:text-black">Home</a>
+        <span class="mx-2 text-gray-300">/</span>
+        <a href="hand-bags.html" class="hover:text-black" id="breadcrumb-category">Bags</a>
+        <span class="mx-2 text-gray-300">/</span>
+        <span class="text-black font-semibold" id="breadcrumb-name">Product</span>
+    </div>
+
+    <!-- Product Detail -->
+    <section class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 md:py-16">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+
+            <!-- Left: Gallery -->
+            <div class="fade-up">
+                <div class="relative bg-surface overflow-hidden cursor-zoom-in group mb-4 rounded-sm" style="aspect-ratio:1/1;" id="main-img-wrap" onclick="openZoom()">
+                    <img id="main-img" src="" alt="Product" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
+                    <div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
+                        <span id="badge-new" class="hidden bg-black text-white text-[9px] font-bold px-3 py-1 tracking-widest uppercase rounded-full">NEW</span>
+                        <span id="badge-sale" class="hidden bg-accent text-white text-[9px] font-bold px-3 py-1 tracking-widest uppercase rounded-full"></span>
+                    </div>
+                    <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
+                        <i class="fas fa-search-plus text-gray-700 text-sm"></i>
+                    </div>
+                </div>
+                <div class="flex gap-3 overflow-x-auto no-scrollbar" id="thumb-row"></div>
+            </div>
+
+            <!-- Right: Info -->
+            <div class="fade-up" style="animation-delay:0.1s">
+                <p class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2" id="product-brand">Brand</p>
+                <h1 class="font-serif text-3xl md:text-4xl text-primary mb-3 leading-tight" id="product-name">Product Name</h1>
+
+                <div class="flex items-center gap-2 mb-4">
+                    <div class="flex text-accent text-sm gap-0.5">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-xs text-gray-500 font-medium">(24 reviews)</span>
+                </div>
+
+                <div class="flex items-baseline gap-3 mb-6">
+                    <span class="text-2xl font-bold text-primary" id="product-price">Rs. 0</span>
+                    <span class="text-sm text-gray-400 line-through" id="product-old-price"></span>
+                    <span class="text-sm text-accent font-bold" id="product-discount"></span>
+                </div>
+
+                <p class="text-sm text-gray-600 leading-relaxed mb-6" id="product-desc"></p>
+                <div class="w-full h-px bg-gray-100 mb-6"></div>
+
+                <div class="mb-6">
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest mr-3">Category:</span>
+                    <span class="text-xs font-bold text-primary uppercase tracking-widest bg-surface px-3 py-1 rounded-full" id="product-category">—</span>
+                </div>
+
+                <!-- Qty -->
+                <div class="flex items-center gap-4 mb-6">
+                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Qty:</span>
+                    <div class="flex items-center border border-gray-300 rounded-sm">
+                        <button onclick="changeQty(-1)" class="w-10 h-10 flex items-center justify-center text-lg hover:bg-gray-100 font-light">−</button>
+                        <span id="qty-display" class="w-10 text-center text-sm font-semibold">1</span>
+                        <button onclick="changeQty(1)" class="w-10 h-10 flex items-center justify-center text-lg hover:bg-gray-100 font-light">+</button>
+                    </div>
+                </div>
+
+                <!-- CTAs -->
+                <div class="flex flex-col sm:flex-row gap-3 mb-3">
+                    <button onclick="addToCart()" class="flex-1 bg-black text-white py-4 text-xs font-bold tracking-widest uppercase hover:bg-darkRed transition-colors duration-300 flex items-center justify-center gap-3">
+                        <i class="fas fa-shopping-bag"></i> Add to Cart
+                    </button>
+                    <button class="flex-1 border border-black text-black py-4 text-xs font-bold tracking-widest uppercase hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center gap-3">
+                        <i class="fab fa-whatsapp text-green-600"></i> Order via WhatsApp
+                    </button>
+                </div>
+                <button class="w-full border border-gray-200 text-gray-600 py-3 text-xs font-semibold tracking-widest uppercase hover:border-black hover:text-black transition-colors flex items-center justify-center gap-2 mb-6">
+                    <i class="far fa-heart"></i> Add to Wishlist
+                </button>
+
+                <!-- Features -->
+                <div class="grid grid-cols-3 gap-4 mb-6 py-4 border-y border-gray-100">
+                    <div class="text-center"><i class="fas fa-truck text-gray-400 text-xl mb-2"></i><p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Free Delivery</p></div>
+                    <div class="text-center"><i class="fas fa-shield-alt text-gray-400 text-xl mb-2"></i><p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Secure Payment</p></div>
+                    <div class="text-center"><i class="fas fa-exchange-alt text-gray-400 text-xl mb-2"></i><p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Easy Returns</p></div>
+                </div>
+
+                <!-- Accordion -->
+                <div class="border-t border-gray-100">
+                    <button onclick="toggleAccordion('details')" class="w-full flex justify-between items-center py-4 text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors">
+                        <span>Product Details</span><i class="fas fa-plus text-xs" id="icon-details"></i>
+                    </button>
+                    <div class="accordion-content" id="acc-details">
+                        <div class="pb-4 text-sm text-gray-600 leading-relaxed space-y-1">
+                            <p>• Premium quality materials</p><p>• Spacious main compartment</p>
+                            <p>• Interior zipper pocket &amp; card slots</p><p>• Gold-tone hardware</p><p>• Dust bag included</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-gray-100">
+                        <button onclick="toggleAccordion('shipping')" class="w-full flex justify-between items-center py-4 text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors">
+                            <span>Shipping &amp; Returns</span><i class="fas fa-plus text-xs" id="icon-shipping"></i>
+                        </button>
+                        <div class="accordion-content" id="acc-shipping">
+                            <div class="pb-4 text-sm text-gray-600 leading-relaxed space-y-1">
+                                <p>• Free delivery across Pakistan</p><p>• 2–4 business days</p>
+                                <p>• Easy 30-day returns &amp; exchanges</p><p>• Cash on Delivery available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Products -->
+        <div class="mt-20 border-t border-gray-100 pt-16">
+            <h2 class="font-serif text-3xl text-primary text-center mb-2">You May Also Like</h2>
+            <p class="text-center text-sm text-gray-400 italic mb-10">More from our collection</p>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" id="related-grid"></div>
+        </div>
+    </section>
+
+    <!-- Zoom Overlay -->
+    <div class="zoom-overlay" id="zoom-overlay" onclick="closeZoom()">
+        <button onclick="closeZoom()" class="absolute top-6 right-6 text-white text-2xl hover:text-gray-300 z-10"><i class="fas fa-times"></i></button>
+        <img id="zoom-img" src="" alt="Zoom" class="max-w-[90vw] max-h-[90vh] object-contain select-none">
+    </div>
+
+    <!-- Toast -->
+    <div id="toast"><i class="fas fa-check-circle text-green-400"></i><span id="toast-msg">Added!</span></div>
+
+    <!-- WhatsApp -->
+    <a href="#" class="fixed right-6 bottom-6 w-[52px] h-[52px] bg-[#25D366] text-white rounded-full flex items-center justify-center text-3xl shadow-xl z-50 hover:scale-110 transition-transform">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <script>
+        const products = [
+            { id:1, category:'handbag', brand:'JW PEI', name:'JW PEI Gabbi Ruched Hobo Bag — Black', price:18500, oldPrice:24000, images:['images/354d20ee-0277-43f9-b769-c50e5ee0febe.jpg'], desc:'The iconic Gabbi ruched hobo bag by JW PEI. Features a soft sculpted silhouette with gold-tone lock clasp. Comes in a set of two. Perfect for day-to-night styling.', isNew:true },
+            { id:2, category:'handbag', brand:'JW PEI', name:'JW PEI Kelly Mini Croc Embossed Bag — Black', price:22000, oldPrice:28000, images:['images/63bf56fe-e34f-4622-96f9-6be517405db2.jpg'], desc:'Structured mini Kelly silhouette in glossy croc-embossed leather. Bold gold lock hardware and a top handle for a polished editorial look.', isNew:true },
+            { id:3, category:'handbag', brand:'JW PEI', name:'JW PEI Keyla Top Handbag — Brown Canvas', price:19500, oldPrice:null, images:['images/8dde9263-9850-43eb-a4e8-36cab650f23f.jpg'], desc:'The Keyla top handle bag in beige canvas with cognac leather flap. Features a gold-tone turnlock and detachable shoulder strap.', isNew:true },
+            { id:4, category:'handbag', brand:'Louis Vuitton', name:'LV OnTheGo MM Monogram Tote', price:45000, oldPrice:55000, images:['images/a9427d3e-055e-4fa8-968c-fb5b80640c58.jpg'], desc:'The iconic LV OnTheGo MM in classic Monogram canvas with crimson red interior. Spacious, structured, and unmistakably luxurious.', isNew:false },
+            { id:5, category:'handbag', brand:'JW PEI', name:'JW PEI Olive Suede Set — Tote & Mini', price:28000, oldPrice:35000, images:['images/d125128e-94cd-459a-acc8-54418d67fd15.jpg'], desc:'Luxurious olive suede tote paired with a matching mini satchel. Both feature JW PEI gold hardware and adjustable straps.', isNew:true },
+            { id:6, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Tan Suede', price:16500, oldPrice:22000, images:['images/1bba8c2a-e74e-4071-8c84-f8b6b273d55e.jpg'], desc:'The Coach Idol bag in warm tan suede. A sleek baguette silhouette with signature Coach charm and double shoulder straps.', isNew:false },
+            { id:7, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Burgundy Leather', price:16500, oldPrice:22000, images:['images/318294ff-5fff-4742-8037-02ed40175681.jpg'], desc:'Rich burgundy leather Coach Idol bag. A classic baguette shape with gold Coach charm. Fits all daily essentials.', isNew:false },
+            { id:8, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Olive Leather', price:16500, oldPrice:22000, images:['images/8ef8ebf8-95f6-4317-9112-2a497bb03798.jpg'], desc:'Earthy olive leather Coach Idol bag. Perfect for understated luxury. Fits everyday essentials with ease.', isNew:false },
+            { id:9, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Dark Olive', price:16500, oldPrice:22000, images:['images/bdb82bb0-ce37-4221-8831-8633c95760c5.jpg'], desc:'Darker olive Coach Idol bag in smooth polished leather. A versatile everyday bag with a refined silhouette.', isNew:false },
+            { id:10, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — Brown', price:12500, oldPrice:16000, images:['images/07359afe-1e29-461c-a29f-ed9eb9f52335.jpg'], desc:'A chic ALDO 3-piece set in smooth brown leather — a spacious tote, a mini crossbody, and a card holder. Perfect for the modern woman.', isNew:false },
+            { id:11, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — White & Tan', price:12500, oldPrice:16000, images:['images/2b768352-9d7f-4e93-b9c3-87395ce593ce.jpg'], desc:'Elegant white tote with contrasting tan leather trim. Includes a matching mini crossbody and card wallet.', isNew:true },
+            { id:12, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Pink Blooms', price:13500, oldPrice:17000, images:['images/4bc836a2-028c-4e38-8f06-0ca963009c56.jpg'], desc:'Stunning floral-printed ALDO tote with matching card holder. Light and vibrant for spring-summer styling.', isNew:true },
+            { id:13, category:'tote', brand:'ALDO', name:'ALDO Butterfly Print Tote — Blue', price:13500, oldPrice:17000, images:['images/9d99e60a-0804-474d-82f8-b13c6fad06a0.jpg'], desc:'Whimsical butterfly and floral print ALDO tote in fresh blue tones. Includes a matching card holder.', isNew:true },
+            { id:14, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Multicolor', price:13500, oldPrice:17000, images:['images/d1dc1f4a-081e-4336-90ea-3d78b9ca05bd.jpg'], desc:'Bold multicolor floral tote with a coordinated card wallet. A pop of color for any outfit.', isNew:false },
+            { id:15, category:'tote', brand:'ALDO', name:'ALDO Leopard Chain Print Tote', price:13500, oldPrice:17000, images:['images/d3480c1e-ea64-45b5-901f-627818bd4ac9.jpg'], desc:'Fierce leopard and chain print ALDO tote with matching card wallet. White leather trim adds elegance.', isNew:false },
+            { id:16, category:'tote', brand:'ALDO', name:'ALDO Monogram Print Tote — Rose & Black', price:13500, oldPrice:17000, images:['images/ec1f129c-7f4f-4120-aea8-f55b75243183.jpg'], desc:'Sophisticated ALDO monogram tote in rose-black pattern. Comes with a matching mini crossbody and card holder.', isNew:true },
+            { id:17, category:'crossbody', brand:'Coach', name:'Coach Tabby Crossbody Set — Maroon', price:14000, oldPrice:18000, images:['images/6f681f9f-c267-4bb4-a273-c0cedcf07350.jpg'], desc:'The Coach Tabby crossbody in deep maroon pebble leather with iconic gold C turnlock. Set includes matching clutch wallet.', isNew:false }
+        ];
+
+        let currentProduct = null, currentThumb = 0, qty = 1, cartCount = 0;
+
+        function getCategoryLabel(cat) {
+            return {handbag:'Handbags',shoulder:'Shoulder Bags',tote:'Tote Bags',crossbody:'Crossbody Bags'}[cat]||cat;
+        }
+
+        function init() {
+            const params = new URLSearchParams(window.location.search);
+            const id = parseInt(params.get('id'))||1;
+            currentProduct = products.find(p=>p.id===id)||products[0];
+            renderProduct();
+            renderRelated();
+        }
+
+        function renderProduct() {
+            const p = currentProduct;
+            document.getElementById('page-title').textContent = p.name + ' — AURA';
+            document.getElementById('breadcrumb-name').textContent = p.name.length > 40 ? p.name.substring(0,40)+'...' : p.name;
+            document.getElementById('breadcrumb-category').textContent = getCategoryLabel(p.category);
+            document.getElementById('product-brand').textContent = p.brand;
+            document.getElementById('product-name').textContent = p.name;
+            document.getElementById('product-price').textContent = 'Rs. ' + p.price.toLocaleString();
+            document.getElementById('product-desc').textContent = p.desc;
+            document.getElementById('product-category').textContent = getCategoryLabel(p.category);
+
+            if(p.oldPrice){
+                document.getElementById('product-old-price').textContent = 'Rs. ' + p.oldPrice.toLocaleString();
+                const disc = Math.round((1-p.price/p.oldPrice)*100);
+                document.getElementById('product-discount').textContent = '-'+disc+'%';
+                document.getElementById('badge-sale').textContent = '-'+disc+'% OFF';
+                document.getElementById('badge-sale').classList.remove('hidden');
+            }
+            if(p.isNew) document.getElementById('badge-new').classList.remove('hidden');
+
+            document.getElementById('main-img').src = p.images[0];
+            document.getElementById('zoom-img').src = p.images[0];
+
+            const thumbRow = document.getElementById('thumb-row');
+            thumbRow.innerHTML = '';
+            p.images.forEach((src,i)=>{
+                const div = document.createElement('div');
+                div.className = `shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden transition-all ${i===0?'border-black':'border-gray-200 hover:border-gray-500'}`;
+                div.onclick = ()=>selectThumb(i);
+                div.id = 'thumb-'+i;
+                const img = document.createElement('img');
+                img.src = src;
+                img.className = 'w-full h-full object-cover';
+                div.appendChild(img);
+                thumbRow.appendChild(div);
+            });
+        }
+
+        function selectThumb(i) {
+            const p = currentProduct;
+            document.getElementById('main-img').src = p.images[i];
+            document.getElementById('zoom-img').src = p.images[i];
+            document.getElementById('thumb-'+currentThumb).className = `shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden transition-all border-gray-200 hover:border-gray-500`;
+            document.getElementById('thumb-'+i).className = `shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden transition-all border-black`;
+            currentThumb = i;
+        }
+
+        function renderRelated() {
+            const p = currentProduct;
+            let related = products.filter(x=>x.id!==p.id&&x.category===p.category).slice(0,4);
+            if(related.length<4) related = [...related,...products.filter(x=>x.id!==p.id&&x.category!==p.category)].slice(0,4);
+            const grid = document.getElementById('related-grid');
+            grid.innerHTML = '';
+            related.forEach(r=>{
+                const disc = r.oldPrice ? Math.round((1-r.price/r.oldPrice)*100) : null;
+                const card = document.createElement('a');
+                card.href = 'product-detail.html?id='+r.id;
+                card.className = 'group cursor-pointer block';
+                card.innerHTML = `
+                    <div class="relative bg-surface overflow-hidden mb-3 rounded-sm" style="aspect-ratio:1/1;">
+                        <img src="${r.images[0]}" alt="${r.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        ${disc?`<div class="absolute top-2 left-2 bg-black text-white text-[9px] font-bold px-2 py-0.5 rounded-full">-${disc}%</div>`:''}
+                    </div>
+                    <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-widest mb-1">${r.brand}</p>
+                    <h4 class="text-sm font-semibold text-primary group-hover:text-accent transition-colors leading-snug line-clamp-2 mb-1">${r.name}</h4>
+                    <p class="text-sm font-bold">Rs. ${r.price.toLocaleString()}</p>`;
+                grid.appendChild(card);
+            });
+        }
+
+        function changeQty(d){ qty=Math.max(1,qty+d); document.getElementById('qty-display').textContent=qty; }
+
+        function addToCart(){
+            cartCount+=qty;
+            document.getElementById('cart-count').textContent=cartCount;
+            showToast(qty+'x added to cart!');
+        }
+
+        function showToast(msg){
+            const t=document.getElementById('toast');
+            document.getElementById('toast-msg').textContent=msg;
+            t.classList.add('show');
+            setTimeout(()=>t.classList.remove('show'),3000);
+        }
+
+        function openZoom(){ document.getElementById('zoom-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
+        function closeZoom(){ document.getElementById('zoom-overlay').classList.remove('open'); document.body.style.overflow=''; }
+
+        function toggleAccordion(key){
+            const c=document.getElementById('acc-'+key);
+            const icon=document.getElementById('icon-'+key);
+            c.classList.toggle('open');
+            icon.classList.toggle('fa-plus');
+            icon.classList.toggle('fa-minus');
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
