@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hand Bags - AURA</title>
+    <meta name="description" content="Shop AURA's premium collection of hand bags, shoulder bags, tote bags and crossbody bags. Free national delivery on orders over Rs. 10,000.">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,8 +15,8 @@
                     colors: {
                         primary: '#000000',
                         accent: '#DB1215',
-                        topbar: '#F3E8D2',
-                        cardbg: '#F9F9F9'
+                        darkRed: '#5E1B1C',
+                        surface: '#F5F5F5',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -28,6 +29,124 @@
     <style>
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Product card premium hover */
+        .product-card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.08), 0 8px 16px rgba(0,0,0,0.04);
+        }
+
+        /* Image zoom on hover */
+        .product-card .product-img {
+            transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .product-card:hover .product-img {
+            transform: scale(1.08);
+        }
+
+        /* Quick actions slide up */
+        .product-card .quick-actions {
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+        .product-card:hover .quick-actions {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Badge shimmer */
+        .badge-new {
+            background: linear-gradient(135deg, #111 0%, #333 100%);
+        }
+        .badge-sale {
+            background: linear-gradient(135deg, #DB1215 0%, #a00e10 100%);
+        }
+
+        /* Filter sidebar */
+        .filter-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .filter-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .filter-panel {
+            transform: translateX(-100%);
+            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        .filter-panel.active {
+            transform: translateX(0);
+        }
+
+        /* Category chip active state */
+        .cat-chip.active {
+            background-color: #111;
+            color: #fff;
+        }
+        .cat-chip.active .cat-img-wrap {
+            border-color: #111;
+        }
+
+        /* Search bar focus glow */
+        .search-input:focus {
+            box-shadow: 0 0 0 3px rgba(94, 27, 28, 0.1);
+        }
+
+        /* Wishlist heart animation */
+        .wishlist-btn.active i {
+            color: #DB1215;
+            animation: heartPop 0.4s ease;
+        }
+        @keyframes heartPop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        /* Skeleton loading */
+        .skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        /* Fade in animation for cards */
+        .product-card {
+            opacity: 0;
+            animation: fadeUp 0.5s ease forwards;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Price range slider */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 3px;
+            background: #ddd;
+            border-radius: 3px;
+            outline: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #111;
+            border-radius: 50%;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body class="bg-white text-primary font-sans antialiased overflow-x-hidden">
@@ -67,12 +186,8 @@
         </nav>
         
         <div class="flex items-center space-x-4 sm:space-x-5 text-lg w-auto md:w-1/4 justify-end ml-auto xl:ml-0">
-            <button class="flex items-center border border-gray-300 rounded-full px-3 py-1 text-xs text-gray-500 hover:border-black transition-colors w-32 sm:w-40 justify-between">
-                <span>Search</span>
-                <i class="fas fa-search"></i>
-            </button>
             <button class="hover:text-gray-600 transition-colors hidden sm:block"><i class="far fa-user"></i></button>
-            <button class="hover:text-gray-600 transition-colors relative">
+            <button class="hover:text-gray-600 transition-colors relative" onclick="window.location.href='checkout.html'">
                 <i class="fas fa-shopping-bag"></i>
                 <span class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold cart-counter-badge">0</span>
             </button>
@@ -80,92 +195,179 @@
     </header>
 
     <!-- Hero Section -->
-    <section class="relative w-full h-[250px] md:h-[400px] overflow-hidden bg-[#A38162]">
-        <img src="images/3.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover opacity-80 mix-blend-multiply">
+    <section class="relative w-full h-[200px] md:h-[340px] overflow-hidden bg-[#1a1a1a]">
+        <img src="images/3.jpg" alt="Hero Background" class="absolute inset-0 w-full h-full object-cover opacity-50">
+        <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
         
         <div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 lg:px-24">
-            <p class="text-white text-sm md:text-lg font-medium opacity-90 mb-2"><a href="index.html" class="hover:underline">Home</a> / Collections / Hand Bags</p>
-            <h1 class="text-white text-4xl md:text-6xl font-bold tracking-wide">Hand Bags</h1>
+            <p class="text-white/60 text-xs md:text-sm font-medium mb-3 tracking-wider uppercase">
+                <a href="index.html" class="hover:text-white transition-colors">Home</a>
+                <span class="mx-2">/</span>
+                <span>Collections</span>
+                <span class="mx-2">/</span>
+                <span class="text-white/90">Hand Bags</span>
+            </p>
+            <h1 class="text-white font-serif text-4xl md:text-6xl font-bold tracking-wide">Hand Bags</h1>
+            <p class="text-white/50 text-xs md:text-sm mt-3 max-w-md tracking-wide">Discover our curated collection of premium handbags crafted with elegance and sophistication.</p>
         </div>
     </section>
 
+    <!-- Search Bar Section -->
+    <div class="w-full bg-white border-b border-gray-100 py-5 px-4 md:px-8">
+        <div class="max-w-2xl mx-auto relative">
+            <input type="text" id="search-input" placeholder="Search bags by name, brand, or category..."
+                class="search-input w-full border border-gray-200 rounded-full pl-12 pr-5 py-3 text-sm outline-none focus:border-gray-400 transition-all bg-gray-50/50 focus:bg-white">
+            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+            <button id="search-clear" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors hidden">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+        </div>
+    </div>
+
     <!-- Categories Strip -->
-    <div class="w-full py-8 md:py-10 px-4 flex justify-start lg:justify-center items-center overflow-x-auto no-scrollbar space-x-2 md:space-x-4 bg-white border-b border-gray-100">
-        <!-- Reusable block for each category -->
-        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='crossbody'; renderGrid();">
-            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
-                <img src="images/4.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+    <div class="w-full py-6 md:py-8 px-4 flex justify-center items-center overflow-x-auto no-scrollbar space-x-3 md:space-x-5 bg-white border-b border-gray-100">
+        <div class="cat-chip active flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all" data-category="all" onclick="setCategory('all', this)">
+            <div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+                <i class="fas fa-th-large text-lg text-gray-500 group-hover:text-black transition-colors"></i>
             </div>
-            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black">Cross Body Bags</span>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">All Bags</span>
         </div>
-        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='handbag'; renderGrid();">
-            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
-                <img src="images/5.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+        <div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="crossbody" onclick="setCategory('crossbody', this)">
+            <div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+                <img src="images/4.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
-            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black">Hand Bags</span>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Cross Body</span>
         </div>
-        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='shoulder'; renderGrid();">
-            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
-                <img src="images/6.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+        <div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="handbag" onclick="setCategory('handbag', this)">
+            <div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+                <img src="images/5.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
-            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black border-b-2 border-transparent group-hover:border-black pb-0.5 transition-colors">Shoulder Bags</span>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Hand Bags</span>
         </div>
-        <div class="flex flex-col items-center group cursor-pointer min-w-[80px] md:min-w-[100px] shrink-0" onclick="document.getElementById('category-filter').value='tote'; renderGrid();">
-            <div class="w-16 h-16 md:w-[85px] md:h-[85px] bg-[#F7F7F7] flex items-center justify-center p-2 mb-3 transition-colors group-hover:bg-[#EAEAEA]">
-                <img src="images/8.jpg" class="w-full h-full object-cover mix-blend-multiply group-hover:scale-110 transition-transform">
+        <div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="shoulder" onclick="setCategory('shoulder', this)">
+            <div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+                <img src="images/6.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
             </div>
-            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase text-black">Tote Bags</span>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Shoulder</span>
+        </div>
+        <div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="tote" onclick="setCategory('tote', this)">
+            <div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+                <img src="images/8.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+            </div>
+            <span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Tote Bags</span>
         </div>
     </div>
 
     <!-- Filter & Sort Bar -->
-    <div class="w-full px-4 md:px-8 py-4 flex justify-between items-center bg-white border-b border-gray-100 mb-6 flex-wrap gap-4">
-        <div class="flex items-center space-x-4">
-            <button class="flex items-center space-x-2 text-xs font-bold px-4 py-2 hover:bg-gray-50 transition-colors rounded-sm shadow-sm border border-gray-200">
-                <i class="fas fa-sliders-h"></i>
+    <div class="w-full px-4 md:px-8 py-4 flex justify-between items-center bg-white border-b border-gray-100 flex-wrap gap-4">
+        <div class="flex items-center space-x-3">
+            <button id="filter-btn" class="flex items-center space-x-2 text-xs font-bold px-5 py-2.5 hover:bg-black hover:text-white transition-all rounded-full border border-gray-300 hover:border-black">
+                <i class="fas fa-sliders-h text-[10px]"></i>
                 <span>FILTER</span>
             </button>
-            <div class="hidden sm:flex items-center border border-gray-200 px-3 py-2 hover:border-black transition-colors rounded-sm cursor-pointer relative min-w-[160px]">
-                <select id="category-filter" onchange="renderGrid()" class="w-full text-xs text-gray-700 outline-none cursor-pointer bg-transparent appearance-none pr-6 font-semibold">
-                    <option value="all">All Categories</option>
-                    <option value="handbag">Hand Bags</option>
-                    <option value="shoulder">Shoulder Bags</option>
-                    <option value="tote">Tote Bags</option>
-                    <option value="crossbody">Cross Body Bags</option>
+            <span id="product-count" class="text-xs text-gray-400 font-medium hidden sm:inline-block">0 products</span>
+            <span id="active-filters" class="text-xs text-accent font-semibold hidden"></span>
+        </div>
+        <div class="flex items-center space-x-3">
+            <span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider hidden sm:inline">Sort by</span>
+            <div class="flex items-center border border-gray-200 px-4 py-2.5 hover:border-black transition-colors rounded-full cursor-pointer relative min-w-[160px]">
+                <select id="sort-select" onchange="renderGrid()" class="w-full text-xs text-gray-700 outline-none cursor-pointer bg-transparent appearance-none pr-6 font-semibold">
+                    <option value="featured">Featured</option>
+                    <option value="newest">Newest</option>
+                    <option value="name-asc">Alphabetically, A-Z</option>
+                    <option value="name-desc">Alphabetically, Z-A</option>
+                    <option value="price-asc">Price, Low to High</option>
+                    <option value="price-desc">Price, High to Low</option>
                 </select>
-                <i class="fas fa-chevron-down text-[10px] absolute right-3 pointer-events-none text-gray-400"></i>
+                <i class="fas fa-chevron-down text-[10px] absolute right-4 pointer-events-none text-gray-400"></i>
             </div>
         </div>
-        <div class="flex items-center border border-gray-200 px-3 py-2 hover:border-black transition-colors rounded-sm cursor-pointer relative min-w-[140px]">
-            <select class="w-full text-xs text-gray-700 outline-none cursor-pointer bg-transparent appearance-none pr-6">
-                <option>Featured</option>
-                <option>Best Selling</option>
-                <option>Alphabetically, A-Z</option>
-                <option>Price, low to high</option>
-            </select>
-            <i class="fas fa-chevron-down text-[10px] absolute right-3 pointer-events-none text-gray-400"></i>
+    </div>
+
+    <!-- Filter Sidebar Overlay -->
+    <div id="filter-overlay" class="filter-overlay fixed inset-0 bg-black/40 z-[60] backdrop-blur-sm" onclick="closeFilter()"></div>
+    <div id="filter-panel" class="filter-panel fixed top-0 left-0 h-full w-[320px] max-w-[85vw] bg-white z-[70] shadow-2xl overflow-y-auto">
+        <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+            <h3 class="font-serif text-xl font-bold tracking-wide">Filters</h3>
+            <button onclick="closeFilter()" class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors">
+                <i class="fas fa-times text-sm"></i>
+            </button>
+        </div>
+
+        <!-- Category Filter -->
+        <div class="px-6 py-5 border-b border-gray-100">
+            <h4 class="text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">Category</h4>
+            <div class="space-y-2.5">
+                <label class="flex items-center space-x-3 cursor-pointer group">
+                    <input type="radio" name="sidebar-cat" value="all" checked class="accent-black w-4 h-4" onchange="setSidebarCategory(this.value)">
+                    <span class="text-sm text-gray-700 group-hover:text-black transition-colors">All Categories</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer group">
+                    <input type="radio" name="sidebar-cat" value="handbag" class="accent-black w-4 h-4" onchange="setSidebarCategory(this.value)">
+                    <span class="text-sm text-gray-700 group-hover:text-black transition-colors">Hand Bags</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer group">
+                    <input type="radio" name="sidebar-cat" value="shoulder" class="accent-black w-4 h-4" onchange="setSidebarCategory(this.value)">
+                    <span class="text-sm text-gray-700 group-hover:text-black transition-colors">Shoulder Bags</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer group">
+                    <input type="radio" name="sidebar-cat" value="tote" class="accent-black w-4 h-4" onchange="setSidebarCategory(this.value)">
+                    <span class="text-sm text-gray-700 group-hover:text-black transition-colors">Tote Bags</span>
+                </label>
+                <label class="flex items-center space-x-3 cursor-pointer group">
+                    <input type="radio" name="sidebar-cat" value="crossbody" class="accent-black w-4 h-4" onchange="setSidebarCategory(this.value)">
+                    <span class="text-sm text-gray-700 group-hover:text-black transition-colors">Cross Body Bags</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Price Range Filter -->
+        <div class="px-6 py-5 border-b border-gray-100">
+            <h4 class="text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">Price Range</h4>
+            <div class="space-y-4">
+                <div>
+                    <div class="flex justify-between text-xs text-gray-500 mb-2">
+                        <span>Rs. 0</span>
+                        <span id="price-range-label" class="font-semibold text-black">Rs. 50,000</span>
+                    </div>
+                    <input type="range" id="price-range" min="0" max="50000" value="50000" step="500" oninput="updatePriceRange(this.value)">
+                </div>
+            </div>
+        </div>
+
+        <!-- Apply / Clear Buttons -->
+        <div class="px-6 py-5 flex space-x-3">
+            <button onclick="clearAllFilters()" class="flex-1 border border-gray-300 text-gray-700 py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:border-black hover:text-black transition-all">
+                Clear All
+            </button>
+            <button onclick="closeFilter()" class="flex-1 bg-black text-white py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-darkRed transition-colors">
+                Apply
+            </button>
         </div>
     </div>
 
     <!-- Product Grid -->
-    <section class="w-full px-4 md:px-8 pb-12 relative">
+    <section class="w-full px-4 md:px-8 py-8 relative">
         <!-- Floating WhatsApp -->
         <a href="#" class="fixed right-6 bottom-6 w-[52px] h-[52px] bg-[#25D366] text-white rounded-full flex items-center justify-center text-3xl shadow-xl z-50 hover:scale-110 transition-transform">
             <i class="fab fa-whatsapp"></i>
         </a>
 
-        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 md:gap-5">
-            <!-- Dynamic products will load here -->
+        <!-- No Results Message -->
+        <div id="no-results" class="hidden text-center py-20">
+            <i class="fas fa-search text-4xl text-gray-200 mb-4"></i>
+            <h3 class="font-serif text-2xl text-gray-300 mb-2">No Products Found</h3>
+            <p class="text-sm text-gray-400 mb-6">Try adjusting your search or filter to find what you're looking for.</p>
+            <button onclick="clearAllFilters()" class="text-xs font-bold uppercase tracking-widest border-b-2 border-black pb-1 hover:text-accent hover:border-accent transition-colors">Clear All Filters</button>
         </div>
 
-        <!-- Load More Button -->
-        <div class="w-full flex justify-center mt-12 mb-8">
-            <button class="border border-gray-300 text-gray-800 px-10 py-3 text-[11px] font-semibold tracking-widest hover:border-black hover:bg-black hover:text-white transition-all rounded-sm">Load more</button>
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+            <!-- Dynamic products will load here -->
         </div>
     </section>
 
     <!-- Toast -->
-    <div id="toast" class="fixed bottom-20 right-6 bg-[#111] text-white px-6 py-3.5 rounded-sm text-[13px] font-semibold tracking-wide opacity-0 translate-y-4 transition-all z-[999] flex items-center gap-3 pointer-events-none">
+    <div id="toast" class="fixed bottom-20 right-6 bg-[#111] text-white px-6 py-3.5 rounded-full text-[13px] font-semibold tracking-wide opacity-0 translate-y-4 transition-all z-[999] flex items-center gap-3 pointer-events-none shadow-2xl">
         <i class="fas fa-check-circle text-green-400"></i><span id="toast-msg">Added!</span>
     </div>
 
@@ -183,8 +385,6 @@
             return data.result;
         }
 
-        // "id" below is aliased to the product's slug, so the rest of the page's
-        // logic (links, cart, filtering) can keep working exactly as before.
         const PRODUCTS_QUERY = `*[_type == "product"] | order(_createdAt desc){
             "id": slug.current,
             name,
@@ -197,15 +397,35 @@
         }`;
 
         let products = [];
-        let cartCount = 0;
+        let currentCategory = 'all';
+        let maxPrice = 50000;
+        let wishlist = JSON.parse(localStorage.getItem('aura_wishlist') || '[]');
+
+        // ---- LOADING SKELETON ----
+        function showSkeleton() {
+            const grid = document.getElementById('product-grid');
+            let skeletonHTML = '';
+            for (let i = 0; i < 8; i++) {
+                skeletonHTML += `
+                    <div class="bg-white rounded-xl overflow-hidden">
+                        <div class="skeleton aspect-[3/4] w-full rounded-t-xl"></div>
+                        <div class="p-4 space-y-2.5">
+                            <div class="skeleton h-3 w-16 rounded-full"></div>
+                            <div class="skeleton h-4 w-full rounded-full"></div>
+                            <div class="skeleton h-3 w-24 rounded-full"></div>
+                        </div>
+                    </div>`;
+            }
+            grid.innerHTML = skeletonHTML;
+        }
 
         async function loadProducts() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = '<p class="col-span-full text-center text-sm text-gray-400 py-16">Loading products…</p>';
+            showSkeleton();
             try {
                 products = await sanityFetch(PRODUCTS_QUERY);
             } catch (err) {
                 console.error(err);
+                const grid = document.getElementById('product-grid');
                 grid.innerHTML = '<p class="col-span-full text-center text-sm text-red-500 py-16">Could not load products from Sanity. Please check your connection and try again.</p>';
                 return;
             }
@@ -220,40 +440,182 @@
             document.querySelectorAll('.cart-counter-badge').forEach(el => el.textContent = total);
         }
 
+        // ---- WISHLIST ----
+        function toggleWishlist(e, productId) {
+            e.preventDefault();
+            e.stopPropagation();
+            const idx = wishlist.indexOf(productId);
+            if (idx > -1) { wishlist.splice(idx, 1); }
+            else { wishlist.push(productId); }
+            localStorage.setItem('aura_wishlist', JSON.stringify(wishlist));
+            // Toggle visual
+            const btn = e.currentTarget;
+            btn.classList.toggle('active');
+            showToast(idx > -1 ? 'Removed from wishlist' : 'Added to wishlist');
+        }
+
+        // ---- CATEGORY ----
+        function setCategory(cat, el) {
+            currentCategory = cat;
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.remove('active'));
+            if (el) el.classList.add('active');
+            // Sync sidebar radio
+            const radio = document.querySelector(`input[name="sidebar-cat"][value="${cat}"]`);
+            if (radio) radio.checked = true;
+            renderGrid();
+        }
+
+        function setSidebarCategory(cat) {
+            currentCategory = cat;
+            // Sync top chips
+            document.querySelectorAll('.cat-chip').forEach(c => {
+                c.classList.toggle('active', c.dataset.category === cat);
+            });
+            renderGrid();
+        }
+
+        // ---- PRICE RANGE ----
+        function updatePriceRange(val) {
+            maxPrice = parseInt(val);
+            document.getElementById('price-range-label').textContent = 'Rs. ' + maxPrice.toLocaleString();
+            renderGrid();
+        }
+
+        // ---- FILTER SIDEBAR ----
+        function openFilter() {
+            document.getElementById('filter-overlay').classList.add('active');
+            document.getElementById('filter-panel').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeFilter() {
+            document.getElementById('filter-overlay').classList.remove('active');
+            document.getElementById('filter-panel').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // ---- CLEAR ALL ----
+        function clearAllFilters() {
+            currentCategory = 'all';
+            maxPrice = 50000;
+            document.getElementById('price-range').value = 50000;
+            document.getElementById('price-range-label').textContent = 'Rs. 50,000';
+            document.getElementById('search-input').value = '';
+            document.getElementById('search-clear').classList.add('hidden');
+            document.getElementById('sort-select').value = 'featured';
+            document.querySelectorAll('.cat-chip').forEach(c => c.classList.toggle('active', c.dataset.category === 'all'));
+            const radio = document.querySelector('input[name="sidebar-cat"][value="all"]');
+            if (radio) radio.checked = true;
+            renderGrid();
+        }
+
+        // ---- RENDER ----
         function renderGrid() {
-            const filterCat = document.getElementById('category-filter').value;
+            const searchQuery = document.getElementById('search-input').value.toLowerCase().trim();
+            const sortVal = document.getElementById('sort-select').value;
             const grid = document.getElementById('product-grid');
+            const noResults = document.getElementById('no-results');
             grid.innerHTML = '';
 
-            const filtered = products.filter(p => filterCat === 'all' || p.category === filterCat);
-            
-            filtered.forEach(p => {
+            let filtered = products.filter(p => {
+                const catMatch = currentCategory === 'all' || p.category === currentCategory;
+                const priceMatch = p.price <= maxPrice;
+                const searchMatch = !searchQuery ||
+                    p.name.toLowerCase().includes(searchQuery) ||
+                    (p.brand && p.brand.toLowerCase().includes(searchQuery)) ||
+                    (p.category && p.category.toLowerCase().includes(searchQuery));
+                return catMatch && priceMatch && searchMatch;
+            });
+
+            // Sort
+            switch (sortVal) {
+                case 'name-asc':
+                    filtered.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name-desc':
+                    filtered.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                case 'price-asc':
+                    filtered.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filtered.sort((a, b) => b.price - a.price);
+                    break;
+                case 'newest':
+                    // Already sorted by createdAt desc from query
+                    break;
+                default:
+                    break;
+            }
+
+            // Update count
+            document.getElementById('product-count').textContent = filtered.length + ' product' + (filtered.length !== 1 ? 's' : '');
+
+            // Show active filters info
+            const activeFiltersEl = document.getElementById('active-filters');
+            const activeFilters = [];
+            if (currentCategory !== 'all') activeFilters.push(currentCategory);
+            if (maxPrice < 50000) activeFilters.push('Under Rs.' + maxPrice.toLocaleString());
+            if (searchQuery) activeFilters.push('"' + searchQuery + '"');
+            if (activeFilters.length > 0) {
+                activeFiltersEl.textContent = '· ' + activeFilters.join(' · ');
+                activeFiltersEl.classList.remove('hidden');
+            } else {
+                activeFiltersEl.classList.add('hidden');
+            }
+
+            // Show/hide no results
+            if (filtered.length === 0) {
+                noResults.classList.remove('hidden');
+                grid.classList.add('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+                grid.classList.remove('hidden');
+            }
+
+            filtered.forEach((p, index) => {
                 const disc = p.oldPrice ? Math.round((1 - p.price / p.oldPrice) * 100) : null;
+                const isWished = wishlist.includes(p.id);
                 const card = document.createElement('div');
-                card.className = 'group relative bg-[#F9F9F9] cursor-pointer transition-shadow hover:shadow-lg rounded-sm overflow-hidden flex flex-col h-full';
-                
+                card.className = 'product-card bg-white rounded-xl overflow-hidden cursor-pointer flex flex-col h-full border border-gray-100/80';
+                card.style.animationDelay = (index * 0.06) + 's';
+
                 card.innerHTML = `
                     <a href="product-detail.html?id=${p.id}" class="flex flex-col h-full">
-                        ${disc ? `<div class="absolute top-2 left-2 bg-accent text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">-${disc}%</div>` : ''}
-                        ${p.isNew ? `<div class="absolute top-2 right-2 bg-black text-white text-[9px] font-bold px-2 py-0.5 rounded-full z-10">NEW</div>` : ''}
-                        
-                        <div class="relative overflow-hidden bg-[#F9F9F9] h-[160px] md:h-[220px] shrink-0 w-full">
-                            <img src="${p.images[0]}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <!-- Image Container -->
+                        <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 aspect-[3/4] shrink-0 w-full">
+                            <img src="${p.images[0]}" alt="${p.name}" class="product-img w-full h-full object-cover" loading="lazy">
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
+                                ${disc ? `<div class="badge-sale text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">-${disc}%</div>` : ''}
+                                ${p.isNew ? `<div class="badge-new text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">NEW</div>` : ''}
+                            </div>
+
+                            <!-- Wishlist Button -->
+                            <button onclick="toggleWishlist(event, '${p.id}')" class="wishlist-btn ${isWished ? 'active' : ''} absolute top-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-all z-10 hover:scale-110">
+                                <i class="${isWished ? 'fas' : 'far'} fa-heart text-sm ${isWished ? 'text-accent' : 'text-gray-500'}"></i>
+                            </button>
+
+                            <!-- Quick Add Overlay -->
+                            <div class="quick-actions absolute bottom-0 left-0 right-0 p-3 z-10">
+                                <button onclick="addToCart(event, '${p.id}')" class="w-full bg-black/90 backdrop-blur-sm text-white py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-darkRed transition-colors flex items-center justify-center gap-2 shadow-lg">
+                                    <i class="fas fa-shopping-bag text-[9px]"></i>
+                                    Add to Bag
+                                </button>
+                            </div>
                         </div>
                         
-                        <div class="p-3 pb-12 flex flex-col flex-1 items-center text-center">
-                            <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-widest mb-0.5">${p.brand}</p>
-                            <h3 class="text-[10px] md:text-[11px] font-bold uppercase tracking-wide text-black mb-1 w-full line-clamp-2 px-1 leading-snug">${p.name}</h3>
-                            <div class="flex items-center space-x-1 md:space-x-2 mt-auto text-xs w-full justify-center pt-2">
-                                <span class="font-bold text-black">Rs.${p.price.toLocaleString()}</span>
-                                ${p.oldPrice ? `<span class="text-gray-400 line-through text-[10px]">Rs.${p.oldPrice.toLocaleString()}</span>` : ''}
+                        <!-- Product Info -->
+                        <div class="p-3 md:p-4 flex flex-col flex-1">
+                            <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-[0.15em] mb-1">${p.brand || 'AURA'}</p>
+                            <h3 class="text-[11px] md:text-xs font-bold uppercase tracking-wide text-black mb-2 line-clamp-2 leading-relaxed">${p.name}</h3>
+                            <div class="flex items-center space-x-2 mt-auto pt-1">
+                                <span class="font-bold text-sm text-black">Rs. ${p.price.toLocaleString()}</span>
+                                ${p.oldPrice ? `<span class="text-gray-400 line-through text-[11px]">Rs. ${p.oldPrice.toLocaleString()}</span>` : ''}
                             </div>
                         </div>
                     </a>
-                    
-                    <button onclick="addToCart(event, '${p.id}')" class="absolute bottom-3 right-3 w-8 h-8 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all shadow-sm z-20">
-                        <i class="fas fa-shopping-bag text-[11px]"></i>
-                    </button>
                 `;
                 grid.appendChild(card);
             });
@@ -266,29 +628,49 @@
             if (!product) return;
             const cart = getCart();
             const existing = cart.find(i => i.id === productId);
-            if (existing) { existing.qty++; } 
+            if (existing) { existing.qty++; }
             else { cart.push({ id: product.id, name: product.name, brand: product.brand, price: product.price, image: product.images[0], qty: 1 }); }
             saveCart(cart);
             updateBadge();
-            
+            showToast('Added to bag!');
+        }
+
+        function showToast(msg) {
             const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
             toast.style.opacity = '1';
             toast.style.transform = 'translateY(0)';
+            toast.style.pointerEvents = 'auto';
             setTimeout(() => {
                 toast.style.opacity = '0';
                 toast.style.transform = 'translateY(16px)';
+                toast.style.pointerEvents = 'none';
             }, 2500);
         }
 
-        // Link cart button to checkout
+        // ---- SEARCH ----
+        const searchInput = document.getElementById('search-input');
+        const searchClear = document.getElementById('search-clear');
+        let searchTimeout;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchTimeout);
+            searchClear.classList.toggle('hidden', !searchInput.value);
+            searchTimeout = setTimeout(() => renderGrid(), 300);
+        });
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            searchClear.classList.add('hidden');
+            renderGrid();
+            searchInput.focus();
+        });
+
+        // ---- FILTER BUTTON ----
+        document.getElementById('filter-btn').addEventListener('click', openFilter);
+
+        // ---- INIT ----
         document.addEventListener('DOMContentLoaded', () => {
             loadProducts();
             updateBadge();
-            document.querySelectorAll('button.relative').forEach(btn => {
-                if (btn.querySelector('.cart-counter-badge')) {
-                    btn.addEventListener('click', () => window.location.href = 'checkout.html');
-                }
-            });
         });
     </script>
 </body>
