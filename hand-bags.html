@@ -63,7 +63,6 @@
         <nav class="hidden xl:flex space-x-6 text-[10px] font-bold tracking-widest uppercase flex-1 justify-center whitespace-nowrap">
             <a href="index.html" class="hover:text-gray-600 transition-colors">HOME</a>
             <a href="hand-bags.html" class="hover:text-gray-600 transition-colors">LADIES BAGS</a>
-            <a href="hand-bags.html" class="hover:text-gray-600 transition-colors">WALLETS</a>
             <a href="hand-bags.html" class="hover:text-gray-600 transition-colors">BAGS PACK</a>
         </nav>
         
@@ -171,27 +170,55 @@
     </div>
 
     <script>
-        const products = [
-            { id:1, category:'handbag', brand:'JW PEI', name:'JW PEI Gabbi Ruched Hobo Bag — Black', price:18500, oldPrice:24000, images:['images/354d20ee-0277-43f9-b769-c50e5ee0febe.jpg'], isNew:true },
-            { id:2, category:'handbag', brand:'JW PEI', name:'JW PEI Kelly Mini Croc Embossed Bag — Black', price:22000, oldPrice:28000, images:['images/63bf56fe-e34f-4622-96f9-6be517405db2.jpg'], isNew:true },
-            { id:3, category:'handbag', brand:'JW PEI', name:'JW PEI Keyla Top Handbag — Brown Canvas', price:19500, oldPrice:null, images:['images/8dde9263-9850-43eb-a4e8-36cab650f23f.jpg'], isNew:true },
-            { id:4, category:'handbag', brand:'Louis Vuitton', name:'LV OnTheGo MM Monogram Tote', price:45000, oldPrice:55000, images:['images/a9427d3e-055e-4fa8-968c-fb5b80640c58.jpg'], isNew:false },
-            { id:5, category:'handbag', brand:'JW PEI', name:'JW PEI Olive Suede Set — Tote & Mini', price:28000, oldPrice:35000, images:['images/d125128e-94cd-459a-acc8-54418d67fd15.jpg'], isNew:true },
-            { id:6, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Tan Suede', price:16500, oldPrice:22000, images:['images/1bba8c2a-e74e-4071-8c84-f8b6b273d55e.jpg'], isNew:false },
-            { id:7, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Burgundy Leather', price:16500, oldPrice:22000, images:['images/318294ff-5fff-4742-8037-02ed40175681.jpg'], isNew:false },
-            { id:8, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Olive Leather', price:16500, oldPrice:22000, images:['images/8ef8ebf8-95f6-4317-9112-2a497bb03798.jpg'], isNew:false },
-            { id:9, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Dark Olive', price:16500, oldPrice:22000, images:['images/bdb82bb0-ce37-4221-8831-8633c95760c5.jpg'], isNew:false },
-            { id:10, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — Brown', price:12500, oldPrice:16000, images:['images/07359afe-1e29-461c-a29f-ed9eb9f52335.jpg'], isNew:false },
-            { id:11, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — White & Tan', price:12500, oldPrice:16000, images:['images/2b768352-9d7f-4e93-b9c3-87395ce593ce.jpg'], isNew:true },
-            { id:12, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Pink Blooms', price:13500, oldPrice:17000, images:['images/4bc836a2-028c-4e38-8f06-0ca963009c56.jpg'], isNew:true },
-            { id:13, category:'tote', brand:'ALDO', name:'ALDO Butterfly Print Tote — Blue', price:13500, oldPrice:17000, images:['images/9d99e60a-0804-474d-82f8-b13c6fad06a0.jpg'], isNew:true },
-            { id:14, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Multicolor', price:13500, oldPrice:17000, images:['images/d1dc1f4a-081e-4336-90ea-3d78b9ca05bd.jpg'], isNew:false },
-            { id:15, category:'tote', brand:'ALDO', name:'ALDO Leopard Chain Print Tote', price:13500, oldPrice:17000, images:['images/d3480c1e-ea64-45b5-901f-627818bd4ac9.jpg'], isNew:false },
-            { id:16, category:'tote', brand:'ALDO', name:'ALDO Monogram Print Tote — Rose & Black', price:13500, oldPrice:17000, images:['images/ec1f129c-7f4f-4120-aea8-f55b75243183.jpg'], isNew:true },
-            { id:17, category:'crossbody', brand:'Coach', name:'Coach Tabby Crossbody Set — Maroon', price:14000, oldPrice:18000, images:['images/6f681f9f-c267-4bb4-a273-c0cedcf07350.jpg'], isNew:false }
-        ];
+        // ---- SANITY CONFIG ----
+        const SANITY_PROJECT_ID = '8uqf5doi';
+        const SANITY_DATASET = 'production';
+        const SANITY_API_VERSION = '2023-05-03';
 
+        async function sanityFetch(query) {
+            const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Sanity fetch failed: ' + res.status);
+            const data = await res.json();
+            return data.result;
+        }
+
+        // "id" below is aliased to the product's slug, so the rest of the page's
+        // logic (links, cart, filtering) can keep working exactly as before.
+        const PRODUCTS_QUERY = `*[_type == "product"] | order(_createdAt desc){
+            "id": slug.current,
+            name,
+            brand,
+            category,
+            price,
+            oldPrice,
+            "images": images[].asset->url,
+            isNew
+        }`;
+
+        let products = [];
         let cartCount = 0;
+
+        async function loadProducts() {
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = '<p class="col-span-full text-center text-sm text-gray-400 py-16">Loading products…</p>';
+            try {
+                products = await sanityFetch(PRODUCTS_QUERY);
+            } catch (err) {
+                console.error(err);
+                grid.innerHTML = '<p class="col-span-full text-center text-sm text-red-500 py-16">Could not load products from Sanity. Please check your connection and try again.</p>';
+                return;
+            }
+            renderGrid();
+        }
+
+        // ---- CART HELPERS (localStorage) ----
+        function getCart() { return JSON.parse(localStorage.getItem('aura_cart') || '[]'); }
+        function saveCart(cart) { localStorage.setItem('aura_cart', JSON.stringify(cart)); }
+        function updateBadge() {
+            const total = getCart().reduce((sum,i) => sum + i.qty, 0);
+            document.querySelectorAll('.cart-counter-badge').forEach(el => el.textContent = total);
+        }
 
         function renderGrid() {
             const filterCat = document.getElementById('category-filter').value;
@@ -224,7 +251,7 @@
                         </div>
                     </a>
                     
-                    <button onclick="addToCart(event)" class="absolute bottom-3 right-3 w-8 h-8 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all shadow-sm z-20">
+                    <button onclick="addToCart(event, '${p.id}')" class="absolute bottom-3 right-3 w-8 h-8 bg-white border border-gray-200 rounded-full flex items-center justify-center hover:bg-black hover:text-white hover:border-black transition-all shadow-sm z-20">
                         <i class="fas fa-shopping-bag text-[11px]"></i>
                     </button>
                 `;
@@ -232,11 +259,17 @@
             });
         }
 
-        function addToCart(e) {
+        function addToCart(e, productId) {
             e.preventDefault();
             e.stopPropagation();
-            cartCount++;
-            document.querySelectorAll('.cart-counter-badge').forEach(el => el.textContent = cartCount);
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            const cart = getCart();
+            const existing = cart.find(i => i.id === productId);
+            if (existing) { existing.qty++; } 
+            else { cart.push({ id: product.id, name: product.name, brand: product.brand, price: product.price, image: product.images[0], qty: 1 }); }
+            saveCart(cart);
+            updateBadge();
             
             const toast = document.getElementById('toast');
             toast.style.opacity = '1';
@@ -247,7 +280,16 @@
             }, 2500);
         }
 
-        window.addEventListener('DOMContentLoaded', renderGrid);
+        // Link cart button to checkout
+        document.addEventListener('DOMContentLoaded', () => {
+            loadProducts();
+            updateBadge();
+            document.querySelectorAll('button.relative').forEach(btn => {
+                if (btn.querySelector('.cart-counter-badge')) {
+                    btn.addEventListener('click', () => window.location.href = 'checkout.html');
+                }
+            });
+        });
     </script>
 </body>
 </html>

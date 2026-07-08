@@ -63,7 +63,6 @@
         <nav class="hidden xl:flex space-x-6 text-[10px] font-bold tracking-widest uppercase flex-1 justify-center whitespace-nowrap">
             <a href="index.html" class="hover:text-gray-600">HOME</a>
             <a href="hand-bags.html" class="hover:text-gray-600">LADIES BAGS</a>
-            <a href="hand-bags.html" class="hover:text-gray-600">WALLETS</a>
             <a href="hand-bags.html" class="hover:text-gray-600">BAGS PACK</a>
         </nav>
         <div class="flex items-center space-x-4 text-lg ml-auto xl:ml-0">
@@ -208,38 +207,71 @@
     </a>
 
     <script>
-        const products = [
-            { id:1, category:'handbag', brand:'JW PEI', name:'JW PEI Gabbi Ruched Hobo Bag — Black', price:18500, oldPrice:24000, images:['images/354d20ee-0277-43f9-b769-c50e5ee0febe.jpg'], desc:'The iconic Gabbi ruched hobo bag by JW PEI. Features a soft sculpted silhouette with gold-tone lock clasp. Comes in a set of two. Perfect for day-to-night styling.', isNew:true },
-            { id:2, category:'handbag', brand:'JW PEI', name:'JW PEI Kelly Mini Croc Embossed Bag — Black', price:22000, oldPrice:28000, images:['images/63bf56fe-e34f-4622-96f9-6be517405db2.jpg'], desc:'Structured mini Kelly silhouette in glossy croc-embossed leather. Bold gold lock hardware and a top handle for a polished editorial look.', isNew:true },
-            { id:3, category:'handbag', brand:'JW PEI', name:'JW PEI Keyla Top Handbag — Brown Canvas', price:19500, oldPrice:null, images:['images/8dde9263-9850-43eb-a4e8-36cab650f23f.jpg'], desc:'The Keyla top handle bag in beige canvas with cognac leather flap. Features a gold-tone turnlock and detachable shoulder strap.', isNew:true },
-            { id:4, category:'handbag', brand:'Louis Vuitton', name:'LV OnTheGo MM Monogram Tote', price:45000, oldPrice:55000, images:['images/a9427d3e-055e-4fa8-968c-fb5b80640c58.jpg'], desc:'The iconic LV OnTheGo MM in classic Monogram canvas with crimson red interior. Spacious, structured, and unmistakably luxurious.', isNew:false },
-            { id:5, category:'handbag', brand:'JW PEI', name:'JW PEI Olive Suede Set — Tote & Mini', price:28000, oldPrice:35000, images:['images/d125128e-94cd-459a-acc8-54418d67fd15.jpg'], desc:'Luxurious olive suede tote paired with a matching mini satchel. Both feature JW PEI gold hardware and adjustable straps.', isNew:true },
-            { id:6, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Tan Suede', price:16500, oldPrice:22000, images:['images/1bba8c2a-e74e-4071-8c84-f8b6b273d55e.jpg'], desc:'The Coach Idol bag in warm tan suede. A sleek baguette silhouette with signature Coach charm and double shoulder straps.', isNew:false },
-            { id:7, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Burgundy Leather', price:16500, oldPrice:22000, images:['images/318294ff-5fff-4742-8037-02ed40175681.jpg'], desc:'Rich burgundy leather Coach Idol bag. A classic baguette shape with gold Coach charm. Fits all daily essentials.', isNew:false },
-            { id:8, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Olive Leather', price:16500, oldPrice:22000, images:['images/8ef8ebf8-95f6-4317-9112-2a497bb03798.jpg'], desc:'Earthy olive leather Coach Idol bag. Perfect for understated luxury. Fits everyday essentials with ease.', isNew:false },
-            { id:9, category:'shoulder', brand:'Coach', name:'Coach Idol Bag — Dark Olive', price:16500, oldPrice:22000, images:['images/bdb82bb0-ce37-4221-8831-8633c95760c5.jpg'], desc:'Darker olive Coach Idol bag in smooth polished leather. A versatile everyday bag with a refined silhouette.', isNew:false },
-            { id:10, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — Brown', price:12500, oldPrice:16000, images:['images/07359afe-1e29-461c-a29f-ed9eb9f52335.jpg'], desc:'A chic ALDO 3-piece set in smooth brown leather — a spacious tote, a mini crossbody, and a card holder. Perfect for the modern woman.', isNew:false },
-            { id:11, category:'tote', brand:'ALDO', name:'ALDO 3-Piece Tote Set — White & Tan', price:12500, oldPrice:16000, images:['images/2b768352-9d7f-4e93-b9c3-87395ce593ce.jpg'], desc:'Elegant white tote with contrasting tan leather trim. Includes a matching mini crossbody and card wallet.', isNew:true },
-            { id:12, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Pink Blooms', price:13500, oldPrice:17000, images:['images/4bc836a2-028c-4e38-8f06-0ca963009c56.jpg'], desc:'Stunning floral-printed ALDO tote with matching card holder. Light and vibrant for spring-summer styling.', isNew:true },
-            { id:13, category:'tote', brand:'ALDO', name:'ALDO Butterfly Print Tote — Blue', price:13500, oldPrice:17000, images:['images/9d99e60a-0804-474d-82f8-b13c6fad06a0.jpg'], desc:'Whimsical butterfly and floral print ALDO tote in fresh blue tones. Includes a matching card holder.', isNew:true },
-            { id:14, category:'tote', brand:'ALDO', name:'ALDO Floral Print Tote — Multicolor', price:13500, oldPrice:17000, images:['images/d1dc1f4a-081e-4336-90ea-3d78b9ca05bd.jpg'], desc:'Bold multicolor floral tote with a coordinated card wallet. A pop of color for any outfit.', isNew:false },
-            { id:15, category:'tote', brand:'ALDO', name:'ALDO Leopard Chain Print Tote', price:13500, oldPrice:17000, images:['images/d3480c1e-ea64-45b5-901f-627818bd4ac9.jpg'], desc:'Fierce leopard and chain print ALDO tote with matching card wallet. White leather trim adds elegance.', isNew:false },
-            { id:16, category:'tote', brand:'ALDO', name:'ALDO Monogram Print Tote — Rose & Black', price:13500, oldPrice:17000, images:['images/ec1f129c-7f4f-4120-aea8-f55b75243183.jpg'], desc:'Sophisticated ALDO monogram tote in rose-black pattern. Comes with a matching mini crossbody and card holder.', isNew:true },
-            { id:17, category:'crossbody', brand:'Coach', name:'Coach Tabby Crossbody Set — Maroon', price:14000, oldPrice:18000, images:['images/6f681f9f-c267-4bb4-a273-c0cedcf07350.jpg'], desc:'The Coach Tabby crossbody in deep maroon pebble leather with iconic gold C turnlock. Set includes matching clutch wallet.', isNew:false }
-        ];
+        // ---- SANITY CONFIG ----
+        const SANITY_PROJECT_ID = '8uqf5doi';
+        const SANITY_DATASET = 'production';
+        const SANITY_API_VERSION = '2023-05-03';
 
-        let currentProduct = null, currentThumb = 0, qty = 1, cartCount = 0;
+        async function sanityFetch(query) {
+            const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Sanity fetch failed: ' + res.status);
+            const data = await res.json();
+            return data.result;
+        }
+
+        // "id" below is aliased to the product's slug, so the rest of the page's
+        // logic (links, cart, related products) can keep working exactly as before.
+        const PRODUCTS_QUERY = `*[_type == "product"]{
+            "id": slug.current,
+            name,
+            brand,
+            category,
+            price,
+            oldPrice,
+            "images": images[].asset->url,
+            isNew,
+            "desc": description
+        }`;
+
+        let products = [];
+        let currentProduct = null, currentThumb = 0, qty = 1;
+
+        // ---- CART HELPERS ----
+        function getCart() { return JSON.parse(localStorage.getItem('aura_cart') || '[]'); }
+        function saveCart(cart) { localStorage.setItem('aura_cart', JSON.stringify(cart)); }
+        function updateBadge() {
+            const total = getCart().reduce((sum,i) => sum + i.qty, 0);
+            document.getElementById('cart-count').textContent = total;
+        }
 
         function getCategoryLabel(cat) {
             return {handbag:'Handbags',shoulder:'Shoulder Bags',tote:'Tote Bags',crossbody:'Crossbody Bags'}[cat]||cat;
         }
 
-        function init() {
+        async function init() {
+            try {
+                products = await sanityFetch(PRODUCTS_QUERY);
+            } catch (err) {
+                console.error(err);
+                document.getElementById('product-name').textContent = 'Could not load product';
+                document.getElementById('product-desc').textContent = 'Please check your connection and try again.';
+                return;
+            }
+
+            if (!products.length) {
+                document.getElementById('product-name').textContent = 'No products found';
+                return;
+            }
+
             const params = new URLSearchParams(window.location.search);
-            const id = parseInt(params.get('id'))||1;
-            currentProduct = products.find(p=>p.id===id)||products[0];
+            const id = params.get('id');
+            currentProduct = products.find(p=>p.id===id) || products[0];
+
             renderProduct();
             renderRelated();
+            updateBadge();
+            document.getElementById('cart-btn').addEventListener('click', () => window.location.href = 'checkout.html');
         }
 
         function renderProduct() {
@@ -315,8 +347,13 @@
         function changeQty(d){ qty=Math.max(1,qty+d); document.getElementById('qty-display').textContent=qty; }
 
         function addToCart(){
-            cartCount+=qty;
-            document.getElementById('cart-count').textContent=cartCount;
+            const p = currentProduct;
+            const cart = getCart();
+            const existing = cart.find(i => i.id === p.id);
+            if (existing) { existing.qty += qty; }
+            else { cart.push({ id: p.id, name: p.name, brand: p.brand, price: p.price, image: p.images[0], qty: qty }); }
+            saveCart(cart);
+            updateBadge();
             showToast(qty+'x added to cart!');
         }
 

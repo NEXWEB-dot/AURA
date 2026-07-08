@@ -123,55 +123,211 @@
 
     <!-- Categories Bar -->
     <div class="w-full bg-white border-b border-gray-100 py-3 sm:py-4 px-2 sm:px-8">
-        <div class="flex justify-start lg:justify-center lg:space-x-12 items-center overflow-x-auto no-scrollbar space-x-6 sm:space-x-4 lg:space-x-12">
+        <div class="flex justify-center items-center overflow-x-auto no-scrollbar space-x-6 sm:space-x-8 md:space-x-12">
             <a href="hand-bags.html" class="flex flex-col items-center min-w-[70px] cursor-pointer group">
-                <div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img src="images/2.jpg" alt="Handbags" class="w-full h-full object-cover rounded-full mix-blend-multiply"></div>
+                <div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img src="images/1.jpg" alt="Handbags" class="w-full h-full object-cover rounded-full mix-blend-multiply"></div>
                 <span class="text-[10px] font-semibold tracking-wide uppercase group-hover:text-accent transition-colors">Handbags</span>
             </a>
             <div class="flex flex-col items-center min-w-[70px] cursor-pointer group">
-                <div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img src="images/3.jpg" alt="Shoulder Bags" class="w-full h-full object-cover rounded-full mix-blend-multiply"></div>
+                <div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img src="images/2.jpg" alt="Shoulder Bags" class="w-full h-full object-cover rounded-full mix-blend-multiply"></div>
                 <span class="text-[10px] font-semibold tracking-wide uppercase group-hover:text-accent transition-colors">Shoulder Bags</span>
             </div>
             <div class="flex flex-col items-center min-w-[70px] cursor-pointer group">
-                <div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img src="images/4.jpg" alt="Tote Bags" class="w-full h-full object-cover rounded-full mix-blend-multiply"></div>
+                <div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img src="images/3.jpg" alt="Tote Bags" class="w-full h-full object-cover rounded-full mix-blend-multiply"></div>
                 <span class="text-[10px] font-semibold tracking-wide uppercase group-hover:text-accent transition-colors">Tote Bags</span>
             </div>
         </div>
     </div>
 
-    <!-- Hero Section Improved for Mobile -->
-    <section class="w-full bg-[#F8F4EC] relative overflow-hidden flex flex-col md:flex-row items-center justify-center min-h-[450px] md:min-h-[600px] pt-10 pb-6 md:py-0">
-        <!-- Center Text -->
-        <div class="w-full md:w-1/3 text-center flex flex-col items-center justify-center z-20 px-4 mb-4 md:mb-0 relative order-1 md:order-2">
-            <h3 class="font-serif text-3xl md:text-2xl italic text-gray-500 mb-1 md:mb-2">Newly</h3>
-            <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl text-[#5E1B1C] mb-3 md:mb-4 tracking-wider uppercase drop-shadow-sm">ARRIVED</h1>
-            <p class="text-[10px] sm:text-xs font-semibold text-gray-600 mb-6 md:mb-8 uppercase tracking-[0.2em] text-center">Shop the latest collection</p>
-            <a href="hand-bags.html" class="bg-[#5E1B1C] text-white px-8 md:px-10 py-3 md:py-3.5 text-[10px] md:text-xs font-bold tracking-widest uppercase hover:bg-black transition-colors shadow-lg shadow-[#5E1B1C]/20">Shop Now</a>
-        </div>
-        
-        <!-- Images Container -->
-        <div class="w-full flex flex-row justify-center items-center h-[220px] sm:h-[350px] md:h-full md:absolute md:inset-0 z-10 md:justify-between pointer-events-none order-2 md:order-1">
-            <!-- Left Image -->
-            <div class="w-1/2 md:w-1/3 h-full flex items-center justify-center md:justify-start p-2 sm:p-4 md:p-8 pointer-events-auto">
-                <img src="images/10.jpg" alt="Black Handbag" class="max-w-full max-h-full object-contain md:object-right mix-blend-multiply fade-in hover:scale-105 transition-transform duration-700">
+    <!-- Hero Section: Premium Model Carousel -->
+    <section class="hero-carousel relative w-full h-[560px] sm:h-[640px] md:h-[780px] overflow-hidden bg-black" id="heroCarousel">
+
+        <!-- Slides -->
+        <div class="hero-slides absolute inset-0 w-full h-full">
+            <div class="hero-slide active absolute inset-0 w-full h-full" data-index="0">
+                <img src="images/1.jpg" alt="AURA model wearing new collection" class="hero-slide-img w-full h-full object-cover object-top md:object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
             </div>
-            <!-- Right Image -->
-            <div class="w-1/2 md:w-1/3 h-full flex items-center justify-center md:justify-end p-2 sm:p-4 md:p-8 pointer-events-auto">
-                <img src="images/11.jpg" alt="Beige Handbag" class="max-w-full max-h-full object-contain md:object-left mix-blend-multiply fade-in hover:scale-105 transition-transform duration-700" style="animation-delay: 0.2s;">
+            <div class="hero-slide absolute inset-0 w-full h-full" data-index="1">
+                <img src="images/15.jpg" alt="AURA model wearing new collection" class="hero-slide-img w-full h-full object-cover object-top md:object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+            </div>
+            <div class="hero-slide absolute inset-0 w-full h-full" data-index="2">
+                <img src="images/16.jpg" alt="AURA model wearing new collection" class="hero-slide-img w-full h-full object-cover object-top md:object-center">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
             </div>
         </div>
+
+        <!-- Clickable Background Overlay -->
+        <a href="hand-bags.html" class="absolute inset-0 z-10 cursor-pointer" aria-label="Shop new collection"></a>
+
+        <!-- Text Overlay -->
+        <div class="absolute inset-0 z-20 flex flex-col justify-end md:justify-center px-6 sm:px-10 md:px-16 pb-16 md:pb-0 pointer-events-none">
+            <div class="max-w-md text-white pointer-events-auto">
+                <h3 class="font-serif text-2xl md:text-3xl italic text-white/70 mb-1 md:mb-2 fade-in">Newly</h3>
+                <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl mb-3 md:mb-5 tracking-wider uppercase drop-shadow-lg fade-in">ARRIVED</h1>
+                <p class="text-[10px] sm:text-xs font-semibold text-white/80 mb-6 md:mb-8 uppercase tracking-[0.2em] fade-in">Shop the latest collection</p>
+                <a href="hand-bags.html" class="inline-block bg-white text-[#5E1B1C] px-8 md:px-10 py-3 md:py-3.5 text-[10px] md:text-xs font-bold tracking-widest uppercase hover:bg-[#5E1B1C] hover:text-white transition-colors shadow-lg">Shop Now</a>
+            </div>
+        </div>
+
+        <!-- Slide Counter (editorial style) -->
+        <div class="absolute top-6 sm:top-8 left-6 sm:left-10 md:left-16 z-30 text-white font-serif tracking-widest text-xs sm:text-sm flex items-center gap-2">
+            <span class="hero-counter-current text-base sm:text-lg">01</span>
+            <span class="w-6 h-px bg-white/50"></span>
+            <span class="hero-counter-total">03</span>
+        </div>
+
+        <!-- Prev / Next Arrows -->
+        <button class="hero-prev absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white hover:text-[#5E1B1C] hover:border-white transition-colors backdrop-blur-sm" aria-label="Previous slide">
+            <i class="fas fa-chevron-left text-sm"></i>
+        </button>
+        <button class="hero-next absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white hover:text-[#5E1B1C] hover:border-white transition-colors backdrop-blur-sm" aria-label="Next slide">
+            <i class="fas fa-chevron-right text-sm"></i>
+        </button>
+
+        <!-- Click-to-select Thumbnail Rail -->
+        <div class="hero-thumbs absolute z-30 bottom-6 sm:bottom-8 right-4 sm:right-8 md:right-12 flex flex-row md:flex-col gap-3">
+            <button class="hero-thumb active" data-index="0" aria-label="View slide 1">
+                <img src="images/1.jpg" alt="Look 1">
+            </button>
+            <button class="hero-thumb" data-index="1" aria-label="View slide 2">
+                <img src="images/15.jpg" alt="Look 2">
+            </button>
+            <button class="hero-thumb" data-index="2" aria-label="View slide 3">
+                <img src="images/16.jpg" alt="Look 3">
+            </button>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="absolute bottom-0 left-0 z-30 h-[3px] bg-white/90 hero-progress" style="width:0%;"></div>
     </section>
+
+    <style>
+        .hero-slide {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.1s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        .hero-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+            z-index: 5;
+        }
+        .hero-slide-img {
+            transform: scale(1.08);
+            transition: transform 6.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .hero-slide.active .hero-slide-img {
+            transform: scale(1);
+        }
+        .hero-thumb {
+            width: 52px;
+            height: 68px;
+            overflow: hidden;
+            border-radius: 2px;
+            border: 2px solid transparent;
+            opacity: 0.55;
+            cursor: pointer;
+            transition: opacity 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+            padding: 0;
+            background: none;
+        }
+        @media (min-width: 640px) {
+            .hero-thumb { width: 64px; height: 84px; }
+        }
+        .hero-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-thumb:hover {
+            opacity: 0.85;
+            transform: translateY(-2px);
+        }
+        .hero-thumb.active {
+            opacity: 1;
+            border-color: #FFFFFF;
+        }
+        .hero-progress {
+            transition: width 0.1s linear;
+        }
+    </style>
+
+    <script>
+        (function () {
+            const carousel = document.getElementById('heroCarousel');
+            if (!carousel) return;
+
+            const slides = Array.from(carousel.querySelectorAll('.hero-slide'));
+            const thumbs = Array.from(carousel.querySelectorAll('.hero-thumb'));
+            const prevBtn = carousel.querySelector('.hero-prev');
+            const nextBtn = carousel.querySelector('.hero-next');
+            const counterCurrent = carousel.querySelector('.hero-counter-current');
+            const progressBar = carousel.querySelector('.hero-progress');
+
+            let current = 0;
+            let autoplayTimer = null;
+            let progressTimer = null;
+            const AUTOPLAY_MS = 6000;
+
+            function pad(n) { return String(n + 1).padStart(2, '0'); }
+
+            function goTo(index) {
+                slides[current].classList.remove('active');
+                thumbs[current].classList.remove('active');
+                current = (index + slides.length) % slides.length;
+                slides[current].classList.add('active');
+                thumbs[current].classList.add('active');
+                counterCurrent.textContent = pad(current);
+                restartAutoplay();
+            }
+
+            function next() { goTo(current + 1); }
+            function prevSlide() { goTo(current - 1); }
+
+            function restartAutoplay() {
+                clearTimeout(autoplayTimer);
+                clearInterval(progressTimer);
+                progressBar.style.width = '0%';
+                let elapsed = 0;
+                progressTimer = setInterval(() => {
+                    elapsed += 100;
+                    progressBar.style.width = Math.min((elapsed / AUTOPLAY_MS) * 100, 100) + '%';
+                }, 100);
+                autoplayTimer = setTimeout(next, AUTOPLAY_MS);
+            }
+
+            thumbs.forEach((thumb) => {
+                thumb.addEventListener('click', () => {
+                    const idx = parseInt(thumb.getAttribute('data-index'), 10);
+                    goTo(idx);
+                });
+            });
+
+            nextBtn.addEventListener('click', next);
+            prevBtn.addEventListener('click', prevSlide);
+
+            carousel.addEventListener('mouseenter', () => {
+                clearTimeout(autoplayTimer);
+                clearInterval(progressTimer);
+            });
+            carousel.addEventListener('mouseleave', restartAutoplay);
+
+            restartAutoplay();
+        })();
+    </script>
 
     <!-- Grid Banners -->
     <section class="w-full p-2 sm:p-4 grid grid-cols-1 md:grid-cols-4 gap-2 sm:gap-4 bg-white">
         <!-- Left Large Banner -->
-        <a href="hand-bags.html" class="md:col-span-1 relative bg-[#F9F7F1] h-[250px] sm:h-[350px] md:h-[480px] group overflow-hidden cursor-pointer flex flex-col justify-between p-6 sm:p-8 block">
-            <div class="z-10 text-center w-full relative">
+        <a href="hand-bags.html" class="md:col-span-1 relative bg-[#F9F7F1] h-[250px] sm:h-[350px] md:h-[480px] group overflow-hidden cursor-pointer flex flex-col justify-between items-center p-6 sm:p-8">
+            <div class="z-10 text-center relative bg-white/90 backdrop-blur-md px-6 py-5 inline-block shadow-md rounded border border-white/50">
                 <h3 class="font-serif text-xl italic text-gray-500">The</h3>
                 <h2 class="font-serif text-3xl text-[#5E1B1C] uppercase tracking-wide">BAG PACK</h2>
                 <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mt-2 border-b border-gray-300 inline-block pb-1">Shop Collection</p>
             </div>
-            <img src="images/12.jpg" alt="Backpack" class="absolute inset-0 w-full h-full object-cover object-bottom mix-blend-multiply group-hover:scale-105 transition-transform duration-700">
+            <img src="images/12.jpg" alt="Backpack" class="absolute inset-0 w-full h-full object-cover md:object-center object-bottom mix-blend-multiply group-hover:scale-105 transition-transform duration-700">
         </a>
         
         <!-- Middle Large Banner -->
@@ -197,7 +353,7 @@
     <section class="w-full bg-white border-y border-gray-100 py-6 md:py-8 px-4 flex flex-col md:flex-row justify-center items-center gap-6 md:gap-10 lg:gap-20 text-[10px] md:text-xs font-bold tracking-widest uppercase">
         <div class="flex flex-row items-center space-x-4 text-primary group hover:text-accent cursor-pointer transition-colors text-left w-full sm:w-auto justify-start sm:justify-center">
             <i class="fas fa-truck text-xl md:text-2xl text-gray-400 group-hover:text-accent transition-colors shrink-0 w-8 text-center"></i>
-            <span>Free Delivery In Usa & Canada</span>
+            <span>Free National Delivery</span>
         </div>
         <div class="hidden md:block w-px h-8 bg-gray-200"></div>
         <div class="flex flex-row items-center space-x-4 text-primary group hover:text-accent cursor-pointer transition-colors text-left w-full sm:w-auto justify-start sm:justify-center">

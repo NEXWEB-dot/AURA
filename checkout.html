@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — AURA</title>
+    <meta name="description" content="Complete your purchase at AURA — Pakistan's premium luxury bags destination.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#000000',
+                        accent: '#DB1215',
+                        surface: '#F5F5F5',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .step-line { height: 2px; background: #e5e7eb; flex: 1; }
+        .step-line.done { background: #000; }
+        .form-input {
+            width: 100%;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 11px 14px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #fff;
+        }
+        .form-input:focus { border-color: #000; }
+        .form-label {
+            display: block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: #6b7280;
+            margin-bottom: 6px;
+        }
+        .radio-card {
+            border: 1.5px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 14px 16px;
+            cursor: pointer;
+            transition: border-color 0.2s, background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .radio-card.selected { border-color: #000; background: #fafafa; }
+        .radio-card input[type=radio] { accent-color: #000; }
+        @keyframes fadeUp { from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);} }
+        .fade-up { animation: fadeUp 0.4s ease forwards; }
+        .fade-up-d1 { animation: fadeUp 0.4s ease 0.1s both; }
+        .fade-up-d2 { animation: fadeUp 0.4s ease 0.2s both; }
+        #success-overlay { display: none; }
+        #success-overlay.show { display: flex; }
+    </style>
+</head>
+<body class="bg-[#f8f8f8] font-sans text-black antialiased min-h-screen">
+
+    <!-- Top bar -->
+    <div class="w-full bg-black text-white text-[11px] font-medium text-center py-2.5 tracking-widest">
+        FREE SHIPPING OVER Rs. 10,000 &amp; FREE RETURNS
+    </div>
+
+    <!-- Header -->
+    <header class="w-full bg-white px-4 sm:px-8 py-4 flex justify-between items-center border-b border-gray-100 sticky top-0 z-40 shadow-sm">
+        <a href="index.html" class="text-2xl font-serif font-bold tracking-widest text-black">AURA</a>
+        <div class="flex items-center gap-6 text-xs text-gray-500">
+            <a href="hand-bags.html" class="flex items-center gap-2 hover:text-black transition-colors">
+                <i class="fas fa-arrow-left text-[10px]"></i> Continue Shopping
+            </a>
+            <div class="relative">
+                <i class="fas fa-shopping-bag text-lg text-black"></i>
+                <span id="cart-badge" class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Steps -->
+    <div class="max-w-3xl mx-auto px-4 pt-8 pb-4">
+        <div class="flex items-center gap-0">
+            <div class="flex flex-col items-center" id="step-1-indicator">
+                <div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">1</div>
+                <span class="text-[10px] font-semibold mt-1 tracking-wide uppercase text-black">Cart</span>
+            </div>
+            <div class="step-line done mx-2" id="line-1"></div>
+            <div class="flex flex-col items-center" id="step-2-indicator">
+                <div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold" id="step-2-circle">2</div>
+                <span class="text-[10px] font-semibold mt-1 tracking-wide uppercase text-black">Delivery</span>
+            </div>
+            <div class="step-line mx-2" id="line-2"></div>
+            <div class="flex flex-col items-center" id="step-3-indicator">
+                <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold" id="step-3-circle">3</div>
+                <span class="text-[10px] font-semibold mt-1 tracking-wide uppercase text-gray-400" id="step-3-label">Payment</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 pb-20 mt-6 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8">
+
+        <!-- LEFT: Forms -->
+        <div>
+
+            <!-- STEP 1: Cart Review -->
+            <section id="section-cart" class="bg-white rounded-lg border border-gray-100 p-6 mb-6 fade-up">
+                <h2 class="font-serif text-xl mb-5 flex items-center gap-3">
+                    <span class="w-7 h-7 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                    Your Cart
+                </h2>
+
+                <div id="cart-items-list">
+                    <!-- filled by JS -->
+                </div>
+
+                <div id="empty-cart-msg" class="hidden text-center py-12">
+                    <i class="fas fa-shopping-bag text-5xl text-gray-200 mb-4"></i>
+                    <p class="text-gray-400 font-medium text-sm">Your cart is empty</p>
+                    <a href="hand-bags.html" class="inline-block mt-4 bg-black text-white px-6 py-2.5 text-xs font-bold tracking-widest hover:bg-gray-800 transition-colors rounded-sm">Start Shopping</a>
+                </div>
+
+                <div id="cart-actions" class="hidden mt-5 pt-5 border-t border-gray-100 flex justify-between items-center">
+                    <button onclick="clearCart()" class="text-xs text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1.5">
+                        <i class="fas fa-trash-alt text-[11px]"></i> Clear Cart
+                    </button>
+                    <button onclick="goToStep(2)" id="to-delivery-btn" class="bg-black text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center gap-2">
+                        Proceed to Delivery <i class="fas fa-arrow-right text-[11px]"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- STEP 2: Delivery -->
+            <section id="section-delivery" class="bg-white rounded-lg border border-gray-100 p-6 mb-6 fade-up-d1 hidden">
+                <h2 class="font-serif text-xl mb-6 flex items-center gap-3">
+                    <span class="w-7 h-7 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                    Delivery Information
+                </h2>
+
+                <form id="delivery-form" class="space-y-4" onsubmit="return false;">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label" for="first-name">First Name *</label>
+                            <input type="text" id="first-name" class="form-input" placeholder="Aisha" required>
+                        </div>
+                        <div>
+                            <label class="form-label" for="last-name">Last Name *</label>
+                            <input type="text" id="last-name" class="form-input" placeholder="Khan" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" class="form-input" placeholder="+92 3XX XXXXXXX" required>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="email">Email Address</label>
+                        <input type="email" id="email" class="form-input" placeholder="aisha@email.com">
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="address">Street Address *</label>
+                        <input type="text" id="address" class="form-input" placeholder="House #, Street #, Area" required>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="form-label" for="city">City *</label>
+                            <select id="city" class="form-input" required>
+                                <option value="">Select City</option>
+                                <option>Karachi</option>
+                                <option>Lahore</option>
+                                <option>Islamabad</option>
+                                <option>Rawalpindi</option>
+                                <option>Faisalabad</option>
+                                <option>Peshawar</option>
+                                <option>Quetta</option>
+                                <option>Multan</option>
+                                <option>Hyderabad</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label" for="postal">Postal Code</label>
+                            <input type="text" id="postal" class="form-input" placeholder="75500">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="form-label" for="notes">Order Notes (Optional)</label>
+                        <textarea id="notes" rows="3" class="form-input resize-none" placeholder="Special instructions, colour preference, etc."></textarea>
+                    </div>
+
+                    <!-- Shipping Method -->
+                    <div>
+                        <label class="form-label mb-3 block">Shipping Method</label>
+                        <div class="space-y-3">
+                            <label class="radio-card selected" id="ship-standard-card" onclick="selectShipping('standard', this)">
+                                <input type="radio" name="shipping" value="standard" checked>
+                                <div class="flex-1 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm font-semibold">Standard Delivery</p>
+                                        <p class="text-xs text-gray-400 mt-0.5">3–5 business days</p>
+                                    </div>
+                                    <span class="text-sm font-bold text-green-600" id="ship-standard-price">FREE</span>
+                                </div>
+                            </label>
+                            <label class="radio-card" id="ship-express-card" onclick="selectShipping('express', this)">
+                                <input type="radio" name="shipping" value="express">
+                                <div class="flex-1 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm font-semibold">Express Delivery</p>
+                                        <p class="text-xs text-gray-400 mt-0.5">1–2 business days</p>
+                                    </div>
+                                    <span class="text-sm font-bold">Rs. 350</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-2 flex gap-3">
+                        <button onclick="goToStep(1)" class="border border-gray-300 text-gray-600 px-6 py-3 text-xs font-bold tracking-widest uppercase hover:border-black hover:text-black transition-colors rounded-sm flex items-center gap-2">
+                            <i class="fas fa-arrow-left text-[11px]"></i> Back
+                        </button>
+                        <button onclick="submitDelivery()" class="flex-1 bg-black text-white py-3 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center justify-center gap-2">
+                            Continue to Payment <i class="fas fa-arrow-right text-[11px]"></i>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- STEP 3: Payment -->
+            <section id="section-payment" class="bg-white rounded-lg border border-gray-100 p-6 mb-6 fade-up-d2 hidden">
+                <h2 class="font-serif text-xl mb-6 flex items-center gap-3">
+                    <span class="w-7 h-7 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                    Payment Method
+                </h2>
+
+                <div class="space-y-3 mb-6">
+                    <label class="radio-card selected" id="pay-cod-card" onclick="selectPayment('cod', this)">
+                        <input type="radio" name="payment" value="cod" checked>
+                        <div class="flex items-center gap-3 flex-1">
+                            <i class="fas fa-money-bill-wave text-green-600 text-xl"></i>
+                            <div>
+                                <p class="text-sm font-semibold">Cash on Delivery</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Pay when your order arrives</p>
+                            </div>
+                        </div>
+                        <span class="text-[10px] bg-green-50 text-green-700 font-bold px-2 py-1 rounded-full border border-green-200">POPULAR</span>
+                    </label>
+
+                    <label class="radio-card" id="pay-bank-card" onclick="selectPayment('bank', this)">
+                        <input type="radio" name="payment" value="bank">
+                        <div class="flex items-center gap-3 flex-1">
+                            <i class="fas fa-university text-blue-600 text-xl"></i>
+                            <div>
+                                <p class="text-sm font-semibold">Bank Transfer</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Transfer to our account &amp; send screenshot</p>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="radio-card" id="pay-easypaisa-card" onclick="selectPayment('easypaisa', this)">
+                        <input type="radio" name="payment" value="easypaisa">
+                        <div class="flex items-center gap-3 flex-1">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shrink-0">
+                                <i class="fas fa-mobile-alt text-white text-sm"></i>
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold">EasyPaisa / JazzCash</p>
+                                <p class="text-xs text-gray-400 mt-0.5">Pay via mobile wallet</p>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+
+                <!-- Bank details (shown conditionally) -->
+                <div id="bank-details" class="hidden bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6 text-sm">
+                    <p class="font-bold text-blue-800 mb-2 text-xs uppercase tracking-widest">Bank Account Details</p>
+                    <div class="space-y-1 text-gray-700">
+                        <p><span class="font-semibold">Bank:</span> HBL Pakistan</p>
+                        <p><span class="font-semibold">Account Title:</span> AURA Accessories</p>
+                        <p><span class="font-semibold">Account No:</span> 0123-4567890-001</p>
+                        <p><span class="font-semibold">IBAN:</span> PK36HABB0000123456789001</p>
+                    </div>
+                    <p class="text-xs text-blue-600 mt-3 font-medium">Please WhatsApp your payment screenshot to confirm your order.</p>
+                </div>
+
+                <!-- EasyPaisa details (shown conditionally) -->
+                <div id="easypaisa-details" class="hidden bg-green-50 border border-green-100 rounded-lg p-4 mb-6 text-sm">
+                    <p class="font-bold text-green-800 mb-2 text-xs uppercase tracking-widest">Mobile Wallet Details</p>
+                    <div class="space-y-1 text-gray-700">
+                        <p><span class="font-semibold">EasyPaisa / JazzCash:</span> 0300-1234567</p>
+                        <p><span class="font-semibold">Account Name:</span> AURA</p>
+                    </div>
+                    <p class="text-xs text-green-700 mt-3 font-medium">Send the payment screenshot via WhatsApp to confirm your order.</p>
+                </div>
+
+                <!-- Delivery summary -->
+                <div id="delivery-summary" class="bg-surface rounded-lg p-4 mb-6 text-sm space-y-1">
+                    <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Delivery To</p>
+                    <p class="font-semibold" id="summary-name">—</p>
+                    <p class="text-gray-500" id="summary-address">—</p>
+                    <p class="text-gray-500" id="summary-phone">—</p>
+                    <button onclick="goToStep(2)" class="text-xs text-black font-bold underline underline-offset-2 mt-2 hover:text-accent transition-colors">Edit</button>
+                </div>
+
+                <div class="pt-2 flex gap-3">
+                    <button onclick="goToStep(2)" class="border border-gray-300 text-gray-600 px-6 py-3 text-xs font-bold tracking-widest uppercase hover:border-black hover:text-black transition-colors rounded-sm flex items-center gap-2">
+                        <i class="fas fa-arrow-left text-[11px]"></i> Back
+                    </button>
+                    <button onclick="placeOrder()" class="flex-1 bg-black text-white py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-accent transition-colors rounded-sm flex items-center justify-center gap-2">
+                        <i class="fas fa-lock text-[11px]"></i> Place Order
+                    </button>
+                </div>
+            </section>
+        </div>
+
+        <!-- RIGHT: Order Summary -->
+        <aside class="fade-up-d1">
+            <div class="bg-white rounded-lg border border-gray-100 p-6 sticky top-24">
+                <h3 class="font-serif text-lg mb-4 border-b border-gray-100 pb-4">Order Summary</h3>
+
+                <div id="summary-items" class="space-y-3 mb-4 max-h-72 overflow-y-auto pr-1">
+                    <!-- filled by JS -->
+                </div>
+
+                <div class="border-t border-gray-100 pt-4 space-y-2.5 text-sm">
+                    <div class="flex justify-between text-gray-500">
+                        <span>Subtotal</span>
+                        <span id="subtotal-display">Rs. 0</span>
+                    </div>
+                    <div class="flex justify-between text-gray-500">
+                        <span>Shipping</span>
+                        <span id="shipping-display" class="text-green-600 font-semibold">FREE</span>
+                    </div>
+                    <div class="flex justify-between font-bold text-base border-t border-gray-100 pt-3 mt-1">
+                        <span>Total</span>
+                        <span id="total-display">Rs. 0</span>
+                    </div>
+                </div>
+
+                <!-- Trust badges -->
+                <div class="mt-6 grid grid-cols-3 gap-3 text-center border-t border-gray-100 pt-5">
+                    <div>
+                        <i class="fas fa-lock text-gray-300 text-xl mb-1.5"></i>
+                        <p class="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Secure</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-truck text-gray-300 text-xl mb-1.5"></i>
+                        <p class="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Fast Delivery</p>
+                    </div>
+                    <div>
+                        <i class="fas fa-exchange-alt text-gray-300 text-xl mb-1.5"></i>
+                        <p class="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Easy Returns</p>
+                    </div>
+                </div>
+
+                <!-- Need help -->
+                <a href="#" class="mt-5 flex items-center justify-center gap-2 w-full border border-green-500 text-green-600 py-2.5 rounded-sm text-xs font-semibold hover:bg-green-50 transition-colors">
+                    <i class="fab fa-whatsapp text-base"></i> Need help? WhatsApp us
+                </a>
+            </div>
+        </aside>
+    </main>
+
+    <!-- SUCCESS OVERLAY -->
+    <div id="success-overlay" class="fixed inset-0 bg-white z-50 flex-col items-center justify-center text-center px-6">
+        <div class="max-w-sm mx-auto">
+            <div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-check text-green-500 text-3xl"></i>
+            </div>
+            <h1 class="font-serif text-3xl mb-3">Order Placed!</h1>
+            <p class="text-gray-500 text-sm mb-2">Thank you for shopping with <strong class="text-black font-serif">AURA</strong>.</p>
+            <p class="text-gray-400 text-xs mb-8">Your order has been confirmed. We'll contact you shortly to confirm delivery details.</p>
+            <div class="bg-surface rounded-lg p-4 text-sm text-left mb-8 space-y-1.5">
+                <div class="flex justify-between"><span class="text-gray-500">Order ID</span><span class="font-bold" id="order-id">#AUR-00001</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Items</span><span class="font-semibold" id="success-items">—</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Total</span><span class="font-semibold" id="success-total">—</span></div>
+                <div class="flex justify-between"><span class="text-gray-500">Payment</span><span class="font-semibold" id="success-payment">Cash on Delivery</span></div>
+            </div>
+            <a href="hand-bags.html" class="block w-full bg-black text-white py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm">Continue Shopping</a>
+            <a href="#" class="mt-3 block w-full border border-green-500 text-green-600 py-3 text-xs font-semibold rounded-sm hover:bg-green-50 transition-colors flex items-center justify-center gap-2">
+                <i class="fab fa-whatsapp text-base"></i> Track via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ---- STATE ----
+        let currentStep = 1;
+        let shippingMethod = 'standard'; // 'standard' | 'express'
+        let paymentMethod = 'cod';
+        const SHIPPING_COST = { standard: 0, express: 350 };
+
+        // ---- CART ----
+        function getCart() { return JSON.parse(localStorage.getItem('aura_cart') || '[]'); }
+        function saveCart(c) { localStorage.setItem('aura_cart', JSON.stringify(c)); }
+
+        function updateBadge() {
+            const total = getCart().reduce((s,i) => s+i.qty, 0);
+            document.getElementById('cart-badge').textContent = total;
+        }
+
+        function getSubtotal() {
+            return getCart().reduce((s,i) => s + i.price * i.qty, 0);
+        }
+
+        function getTotal() {
+            return getSubtotal() + SHIPPING_COST[shippingMethod];
+        }
+
+        // ---- RENDER CART ----
+        function renderCartItems() {
+            const cart = getCart();
+            const listEl = document.getElementById('cart-items-list');
+            const emptyEl = document.getElementById('empty-cart-msg');
+            const actionsEl = document.getElementById('cart-actions');
+            const summaryEl = document.getElementById('summary-items');
+
+            if (cart.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                actionsEl.classList.add('hidden');
+                summaryEl.innerHTML = '<p class="text-xs text-gray-400 text-center py-4">No items in cart.</p>';
+                updateTotals();
+                return;
+            }
+
+            emptyEl.classList.add('hidden');
+            actionsEl.classList.remove('hidden');
+
+            // Cart list
+            listEl.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-4 py-4 border-b border-gray-100 last:border-0" id="cart-item-${item.id}">
+                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-[#f5f5f5] rounded-sm overflow-hidden shrink-0">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-widest">${item.brand}</p>
+                        <p class="text-sm font-semibold text-black leading-snug mt-0.5 truncate">${item.name}</p>
+                        <p class="text-sm font-bold mt-1">Rs. ${item.price.toLocaleString()}</p>
+                    </div>
+                    <div class="flex flex-col items-end gap-3 shrink-0">
+                        <button onclick="removeItem(${item.id})" class="text-gray-300 hover:text-red-500 transition-colors text-xs">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <div class="flex items-center border border-gray-200 rounded-sm">
+                            <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">−</button>
+                            <span class="w-8 text-center text-sm font-semibold">${item.qty}</span>
+                            <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors text-sm">+</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Sidebar summary
+            summaryEl.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 bg-surface rounded-sm overflow-hidden shrink-0 relative">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                        <span class="absolute -top-1.5 -right-1.5 w-4.5 h-4.5 bg-gray-500 text-white text-[9px] flex items-center justify-center rounded-full font-bold" style="width:18px;height:18px;">${item.qty}</span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <p class="text-xs font-semibold truncate">${item.name}</p>
+                        <p class="text-xs text-gray-400">Rs. ${(item.price * item.qty).toLocaleString()}</p>
+                    </div>
+                </div>
+            `).join('');
+
+            updateTotals();
+        }
+
+        function updateTotals() {
+            const sub = getSubtotal();
+            const ship = SHIPPING_COST[shippingMethod];
+            const total = sub + ship;
+            document.getElementById('subtotal-display').textContent = 'Rs. ' + sub.toLocaleString();
+            document.getElementById('shipping-display').textContent = ship === 0 ? 'FREE' : 'Rs. ' + ship.toLocaleString();
+            document.getElementById('shipping-display').className = ship === 0 
+                ? 'text-green-600 font-semibold' 
+                : 'font-semibold';
+            document.getElementById('total-display').textContent = 'Rs. ' + total.toLocaleString();
+        }
+
+        function removeItem(id) {
+            const cart = getCart().filter(i => i.id !== id);
+            saveCart(cart);
+            updateBadge();
+            renderCartItems();
+        }
+
+        function changeQty(id, delta) {
+            const cart = getCart();
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.qty = Math.max(1, item.qty + delta);
+            saveCart(cart);
+            updateBadge();
+            renderCartItems();
+        }
+
+        function clearCart() {
+            if (!confirm('Remove all items from cart?')) return;
+            saveCart([]);
+            updateBadge();
+            renderCartItems();
+        }
+
+        // ---- STEP NAVIGATION ----
+        function goToStep(step) {
+            const sections = { 1: 'section-cart', 2: 'section-delivery', 3: 'section-payment' };
+            Object.values(sections).forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById(sections[step]).classList.remove('hidden');
+            currentStep = step;
+            updateStepUI(step);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function updateStepUI(step) {
+            // step 2 circle
+            const c2 = document.getElementById('step-2-circle');
+            const c3 = document.getElementById('step-3-circle');
+            const l2 = document.getElementById('line-2');
+            const l3 = document.getElementById('step-3-label');
+
+            if (step >= 2) {
+                c2.className = 'w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold';
+                l2.classList.add('done');
+            } else {
+                c2.className = 'w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold';
+                l2.classList.remove('done');
+            }
+            if (step >= 3) {
+                c3.className = 'w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold';
+                l3.className = 'text-[10px] font-semibold mt-1 tracking-wide uppercase text-black';
+            } else {
+                c3.className = 'w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold';
+                l3.className = 'text-[10px] font-semibold mt-1 tracking-wide uppercase text-gray-400';
+            }
+        }
+
+        // ---- DELIVERY ----
+        function submitDelivery() {
+            const required = ['first-name', 'last-name', 'phone', 'address', 'city'];
+            let valid = true;
+            required.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el.value.trim()) {
+                    el.style.borderColor = '#ef4444';
+                    valid = false;
+                } else {
+                    el.style.borderColor = '#e5e7eb';
+                }
+            });
+
+            if (!valid) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            // Populate delivery summary
+            const name = document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value;
+            const city = document.getElementById('city').value;
+            const addr = document.getElementById('address').value + ', ' + city;
+            const phone = document.getElementById('phone').value;
+            document.getElementById('summary-name').textContent = name;
+            document.getElementById('summary-address').textContent = addr;
+            document.getElementById('summary-phone').textContent = phone;
+
+            goToStep(3);
+        }
+
+        // ---- SHIPPING SELECT ----
+        function selectShipping(method, el) {
+            shippingMethod = method;
+            document.querySelectorAll('.radio-card[id^="ship-"]').forEach(c => c.classList.remove('selected'));
+            document.getElementById('ship-' + method + '-card').classList.add('selected');
+            updateTotals();
+        }
+
+        // ---- PAYMENT SELECT ----
+        function selectPayment(method, el) {
+            paymentMethod = method;
+            document.querySelectorAll('.radio-card[id^="pay-"]').forEach(c => c.classList.remove('selected'));
+            document.getElementById('pay-' + method + '-card').classList.add('selected');
+            document.getElementById('bank-details').classList.toggle('hidden', method !== 'bank');
+            document.getElementById('easypaisa-details').classList.toggle('hidden', method !== 'easypaisa');
+        }
+
+        // ============================================================
+        // EMAILJS CONFIGURATION — Replace with your real credentials
+        // Get them from https://www.emailjs.com/
+        // ============================================================
+        const EMAILJS_PUBLIC_KEY    = 'YOUR_PUBLIC_KEY';       // e.g. 'user_abc123xyz'
+        const EMAILJS_SERVICE_ID    = 'YOUR_SERVICE_ID';       // e.g. 'service_abc123'
+        const EMAILJS_OWNER_TMPL    = 'YOUR_OWNER_TEMPLATE_ID';  // template that emails the store owner
+        const EMAILJS_CUSTOMER_TMPL = 'YOUR_CUSTOMER_TEMPLATE_ID'; // template that emails the customer
+        const STORE_OWNER_EMAIL     = 'your@email.com';        // store owner's email address
+        // ============================================================
+
+        // ---- PLACE ORDER ----
+        async function placeOrder() {
+            const cart = getCart();
+            if (cart.length === 0) { alert('Your cart is empty!'); return; }
+
+            const orderId = '#AUR-' + String(Math.floor(Math.random() * 90000) + 10000);
+            const payLabels = { cod: 'Cash on Delivery', bank: 'Bank Transfer', easypaisa: 'EasyPaisa / JazzCash' };
+
+            // Collect form values (delivery step must have been completed)
+            const customerName  = (document.getElementById('first-name').value + ' ' + document.getElementById('last-name').value).trim();
+            const customerPhone = document.getElementById('phone').value.trim();
+            const customerEmail = document.getElementById('email').value.trim();
+            const customerAddr  = document.getElementById('address').value.trim() + ', ' + document.getElementById('city').value;
+            const itemCount     = cart.reduce((s, i) => s + i.qty, 0);
+            const orderTotal    = 'Rs. ' + getTotal().toLocaleString();
+            const payLabel      = payLabels[paymentMethod];
+            const shipLabel     = shippingMethod === 'express' ? 'Express (Rs. 350)' : 'Standard (FREE)';
+
+            // Update success overlay
+            document.getElementById('order-id').textContent = orderId;
+            document.getElementById('success-items').textContent = itemCount + ' item(s)';
+            document.getElementById('success-total').textContent = orderTotal;
+            document.getElementById('success-payment').textContent = payLabel;
+
+            // Disable place order button to prevent double submit
+            const placeBtn = document.querySelector('button[onclick="placeOrder()"]');
+            if (placeBtn) { placeBtn.disabled = true; placeBtn.textContent = 'Sending…'; }
+
+            // ---- Shared template params ----
+            const sharedParams = {
+                order_id:      orderId,
+                customer_name: customerName,
+                customer_phone: customerPhone,
+                customer_email: customerEmail || 'Not provided',
+                customer_address: customerAddr,
+                item_count:    itemCount + ' item(s)',
+                order_total:   orderTotal,
+                payment_method: payLabel,
+                shipping_method: shipLabel,
+            };
+
+            try {
+                // Init EmailJS with public key
+                emailjs.init(EMAILJS_PUBLIC_KEY);
+
+                // 1. Email to store owner
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_OWNER_TMPL, {
+                    ...sharedParams,
+                    to_email: STORE_OWNER_EMAIL,
+                    to_name: 'AURA Store',
+                });
+
+                // 2. Email to customer (only if they entered an email)
+                if (customerEmail) {
+                    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CUSTOMER_TMPL, {
+                        ...sharedParams,
+                        to_email: customerEmail,
+                        to_name: customerName,
+                    });
+                }
+
+                console.log('[AURA] Order emails sent successfully.');
+            } catch (err) {
+                // Email failed — still show success to user, log the error
+                console.warn('[AURA] EmailJS error (order still placed):', err);
+            } finally {
+                if (placeBtn) { placeBtn.disabled = false; placeBtn.innerHTML = '<i class="fas fa-lock text-[11px]"></i> Place Order'; }
+            }
+
+            // Clear cart & show success screen
+            saveCart([]);
+            updateBadge();
+            const overlay = document.getElementById('success-overlay');
+            overlay.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // ---- INIT ----
+        document.addEventListener('DOMContentLoaded', () => {
+            renderCartItems();
+            updateBadge();
+        });
+    </script>
+</body>
+</html>
