@@ -4,7 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="page-title">Product - AURA</title>
-    <meta name="description" content="Discover our premium luxury bags collection at AURA.">
+    <meta name="description" id="meta-desc" content="Discover premium luxury accessories at AURA. Shop our curated collection of bags, wallets, glasses, shoes, and scarfs.">
+    <meta property="og:title" id="og-title" content="Product - AURA">
+    <meta property="og:description" id="og-desc" content="Discover premium luxury accessories at AURA.">
+    <meta property="og:image" id="og-image" content="">
+    <meta property="og:url" id="og-url" content="">
+    <meta property="og:type" content="product">
+    <link rel="canonical" id="canonical-url" href="">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -15,9 +21,8 @@
                     colors: {
                         primary: '#000000',
                         accent: '#DB1215',
-                        topbar: '#F3E8D2',
-                        surface: '#F5F5F5',
                         darkRed: '#5E1B1C',
+                        surface: '#F5F5F5',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -28,53 +33,97 @@
         }
     </script>
     <style>
+        /* Scrollbar hide */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .zoom-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.92); z-index:1000; display:none; align-items:center; justify-content:center; }
-        .zoom-overlay.open { display:flex; }
-        .accordion-content { max-height:0; overflow:hidden; transition:max-height 0.35s ease; }
-        .accordion-content.open { max-height:300px; }
-        #toast { position:fixed; bottom:80px; right:24px; background:#111; color:#fff; padding:14px 24px; border-radius:4px; font-size:13px; font-weight:600; letter-spacing:0.05em; opacity:0; transform:translateY(16px); transition:opacity 0.3s,transform 0.3s; z-index:999; display:flex; align-items:center; gap:10px; }
-        #toast.show { opacity:1; transform:translateY(0); }
-        @keyframes fadeUp { from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);} }
-        .fade-up { animation:fadeUp 0.5s ease forwards; }
-        .line-clamp-2 { display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+        /* Zoom lightbox */
+        .zoom-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 1000; display: none; align-items: center; justify-content: center; cursor: zoom-out; }
+        .zoom-overlay.open { display: flex; }
+        .zoom-overlay img { max-width: 90vw; max-height: 90vh; object-fit: contain; user-select: none; animation: zoomIn 0.3s ease; }
+
+        /* Toast */
+        #toast { position: fixed; bottom: 80px; right: 24px; background: #111; color: #fff; padding: 14px 28px; border-radius: 50px; font-size: 13px; font-weight: 600; letter-spacing: 0.03em; opacity: 0; transform: translateY(16px); transition: opacity 0.35s ease, transform 0.35s ease; z-index: 999; display: flex; align-items: center; gap: 10px; pointer-events: none; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        #toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+
+        /* Animations */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes zoomIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+        .fade-up { animation: fadeUp 0.5s ease forwards; }
+        .pulse-dot { animation: pulse 1.5s ease-in-out infinite; }
+
+        /* Line clamp */
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
         /* Mobile Menu */
-        .mobile-menu-overlay {
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        .mobile-menu-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-        .mobile-menu-panel {
-            transform: translateX(-100%);
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-        .mobile-menu-panel.active {
-            transform: translateX(0);
-        }
+        .mobile-menu-overlay { opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+        .mobile-menu-overlay.active { opacity: 1; pointer-events: auto; }
+        .mobile-menu-panel { transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .mobile-menu-panel.active { transform: translateX(0); }
+
+        /* Tab underline animation */
+        .tab-btn { position: relative; }
+        .tab-btn::after { content: ''; position: absolute; bottom: -1px; left: 0; right: 0; height: 2px; background: #000; transform: scaleX(0); transition: transform 0.3s ease; }
+        .tab-btn.active::after { transform: scaleX(1); }
+
+        /* Image zoom on hover */
+        .main-img-wrap:hover .main-product-img { transform: scale(1.15); }
+        .main-product-img { transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); transform-origin: var(--zoom-x, center) var(--zoom-y, center); }
+
+        /* Color swatch */
+        .color-swatch { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .color-swatch:hover { transform: scale(1.15); }
+        .color-swatch.active { box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000; transform: scale(1.1); }
+
+        /* Product card */
+        .product-card { transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.4s ease; }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+        .product-card .product-img { transition: transform 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .product-card:hover .product-img { transform: scale(1.08); }
+        .product-card .quick-actions { opacity: 0; transform: translateY(12px); transition: opacity 0.35s ease, transform 0.35s ease; }
+        .product-card:hover .quick-actions { opacity: 1; transform: translateY(0); }
+
+        /* Wishlist heart */
+        .wishlist-btn.active i { color: #DB1215; animation: heartPop 0.4s ease; }
+        @keyframes heartPop { 0% { transform: scale(1); } 50% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+        /* Badge gradients */
+        .badge-new { background: linear-gradient(135deg, #111 0%, #333 100%); }
+        .badge-sale { background: linear-gradient(135deg, #DB1215 0%, #a00e10 100%); }
+
+        /* Thumbnail active */
+        .thumb-item { transition: all 0.2s ease; }
+        .thumb-item.active { border-color: #000 !important; }
+
+        /* Skeleton */
+        .skeleton { background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* Review stars */
+        .review-stars .fas, .review-stars .far { font-size: 11px; }
     </style>
 </head>
 <body class="bg-white text-primary font-sans antialiased overflow-x-hidden">
 
-    <!-- Top Bar -->
-    <div class="w-full bg-topbar py-2 px-4 sm:px-8 text-[11px] font-semibold text-black flex flex-col md:flex-row justify-between items-center gap-y-2">
-        <div class="flex items-center space-x-3 w-full md:w-1/3">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
+    <!-- ======================== TOP BAR ======================== -->
+    <div class="w-full bg-white border-b border-gray-100 py-2 px-4 sm:px-8 text-[10px] sm:text-[11px] font-medium text-gray-500 flex justify-between items-center flex-wrap gap-y-2">
+        <div class="flex items-center space-x-4 hidden sm:flex">
+            <a href="#" class="hover:text-black transition-colors"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="hover:text-black transition-colors"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="hover:text-black transition-colors"><i class="fab fa-twitter"></i></a>
         </div>
-        <div class="text-center w-full md:w-1/3 tracking-wide"><span>Free Shipping all Over Pakistan</span></div>
-        <div class="flex items-center justify-end space-x-2 w-full md:w-1/3">
-            <a href="#" class="hover:text-gray-600">About</a><span class="text-gray-400">|</span>
-            <a href="#" class="hover:text-gray-600">Contact</a>
+        <div class="text-center flex-grow text-[9px] sm:text-xs tracking-wider font-bold">
+            <span>FREE SHIPPING OVER Rs. 10,000 &amp; FREE RETURNS</span>
+        </div>
+        <div class="flex items-center space-x-4 hidden sm:flex">
+            <a href="#" class="hover:text-black transition-colors">About</a>
+            <span class="text-gray-300">|</span>
+            <a href="#" class="hover:text-black transition-colors">Contact</a>
         </div>
     </div>
 
-    <!-- Header -->
+    <!-- ======================== HEADER ======================== -->
     <header class="w-full bg-white px-4 sm:px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm border-b border-gray-100">
         <button id="mobile-menu-btn" class="xl:hidden text-gray-700 hover:text-black text-xl transition-colors" aria-label="Open menu">
             <i class="fas fa-bars"></i>
@@ -82,25 +131,28 @@
         <a href="index.html" class="flex items-center space-x-2 cursor-pointer w-auto flex-grow xl:flex-grow-0 justify-center xl:justify-start">
             <div class="text-2xl font-serif font-bold tracking-widest text-black">AURA</div>
         </a>
-        <nav class="hidden xl:flex space-x-6 text-[10px] font-bold tracking-widest uppercase flex-1 justify-center whitespace-nowrap">
-            <a href="index.html" class="hover:text-gray-600">HOME</a>
-            <a href="hand-bags.html" class="hover:text-gray-600">LADIES BAGS</a>
-            <a href="hand-bags.html" class="hover:text-gray-600">BAGS PACK</a>
-            <a href="#" class="hover:text-gray-600">CONTACT</a>
+        <nav class="hidden xl:flex space-x-4 xl:space-x-6 text-[10px] font-bold tracking-widest uppercase flex-1 justify-center whitespace-nowrap">
+            <a href="index.html" class="hover:text-gray-600 transition-colors">HOME</a>
+            <a href="shop.html" class="hover:text-gray-600 transition-colors">LADIES BAGS</a>
+            <a href="shop.html" class="hover:text-gray-600 transition-colors">BAGS PACK</a>
+            <a href="shop.html?cat=glasses" class="hover:text-gray-600 transition-colors">GLASSES</a>
+            <a href="shop.html?cat=wallets" class="hover:text-gray-600 transition-colors">WALLETS</a>
+            <a href="shop.html?cat=shoes" class="hover:text-gray-600 transition-colors">SHOES</a>
+            <a href="shop.html?cat=scarfs" class="hover:text-gray-600 transition-colors">SCARFS</a>
+            <a href="#" class="hover:text-gray-600 transition-colors">CONTACT</a>
         </nav>
         <div class="flex items-center space-x-4 sm:space-x-5 text-lg w-auto justify-end">
-            <button class="hover:text-gray-600 hidden sm:block"><i class="far fa-user"></i></button>
-            <button class="hover:text-gray-600 hidden sm:block"><i class="far fa-heart"></i></button>
-            <button class="hover:text-gray-600 relative" id="cart-btn">
+            <button class="hover:text-gray-600 transition-colors hidden sm:block"><i class="far fa-user"></i></button>
+            <button class="hover:text-gray-600 transition-colors hidden sm:block"><i class="far fa-heart"></i></button>
+            <button class="hover:text-gray-600 transition-colors relative" id="cart-btn" onclick="window.location.href='checkout.html'">
                 <i class="fas fa-shopping-bag"></i>
                 <span class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold" id="cart-count">0</span>
             </button>
         </div>
     </header>
 
-    <!-- Mobile Menu Overlay -->
+    <!-- ======================== MOBILE MENU ======================== -->
     <div id="mobile-menu-overlay" class="mobile-menu-overlay fixed inset-0 bg-black/50 z-[60] backdrop-blur-sm" onclick="closeMobileMenu()"></div>
-    <!-- Mobile Menu Panel -->
     <div id="mobile-menu-panel" class="mobile-menu-panel fixed top-0 left-0 h-full w-[280px] max-w-[80vw] bg-white z-[70] shadow-2xl overflow-y-auto">
         <div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
             <span class="text-xl font-serif font-bold tracking-widest">AURA</span>
@@ -108,11 +160,15 @@
                 <i class="fas fa-times text-sm"></i>
             </button>
         </div>
-        <nav class="flex flex-col px-6 py-6 space-y-1">
-            <a href="index.html" class="py-3 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Home</a>
-            <a href="hand-bags.html" class="py-3 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Ladies Bags</a>
-            <a href="hand-bags.html" class="py-3 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Bags Pack</a>
-            <a href="#" class="py-3 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Contact</a>
+        <nav class="flex flex-col px-6 py-4 space-y-1 overflow-y-auto">
+            <a href="index.html" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Home</a>
+            <a href="shop.html" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Ladies Bags</a>
+            <a href="shop.html" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Bags Pack</a>
+            <a href="shop.html?cat=glasses" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Glasses</a>
+            <a href="shop.html?cat=wallets" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Wallets</a>
+            <a href="shop.html?cat=shoes" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Shoes</a>
+            <a href="shop.html?cat=scarfs" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Scarfs</a>
+            <a href="#" class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors">Contact</a>
         </nav>
         <div class="px-6 pb-6 flex items-center space-x-5 text-lg text-gray-500">
             <a href="#" class="hover:text-black transition-colors"><i class="fab fa-facebook-f"></i></a>
@@ -121,144 +177,439 @@
         </div>
     </div>
 
-    <!-- Breadcrumb -->
-    <div class="w-full px-4 sm:px-8 py-3 text-xs text-gray-500 border-b border-gray-100 bg-white">
-        <a href="index.html" class="hover:text-black">Home</a>
-        <span class="mx-2 text-gray-300">/</span>
-        <a href="hand-bags.html" class="hover:text-black" id="breadcrumb-category">Bags</a>
-        <span class="mx-2 text-gray-300">/</span>
-        <span class="text-black font-semibold" id="breadcrumb-name">Product</span>
-    </div>
+    <!-- ======================== BREADCRUMB ======================== -->
+    <nav aria-label="Breadcrumb" class="w-full px-4 sm:px-8 py-3.5 text-xs text-gray-500 border-b border-gray-100 bg-white">
+        <div class="max-w-7xl mx-auto flex items-center flex-wrap gap-y-1">
+            <a href="index.html" class="hover:text-black transition-colors">Home</a>
+            <span class="mx-2 text-gray-300">/</span>
+            <a href="shop.html" class="hover:text-black transition-colors">Collections</a>
+            <span class="mx-2 text-gray-300">/</span>
+            <a href="shop.html" class="hover:text-black transition-colors" id="breadcrumb-category">Category</a>
+            <span class="mx-2 text-gray-300">/</span>
+            <span class="text-black font-semibold" id="breadcrumb-name">Product</span>
+        </div>
+    </nav>
 
-    <!-- Product Detail -->
-    <section class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-10 md:py-16">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
+    <!-- ======================== MAIN CONTENT ======================== -->
+    <main>
+        <!-- Product Detail Section -->
+        <article class="w-full max-w-7xl mx-auto px-4 sm:px-8 py-8 md:py-14">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-14">
 
-            <!-- Left: Gallery -->
-            <div class="fade-up">
-                <div class="relative bg-surface overflow-hidden cursor-zoom-in group mb-4 rounded-sm" style="aspect-ratio:1/1;" id="main-img-wrap" onclick="openZoom()">
-                    <img id="main-img" src="" alt="Product" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
-                        <span id="badge-new" class="hidden bg-black text-white text-[9px] font-bold px-3 py-1 tracking-widest uppercase rounded-full">NEW</span>
-                        <span id="badge-sale" class="hidden bg-accent text-white text-[9px] font-bold px-3 py-1 tracking-widest uppercase rounded-full"></span>
-                    </div>
-                    <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity">
-                        <i class="fas fa-search-plus text-gray-700 text-sm"></i>
-                    </div>
-                </div>
-                <div class="flex gap-3 overflow-x-auto no-scrollbar" id="thumb-row"></div>
-            </div>
-
-            <!-- Right: Info -->
-            <div class="fade-up" style="animation-delay:0.1s">
-                <p class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2" id="product-brand">Brand</p>
-                <h1 class="font-serif text-3xl md:text-4xl text-primary mb-3 leading-tight" id="product-name">Product Name</h1>
-
-                <div class="flex items-center gap-2 mb-4">
-                    <div class="flex text-accent text-sm gap-0.5">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <span class="text-xs text-gray-500 font-medium">(24 reviews)</span>
-                </div>
-
-                <div class="flex items-baseline gap-3 mb-6">
-                    <span class="text-2xl font-bold text-primary" id="product-price">Rs. 0</span>
-                    <span class="text-sm text-gray-400 line-through" id="product-old-price"></span>
-                    <span class="text-sm text-accent font-bold" id="product-discount"></span>
-                </div>
-
-                <p class="text-sm text-gray-600 leading-relaxed mb-6" id="product-desc"></p>
-                <div class="w-full h-px bg-gray-100 mb-6"></div>
-
-                <div class="mb-6">
-                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest mr-3">Category:</span>
-                    <span class="text-xs font-bold text-primary uppercase tracking-widest bg-surface px-3 py-1 rounded-full" id="product-category">—</span>
-                </div>
-
-                <!-- Qty -->
-                <div class="flex items-center gap-4 mb-6">
-                    <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Qty:</span>
-                    <div class="flex items-center border border-gray-300 rounded-sm">
-                        <button onclick="changeQty(-1)" class="w-10 h-10 flex items-center justify-center text-lg hover:bg-gray-100 font-light">−</button>
-                        <span id="qty-display" class="w-10 text-center text-sm font-semibold">1</span>
-                        <button onclick="changeQty(1)" class="w-10 h-10 flex items-center justify-center text-lg hover:bg-gray-100 font-light">+</button>
-                    </div>
-                </div>
-
-                <!-- CTAs -->
-                <div class="flex flex-col sm:flex-row gap-3 mb-3">
-                    <button onclick="addToCart()" class="flex-1 bg-black text-white py-4 text-xs font-bold tracking-widest uppercase hover:bg-darkRed transition-colors duration-300 flex items-center justify-center gap-3">
-                        <i class="fas fa-shopping-bag"></i> Add to Cart
-                    </button>
-                    <button class="flex-1 border border-black text-black py-4 text-xs font-bold tracking-widest uppercase hover:bg-black hover:text-white transition-colors duration-300 flex items-center justify-center gap-3">
-                        <i class="fab fa-whatsapp text-green-600"></i> Order via WhatsApp
-                    </button>
-                </div>
-                <button class="w-full border border-gray-200 text-gray-600 py-3 text-xs font-semibold tracking-widest uppercase hover:border-black hover:text-black transition-colors flex items-center justify-center gap-2 mb-6">
-                    <i class="far fa-heart"></i> Add to Wishlist
-                </button>
-
-                <!-- Features -->
-                <div class="grid grid-cols-3 gap-4 mb-6 py-4 border-y border-gray-100">
-                    <div class="text-center"><i class="fas fa-truck text-gray-400 text-xl mb-2"></i><p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Free Delivery</p></div>
-                    <div class="text-center"><i class="fas fa-shield-alt text-gray-400 text-xl mb-2"></i><p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Secure Payment</p></div>
-                    <div class="text-center"><i class="fas fa-exchange-alt text-gray-400 text-xl mb-2"></i><p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Easy Returns</p></div>
-                </div>
-
-                <!-- Accordion -->
-                <div class="border-t border-gray-100">
-                    <button onclick="toggleAccordion('details')" class="w-full flex justify-between items-center py-4 text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors">
-                        <span>Product Details</span><i class="fas fa-plus text-xs" id="icon-details"></i>
-                    </button>
-                    <div class="accordion-content" id="acc-details">
-                        <div class="pb-4 text-sm text-gray-600 leading-relaxed space-y-1">
-                            <p>• Premium quality materials</p><p>• Spacious main compartment</p>
-                            <p>• Interior zipper pocket &amp; card slots</p><p>• Gold-tone hardware</p><p>• Dust bag included</p>
+                <!-- ======== LEFT: GALLERY ======== -->
+                <div class="fade-up">
+                    <!-- Main Image -->
+                    <div class="main-img-wrap relative bg-surface overflow-hidden cursor-zoom-in group mb-4 rounded-lg" style="aspect-ratio:1/1;" id="main-img-wrap" onclick="openZoom()">
+                        <img id="main-img" src="" alt="Product" class="main-product-img w-full h-full object-cover object-center" onmousemove="handleImgZoom(event)" onmouseleave="resetImgZoom()">
+                        <!-- Badges -->
+                        <div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
+                            <span id="badge-new" class="hidden badge-new text-white text-[9px] font-bold px-3 py-1 tracking-widest uppercase rounded-full shadow-sm">NEW</span>
+                            <span id="badge-sale" class="hidden badge-sale text-white text-[9px] font-bold px-3 py-1 tracking-widest uppercase rounded-full shadow-sm"></span>
+                        </div>
+                        <!-- Zoom hint -->
+                        <div class="absolute bottom-4 right-4 bg-white/80 backdrop-blur-sm p-2.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300 shadow-sm">
+                            <i class="fas fa-search-plus text-gray-600 text-sm"></i>
                         </div>
                     </div>
-                    <div class="border-t border-gray-100">
-                        <button onclick="toggleAccordion('shipping')" class="w-full flex justify-between items-center py-4 text-sm font-semibold uppercase tracking-widest hover:text-accent transition-colors">
-                            <span>Shipping &amp; Returns</span><i class="fas fa-plus text-xs" id="icon-shipping"></i>
+
+                    <!-- Thumbnails -->
+                    <div class="flex gap-3 overflow-x-auto no-scrollbar pb-1" id="thumb-row"></div>
+                </div>
+
+                <!-- ======== RIGHT: PRODUCT INFO ======== -->
+                <div class="fade-up" style="animation-delay:0.1s">
+                    <!-- Brand -->
+                    <p class="text-[10px] font-semibold tracking-[0.2em] uppercase text-gray-400 mb-2" id="product-brand">Brand</p>
+
+                    <!-- Product Name -->
+                    <h1 class="font-serif text-3xl md:text-4xl text-primary mb-3 leading-tight" id="product-name">Product Name</h1>
+
+                    <!-- Rating -->
+                    <div class="flex items-center gap-2 mb-5">
+                        <div class="flex text-amber-400 text-sm gap-0.5">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-xs text-gray-400 font-medium">(24 reviews)</span>
+                    </div>
+
+                    <!-- Price -->
+                    <div class="flex items-baseline gap-3 mb-6">
+                        <span class="text-2xl font-bold text-primary" id="product-price">Rs. 0</span>
+                        <span class="text-sm text-gray-400 line-through" id="product-old-price"></span>
+                        <span id="product-discount" class="hidden text-[10px] font-bold text-white bg-accent px-2.5 py-0.5 rounded-full"></span>
+                    </div>
+
+                    <div class="w-full h-px bg-gray-100 mb-6"></div>
+
+                    <!-- Color Swatches -->
+                    <div class="mb-6" id="color-section" style="display:none;">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Color:</span>
+                            <span class="text-xs font-bold text-primary" id="selected-color-name">—</span>
+                        </div>
+                        <div class="flex flex-wrap gap-3" id="color-swatches"></div>
+                    </div>
+
+                    <!-- Quantity -->
+                    <div class="flex items-center gap-4 mb-6">
+                        <span class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Qty:</span>
+                        <div class="flex items-center border border-gray-200 rounded-lg overflow-hidden">
+                            <button onclick="changeQty(-1)" class="w-11 h-11 flex items-center justify-center text-lg hover:bg-gray-50 font-light transition-colors" aria-label="Decrease quantity">−</button>
+                            <span id="qty-display" class="w-12 text-center text-sm font-semibold border-x border-gray-200">1</span>
+                            <button onclick="changeQty(1)" class="w-11 h-11 flex items-center justify-center text-lg hover:bg-gray-50 font-light transition-colors" aria-label="Increase quantity">+</button>
+                        </div>
+                    </div>
+
+                    <!-- CTAs -->
+                    <div class="flex flex-col gap-3 mb-4">
+                        <button onclick="addToCart()" class="w-full bg-black text-white py-4 text-xs font-bold tracking-widest uppercase hover:bg-darkRed transition-colors duration-300 flex items-center justify-center gap-3 rounded-lg shadow-sm hover:shadow-md">
+                            <i class="fas fa-shopping-bag"></i> ADD TO BAG
                         </button>
-                        <div class="accordion-content" id="acc-shipping">
-                            <div class="pb-4 text-sm text-gray-600 leading-relaxed space-y-1">
-                                <p>• Free delivery across Pakistan</p><p>• 2–4 business days</p>
-                                <p>• Easy 30-day returns &amp; exchanges</p><p>• Cash on Delivery available</p>
+                        <button onclick="orderWhatsApp()" class="w-full bg-[#25D366] text-white py-4 text-xs font-bold tracking-widest uppercase hover:bg-[#1da851] transition-colors duration-300 flex items-center justify-center gap-3 rounded-lg shadow-sm">
+                            <i class="fab fa-whatsapp text-lg"></i> Order via WhatsApp
+                        </button>
+                    </div>
+
+                    <!-- Estimated Delivery -->
+                    <div class="bg-surface rounded-lg px-4 py-3 mb-4 flex items-start gap-3">
+                        <i class="fas fa-truck text-gray-400 mt-0.5"></i>
+                        <div>
+                            <p class="text-xs font-semibold text-primary" id="delivery-estimate">Order now, get by —</p>
+                            <p class="text-[10px] text-gray-400 mt-0.5">Free shipping on orders over Rs. 10,000</p>
+                        </div>
+                    </div>
+
+                    <!-- Stock Urgency -->
+                    <div class="flex items-center gap-2 mb-6 px-1">
+                        <span class="pulse-dot w-2 h-2 rounded-full bg-accent inline-block"></span>
+                        <span class="text-xs font-semibold text-accent">Only a few left — order soon!</span>
+                    </div>
+
+                    <div class="w-full h-px bg-gray-100 mb-5"></div>
+
+                    <!-- Trust Badges -->
+                    <div class="grid grid-cols-3 gap-4 mb-6 py-4 border-b border-gray-100">
+                        <div class="text-center">
+                            <i class="fas fa-truck text-gray-300 text-xl mb-2"></i>
+                            <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Free Delivery</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-shield-alt text-gray-300 text-xl mb-2"></i>
+                            <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Secure Payment</p>
+                        </div>
+                        <div class="text-center">
+                            <i class="fas fa-exchange-alt text-gray-300 text-xl mb-2"></i>
+                            <p class="text-[10px] font-semibold text-gray-500 uppercase tracking-wide">Easy Returns</p>
+                        </div>
+                    </div>
+
+                    <!-- Social Sharing -->
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-xs font-semibold text-gray-400 uppercase tracking-widest">Share:</span>
+                        <button onclick="shareWhatsApp()" class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:text-[#25D366] hover:border-[#25D366] transition-all text-sm" title="Share on WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </button>
+                        <button onclick="shareFacebook()" class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:text-[#1877F2] hover:border-[#1877F2] transition-all text-sm" title="Share on Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </button>
+                        <button onclick="copyLink()" class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center text-gray-500 hover:text-black hover:border-black transition-all text-sm" title="Copy link">
+                            <i class="fas fa-link"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ======================== PRODUCT TABS ======================== -->
+            <section class="mt-16 border-t border-gray-100 pt-0">
+                <!-- Tab Headers -->
+                <div class="flex border-b border-gray-100 overflow-x-auto no-scrollbar">
+                    <button class="tab-btn active py-5 px-6 text-xs font-bold uppercase tracking-widest text-primary whitespace-nowrap transition-colors hover:text-accent" data-tab="details" onclick="switchTab('details', this)">Details</button>
+                    <button class="tab-btn py-5 px-6 text-xs font-bold uppercase tracking-widest text-gray-400 whitespace-nowrap transition-colors hover:text-accent" data-tab="shipping" onclick="switchTab('shipping', this)">Shipping &amp; Returns</button>
+                    <button class="tab-btn py-5 px-6 text-xs font-bold uppercase tracking-widest text-gray-400 whitespace-nowrap transition-colors hover:text-accent" data-tab="reviews" onclick="switchTab('reviews', this)">Reviews</button>
+                </div>
+
+                <!-- Tab: Details -->
+                <div id="tab-details" class="tab-content py-8">
+                    <div class="max-w-3xl">
+                        <p class="text-sm text-gray-600 leading-relaxed mb-6" id="tab-description">
+                            Crafted with premium materials and impeccable attention to detail, this piece combines timeless elegance with modern functionality. Features a spacious main compartment, interior zipper pocket, and elegant hardware accents. Comes with a protective dust bag.
+                        </p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm text-gray-600">
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-gem text-gray-300 mt-0.5"></i>
+                                <span>Premium quality materials</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-cube text-gray-300 mt-0.5"></i>
+                                <span>Spacious main compartment</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-lock text-gray-300 mt-0.5"></i>
+                                <span>Interior zipper pocket &amp; card slots</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-star text-gray-300 mt-0.5"></i>
+                                <span>Gold-tone hardware accents</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-box text-gray-300 mt-0.5"></i>
+                                <span>Dust bag included</span>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <i class="fas fa-check-circle text-gray-300 mt-0.5"></i>
+                                <span>Authentic AURA product</span>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Tab: Shipping -->
+                <div id="tab-shipping" class="tab-content py-8 hidden">
+                    <div class="max-w-3xl space-y-6">
+                        <div class="flex items-start gap-4 p-4 bg-surface rounded-lg">
+                            <i class="fas fa-truck text-xl text-gray-400 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-primary mb-1">Free Standard Shipping</h4>
+                                <p class="text-xs text-gray-500 leading-relaxed">Free on all orders over Rs. 10,000. Delivery within 3–5 business days across Pakistan.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-surface rounded-lg">
+                            <i class="fas fa-bolt text-xl text-gray-400 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-primary mb-1">Express Shipping — Rs. 350</h4>
+                                <p class="text-xs text-gray-500 leading-relaxed">Get your order within 1–2 business days. Available for major cities.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-surface rounded-lg">
+                            <i class="fas fa-exchange-alt text-xl text-gray-400 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-primary mb-1">Easy Returns</h4>
+                                <p class="text-xs text-gray-500 leading-relaxed">Not satisfied? Return within 7 days of delivery for a full refund or exchange. Items must be unused and in original packaging.</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4 p-4 bg-surface rounded-lg">
+                            <i class="fas fa-money-bill-wave text-xl text-gray-400 mt-0.5"></i>
+                            <div>
+                                <h4 class="text-sm font-bold text-primary mb-1">Cash on Delivery</h4>
+                                <p class="text-xs text-gray-500 leading-relaxed">Pay when you receive your order. Available across Pakistan.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Reviews -->
+                <div id="tab-reviews" class="tab-content py-8 hidden">
+                    <div class="max-w-3xl space-y-6">
+                        <!-- Review 1 -->
+                        <div class="border-b border-gray-100 pb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-surface flex items-center justify-center text-sm font-bold text-gray-500">A</div>
+                                    <div>
+                                        <p class="text-sm font-bold text-primary">Ayesha K.</p>
+                                        <p class="text-[10px] text-gray-400">Verified Purchase</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-gray-400">2 weeks ago</span>
+                            </div>
+                            <div class="review-stars flex text-amber-400 gap-0.5 mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-sm text-gray-600 leading-relaxed">Absolutely beautiful! The quality exceeded my expectations. The material feels premium and the stitching is flawless. Received it within 3 days. Highly recommend!</p>
+                        </div>
+                        <!-- Review 2 -->
+                        <div class="border-b border-gray-100 pb-6">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-surface flex items-center justify-center text-sm font-bold text-gray-500">S</div>
+                                    <div>
+                                        <p class="text-sm font-bold text-primary">Sara M.</p>
+                                        <p class="text-[10px] text-gray-400">Verified Purchase</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-gray-400">1 month ago</span>
+                            </div>
+                            <div class="review-stars flex text-amber-400 gap-0.5 mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                            <p class="text-sm text-gray-600 leading-relaxed">Love the design and color. Very elegant and goes with everything. Only giving 4 stars because I wish it came in more color options. But overall a great buy!</p>
+                        </div>
+                        <!-- Review 3 -->
+                        <div class="pb-2">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-9 h-9 rounded-full bg-surface flex items-center justify-center text-sm font-bold text-gray-500">F</div>
+                                    <div>
+                                        <p class="text-sm font-bold text-primary">Fatima R.</p>
+                                        <p class="text-[10px] text-gray-400">Verified Purchase</p>
+                                    </div>
+                                </div>
+                                <span class="text-[10px] text-gray-400">2 months ago</span>
+                            </div>
+                            <div class="review-stars flex text-amber-400 gap-0.5 mb-2">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="text-sm text-gray-600 leading-relaxed">Gifted this to my sister and she absolutely loved it. The packaging was also very premium. AURA never disappoints. Will definitely order again!</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ======================== RECENTLY VIEWED ======================== -->
+            <section class="mt-16 border-t border-gray-100 pt-14" id="recently-viewed-section" style="display:none;">
+                <h2 class="font-serif text-2xl md:text-3xl text-primary text-center mb-2">Recently Viewed</h2>
+                <p class="text-center text-sm text-gray-400 italic mb-10">Products you've explored</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" id="recently-viewed-grid"></div>
+            </section>
+
+            <!-- ======================== RELATED PRODUCTS ======================== -->
+            <section class="mt-16 border-t border-gray-100 pt-14">
+                <h2 class="font-serif text-2xl md:text-3xl text-primary text-center mb-2">You May Also Like</h2>
+                <p class="text-center text-sm text-gray-400 italic mb-10">More from our collection</p>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" id="related-grid"></div>
+            </section>
+        </article>
+    </main>
+
+    <!-- ======================== FOOTER ======================== -->
+    <footer class="bg-[#111] text-white mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+                <!-- Col 1: About -->
+                <div>
+                    <h3 class="font-serif text-2xl font-bold tracking-widest mb-4">AURA</h3>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-6">Curating premium luxury accessories with timeless elegance. Every piece tells a story of craftsmanship and sophistication.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all text-sm"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all text-sm"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full border border-gray-700 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-all text-sm"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <!-- Col 2: Quick Links -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-300 mb-5">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="shop.html" class="text-sm text-gray-400 hover:text-white transition-colors">Shop All</a></li>
+                        <li><a href="shop.html" class="text-sm text-gray-400 hover:text-white transition-colors">Ladies Bags</a></li>
+                        <li><a href="shop.html?cat=glasses" class="text-sm text-gray-400 hover:text-white transition-colors">Glasses</a></li>
+                        <li><a href="shop.html?cat=wallets" class="text-sm text-gray-400 hover:text-white transition-colors">Wallets</a></li>
+                        <li><a href="shop.html?cat=shoes" class="text-sm text-gray-400 hover:text-white transition-colors">Shoes</a></li>
+                    </ul>
+                </div>
+                <!-- Col 3: Customer Service -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-300 mb-5">Customer Service</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Shipping Policy</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Returns &amp; Exchanges</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">FAQ</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="text-sm text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <!-- Col 4: Newsletter -->
+                <div>
+                    <h4 class="text-xs font-bold uppercase tracking-widest text-gray-300 mb-5">Newsletter</h4>
+                    <p class="text-sm text-gray-400 leading-relaxed mb-4">Subscribe for exclusive offers, new arrivals, and styling tips.</p>
+                    <form class="flex" onsubmit="event.preventDefault(); showToast('Subscribed successfully!'); this.reset();">
+                        <input type="email" placeholder="Your email" required class="flex-1 bg-white/10 border border-gray-700 px-4 py-2.5 text-sm text-white placeholder-gray-500 rounded-l-lg outline-none focus:border-gray-500 transition-colors">
+                        <button type="submit" class="bg-white text-black px-5 py-2.5 text-xs font-bold uppercase tracking-wider rounded-r-lg hover:bg-gray-200 transition-colors">Join</button>
+                    </form>
+                </div>
             </div>
         </div>
-
-        <!-- Related Products -->
-        <div class="mt-20 border-t border-gray-100 pt-16">
-            <h2 class="font-serif text-3xl text-primary text-center mb-2">You May Also Like</h2>
-            <p class="text-center text-sm text-gray-400 italic mb-10">More from our collection</p>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6" id="related-grid"></div>
+        <div class="border-t border-gray-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-500">&copy; 2025 AURA. All rights reserved.</p>
+                <div class="flex items-center space-x-4 text-xs text-gray-500">
+                    <span>We accept:</span>
+                    <i class="fab fa-cc-visa text-lg"></i>
+                    <i class="fab fa-cc-mastercard text-lg"></i>
+                    <i class="fas fa-money-bill-wave text-lg"></i>
+                </div>
+            </div>
         </div>
-    </section>
+    </footer>
 
-    <!-- Zoom Overlay -->
+    <!-- ======================== ZOOM OVERLAY ======================== -->
     <div class="zoom-overlay" id="zoom-overlay" onclick="closeZoom()">
-        <button onclick="closeZoom()" class="absolute top-6 right-6 text-white text-2xl hover:text-gray-300 z-10"><i class="fas fa-times"></i></button>
-        <img id="zoom-img" src="" alt="Zoom" class="max-w-[90vw] max-h-[90vh] object-contain select-none">
+        <button onclick="closeZoom()" class="absolute top-6 right-6 text-white text-2xl hover:text-gray-300 z-10 transition-colors" aria-label="Close zoom">
+            <i class="fas fa-times"></i>
+        </button>
+        <button onclick="event.stopPropagation(); zoomNav(-1)" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 text-white text-3xl hover:text-gray-300 z-10 transition-colors" aria-label="Previous image">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button onclick="event.stopPropagation(); zoomNav(1)" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 text-white text-3xl hover:text-gray-300 z-10 transition-colors" aria-label="Next image">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <img id="zoom-img" src="" alt="Zoom" class="max-w-[90vw] max-h-[90vh] object-contain select-none" onclick="event.stopPropagation()">
     </div>
 
-    <!-- Toast -->
+    <!-- ======================== STICKY MOBILE CTA ======================== -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] z-40 md:hidden px-4 py-3 flex items-center justify-between gap-3" id="mobile-cta" style="display:none;">
+        <div>
+            <p class="text-lg font-bold text-primary" id="mobile-price">Rs. 0</p>
+            <p class="text-[10px] text-gray-400 line-through" id="mobile-old-price"></p>
+        </div>
+        <button onclick="addToCart()" class="flex-1 max-w-[220px] bg-black text-white py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-darkRed transition-colors rounded-lg flex items-center justify-center gap-2">
+            <i class="fas fa-shopping-bag text-xs"></i> ADD TO BAG
+        </button>
+    </div>
+
+    <!-- ======================== TOAST ======================== -->
     <div id="toast"><i class="fas fa-check-circle text-green-400"></i><span id="toast-msg">Added!</span></div>
 
-    <!-- WhatsApp -->
-    <a href="#" class="fixed right-6 bottom-6 w-[52px] h-[52px] bg-[#25D366] text-white rounded-full flex items-center justify-center text-3xl shadow-xl z-50 hover:scale-110 transition-transform">
+    <!-- ======================== FLOATING WHATSAPP ======================== -->
+    <a href="https://wa.me/923000000000" target="_blank" class="fixed right-6 bottom-6 md:bottom-6 w-[52px] h-[52px] bg-[#25D366] text-white rounded-full flex items-center justify-center text-3xl shadow-xl z-50 hover:scale-110 transition-transform" id="floating-whatsapp">
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- ======================== JAVASCRIPT ======================== -->
     <script>
-        // ---- SANITY CONFIG ----
+        // ========================================
+        // CONFIGURATION
+        // ========================================
         const SANITY_PROJECT_ID = '8uqf5doi';
         const SANITY_DATASET = 'production';
         const SANITY_API_VERSION = '2023-05-03';
 
+        const COLOR_MAP = {
+            'black': '#000000', 'white': '#FFFFFF', 'red': '#DB1215',
+            'navy blue': '#1B2A4A', 'brown': '#6B3A2A', 'tan': '#D2B48C',
+            'beige': '#F5F0E1', 'pink': '#F4A7B9', 'maroon': '#5E1B1C',
+            'gray': '#808080', 'grey': '#808080', 'olive': '#556B2F',
+            'cream': '#FFFDD0', 'camel': '#C19A6B', 'burgundy': '#800020',
+            'navy': '#1B2A4A', 'blue': '#2563EB', 'green': '#16A34A',
+        };
+
+        const PRODUCTS_QUERY = `*[_type == "product"] | order(_createdAt desc){
+            "id": slug.current,
+            name,
+            brand,
+            category,
+            price,
+            oldPrice,
+            description,
+            colors,
+            "images": images[].asset->url,
+            isNew
+        }`;
+
+        // ========================================
+        // STATE
+        // ========================================
+        let products = [];
+        let currentProduct = null;
+        let currentThumb = 0;
+        let qty = 1;
+        let selectedColor = null;
+        let wishlist = JSON.parse(localStorage.getItem('aura_wishlist') || '[]');
+
+        // ========================================
+        // SANITY FETCH
+        // ========================================
         async function sanityFetch(query) {
             const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
             const res = await fetch(url);
@@ -267,42 +618,43 @@
             return data.result;
         }
 
-        // "id" below is aliased to the product's slug, so the rest of the page's
-        // logic (links, cart, related products) can keep working exactly as before.
-        const PRODUCTS_QUERY = `*[_type == "product"]{
-            "id": slug.current,
-            name,
-            brand,
-            category,
-            price,
-            oldPrice,
-            "images": images[].asset->url,
-            isNew,
-            "desc": description
-        }`;
-
-        let products = [];
-        let currentProduct = null, currentThumb = 0, qty = 1;
-
-        // ---- CART HELPERS ----
+        // ========================================
+        // CART HELPERS
+        // ========================================
         function getCart() { return JSON.parse(localStorage.getItem('aura_cart') || '[]'); }
         function saveCart(cart) { localStorage.setItem('aura_cart', JSON.stringify(cart)); }
         function updateBadge() {
-            const total = getCart().reduce((sum,i) => sum + i.qty, 0);
+            const total = getCart().reduce((sum, i) => sum + i.qty, 0);
             document.getElementById('cart-count').textContent = total;
         }
 
+        // ========================================
+        // CATEGORY HELPERS
+        // ========================================
         function getCategoryLabel(cat) {
-            return {handbag:'Handbags',shoulder:'Shoulder Bags',tote:'Tote Bags',crossbody:'Crossbody Bags'}[cat]||cat;
+            const map = {
+                'handbag': 'Handbags', 'shoulder': 'Shoulder Bags', 'tote': 'Tote Bags',
+                'crossbody': 'Crossbody Bags', 'glasses': 'Glasses', 'wallets': 'Wallets',
+                'shoes': 'Shoes', 'scarfs': 'Scarfs'
+            };
+            return map[cat] || (cat ? cat.charAt(0).toUpperCase() + cat.slice(1) : 'All');
         }
 
+        function getCategorySlug(cat) {
+            const bagTypes = ['handbag', 'shoulder', 'tote', 'crossbody'];
+            if (bagTypes.includes(cat)) return '';
+            return cat || '';
+        }
+
+        // ========================================
+        // INIT
+        // ========================================
         async function init() {
             try {
                 products = await sanityFetch(PRODUCTS_QUERY);
             } catch (err) {
                 console.error(err);
                 document.getElementById('product-name').textContent = 'Could not load product';
-                document.getElementById('product-desc').textContent = 'Please check your connection and try again.';
                 return;
             }
 
@@ -313,104 +665,531 @@
 
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
-            currentProduct = products.find(p=>p.id===id) || products[0];
+            currentProduct = products.find(p => p.id === id) || products[0];
 
             renderProduct();
+            renderColorSwatches();
             renderRelated();
+            renderRecentlyViewed();
+            saveToRecentlyViewed();
             updateBadge();
-            document.getElementById('cart-btn').addEventListener('click', () => window.location.href = 'checkout.html');
+            updateSEO();
+            updateDeliveryEstimate();
+            showMobileCTA();
         }
 
+        // ========================================
+        // RENDER PRODUCT
+        // ========================================
         function renderProduct() {
             const p = currentProduct;
-            document.getElementById('page-title').textContent = p.name + ' — AURA';
-            document.getElementById('breadcrumb-name').textContent = p.name.length > 40 ? p.name.substring(0,40)+'...' : p.name;
-            document.getElementById('breadcrumb-category').textContent = getCategoryLabel(p.category);
-            document.getElementById('product-brand').textContent = p.brand;
+
+            // Breadcrumb
+            document.getElementById('breadcrumb-name').textContent = p.name.length > 40 ? p.name.substring(0, 40) + '...' : p.name;
+            const catLabel = getCategoryLabel(p.category);
+            const breadcrumbCat = document.getElementById('breadcrumb-category');
+            breadcrumbCat.textContent = catLabel;
+            const catSlug = getCategorySlug(p.category);
+            breadcrumbCat.href = catSlug ? `shop.html?cat=${catSlug}` : 'shop.html';
+
+            // Product info
+            document.getElementById('product-brand').textContent = p.brand || 'AURA';
             document.getElementById('product-name').textContent = p.name;
             document.getElementById('product-price').textContent = 'Rs. ' + p.price.toLocaleString();
-            document.getElementById('product-desc').textContent = p.desc;
-            document.getElementById('product-category').textContent = getCategoryLabel(p.category);
 
-            if(p.oldPrice){
+            // Old price & discount
+            if (p.oldPrice && p.oldPrice > p.price) {
                 document.getElementById('product-old-price').textContent = 'Rs. ' + p.oldPrice.toLocaleString();
-                const disc = Math.round((1-p.price/p.oldPrice)*100);
-                document.getElementById('product-discount').textContent = '-'+disc+'%';
-                document.getElementById('badge-sale').textContent = '-'+disc+'% OFF';
+                const disc = Math.round((1 - p.price / p.oldPrice) * 100);
+                const discountEl = document.getElementById('product-discount');
+                discountEl.textContent = '-' + disc + '% OFF';
+                discountEl.classList.remove('hidden');
+                document.getElementById('badge-sale').textContent = '-' + disc + '%';
                 document.getElementById('badge-sale').classList.remove('hidden');
             }
-            if(p.isNew) document.getElementById('badge-new').classList.remove('hidden');
 
-            document.getElementById('main-img').src = p.images[0];
-            document.getElementById('zoom-img').src = p.images[0];
+            if (p.isNew) document.getElementById('badge-new').classList.remove('hidden');
 
+            // Description in tab
+            if (p.description) {
+                document.getElementById('tab-description').textContent = p.description;
+            }
+
+            // Main image
+            if (p.images && p.images.length) {
+                document.getElementById('main-img').src = p.images[0];
+                document.getElementById('zoom-img').src = p.images[0];
+            }
+
+            // Thumbnails
             const thumbRow = document.getElementById('thumb-row');
             thumbRow.innerHTML = '';
-            p.images.forEach((src,i)=>{
-                const div = document.createElement('div');
-                div.className = `shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden transition-all ${i===0?'border-black':'border-gray-200 hover:border-gray-500'}`;
-                div.onclick = ()=>selectThumb(i);
-                div.id = 'thumb-'+i;
-                const img = document.createElement('img');
-                img.src = src;
-                img.className = 'w-full h-full object-cover';
-                div.appendChild(img);
-                thumbRow.appendChild(div);
-            });
+            if (p.images) {
+                p.images.forEach((src, i) => {
+                    const div = document.createElement('div');
+                    div.className = `thumb-item shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden rounded-lg ${i === 0 ? 'active border-black' : 'border-gray-200 hover:border-gray-400'}`;
+                    div.onclick = () => selectThumb(i);
+                    div.id = 'thumb-' + i;
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.alt = p.name + ' - Image ' + (i + 1);
+                    img.className = 'w-full h-full object-cover';
+                    img.loading = 'lazy';
+                    div.appendChild(img);
+                    thumbRow.appendChild(div);
+                });
+            }
         }
 
+        // ========================================
+        // THUMBNAIL SELECTION
+        // ========================================
         function selectThumb(i) {
             const p = currentProduct;
-            document.getElementById('main-img').src = p.images[i];
-            document.getElementById('zoom-img').src = p.images[i];
-            document.getElementById('thumb-'+currentThumb).className = `shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden transition-all border-gray-200 hover:border-gray-500`;
-            document.getElementById('thumb-'+i).className = `shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden transition-all border-black`;
+            if (!p.images || !p.images[i]) return;
+
+            const mainImg = document.getElementById('main-img');
+            mainImg.style.opacity = '0';
+            setTimeout(() => {
+                mainImg.src = p.images[i];
+                document.getElementById('zoom-img').src = p.images[i];
+                mainImg.style.opacity = '1';
+            }, 150);
+            mainImg.style.transition = 'opacity 0.15s ease';
+
+            // Update active state
+            const prevThumb = document.getElementById('thumb-' + currentThumb);
+            if (prevThumb) {
+                prevThumb.classList.remove('active', 'border-black');
+                prevThumb.classList.add('border-gray-200');
+            }
+            const newThumb = document.getElementById('thumb-' + i);
+            if (newThumb) {
+                newThumb.classList.add('active', 'border-black');
+                newThumb.classList.remove('border-gray-200');
+            }
             currentThumb = i;
         }
 
-        function renderRelated() {
+        // ========================================
+        // COLOR SWATCHES
+        // ========================================
+        function renderColorSwatches() {
             const p = currentProduct;
-            let related = products.filter(x=>x.id!==p.id&&x.category===p.category).slice(0,4);
-            if(related.length<4) related = [...related,...products.filter(x=>x.id!==p.id&&x.category!==p.category)].slice(0,4);
-            const grid = document.getElementById('related-grid');
+            if (!p.colors || !p.colors.length) return;
+
+            const section = document.getElementById('color-section');
+            section.style.display = '';
+            const container = document.getElementById('color-swatches');
+            container.innerHTML = '';
+
+            p.colors.forEach((colorName, i) => {
+                const hex = COLOR_MAP[colorName.toLowerCase()] || '#808080';
+                const isLight = isLightColor(hex);
+                const btn = document.createElement('button');
+                btn.className = `color-swatch w-8 h-8 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} ${i === 0 ? 'active' : ''}`;
+                btn.style.backgroundColor = hex;
+                btn.title = colorName;
+                btn.setAttribute('aria-label', 'Select color: ' + colorName);
+                btn.onclick = () => selectColor(colorName, i);
+                container.appendChild(btn);
+            });
+
+            // Default first color
+            selectedColor = p.colors[0];
+            document.getElementById('selected-color-name').textContent = p.colors[0];
+        }
+
+        function selectColor(colorName, index) {
+            selectedColor = colorName;
+            document.getElementById('selected-color-name').textContent = colorName;
+            document.querySelectorAll('.color-swatch').forEach((s, i) => {
+                s.classList.toggle('active', i === index);
+            });
+        }
+
+        function isLightColor(hex) {
+            const r = parseInt(hex.slice(1, 3), 16);
+            const g = parseInt(hex.slice(3, 5), 16);
+            const b = parseInt(hex.slice(5, 7), 16);
+            return (r * 299 + g * 587 + b * 114) / 1000 > 180;
+        }
+
+        // ========================================
+        // IMAGE ZOOM (hover)
+        // ========================================
+        function handleImgZoom(e) {
+            const wrap = document.getElementById('main-img-wrap');
+            const rect = wrap.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            const img = document.getElementById('main-img');
+            img.style.setProperty('--zoom-x', x + '%');
+            img.style.setProperty('--zoom-y', y + '%');
+        }
+
+        function resetImgZoom() {
+            const img = document.getElementById('main-img');
+            img.style.setProperty('--zoom-x', 'center');
+            img.style.setProperty('--zoom-y', 'center');
+        }
+
+        // ========================================
+        // LIGHTBOX ZOOM
+        // ========================================
+        function openZoom() {
+            document.getElementById('zoom-overlay').classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeZoom() {
+            document.getElementById('zoom-overlay').classList.remove('open');
+            document.body.style.overflow = '';
+        }
+        function zoomNav(direction) {
+            const p = currentProduct;
+            if (!p.images || p.images.length <= 1) return;
+            let newIdx = currentThumb + direction;
+            if (newIdx < 0) newIdx = p.images.length - 1;
+            if (newIdx >= p.images.length) newIdx = 0;
+            selectThumb(newIdx);
+            document.getElementById('zoom-img').src = p.images[newIdx];
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            const overlay = document.getElementById('zoom-overlay');
+            if (overlay.classList.contains('open')) {
+                if (e.key === 'Escape') closeZoom();
+                if (e.key === 'ArrowLeft') zoomNav(-1);
+                if (e.key === 'ArrowRight') zoomNav(1);
+            } else {
+                if (e.key === 'ArrowLeft') {
+                    const p = currentProduct;
+                    if (p && p.images && p.images.length > 1) {
+                        let newIdx = currentThumb - 1;
+                        if (newIdx < 0) newIdx = p.images.length - 1;
+                        selectThumb(newIdx);
+                    }
+                }
+                if (e.key === 'ArrowRight') {
+                    const p = currentProduct;
+                    if (p && p.images && p.images.length > 1) {
+                        let newIdx = currentThumb + 1;
+                        if (newIdx >= p.images.length) newIdx = 0;
+                        selectThumb(newIdx);
+                    }
+                }
+            }
+        });
+
+        // ========================================
+        // TABS
+        // ========================================
+        function switchTab(tabName, btn) {
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(b => {
+                b.classList.remove('active', 'text-primary');
+                b.classList.add('text-gray-400');
+            });
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            btn.classList.add('active', 'text-primary');
+            btn.classList.remove('text-gray-400');
+        }
+
+        // ========================================
+        // QUANTITY
+        // ========================================
+        function changeQty(d) {
+            qty = Math.max(1, qty + d);
+            document.getElementById('qty-display').textContent = qty;
+        }
+
+        // ========================================
+        // ADD TO CART
+        // ========================================
+        function addToCart() {
+            if (!currentProduct) return;
+            const p = currentProduct;
+            const cart = getCart();
+            const cartKey = selectedColor ? p.id + '-' + selectedColor.toLowerCase() : p.id;
+            const existing = cart.find(i => i.id === cartKey);
+            if (existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({
+                    id: cartKey,
+                    productId: p.id,
+                    name: p.name,
+                    brand: p.brand || 'AURA',
+                    price: p.price,
+                    image: p.images ? p.images[0] : '',
+                    color: selectedColor || null,
+                    qty: qty
+                });
+            }
+            saveCart(cart);
+            updateBadge();
+            showToast(qty + 'x ' + p.name.substring(0, 20) + ' added to bag!');
+        }
+
+        // ========================================
+        // ORDER VIA WHATSAPP
+        // ========================================
+        function orderWhatsApp() {
+            if (!currentProduct) return;
+            const p = currentProduct;
+            let msg = `Hi! I'd like to order:\n\n`;
+            msg += `*${p.name}*\n`;
+            msg += `Price: Rs. ${p.price.toLocaleString()}\n`;
+            msg += `Qty: ${qty}\n`;
+            if (selectedColor) msg += `Color: ${selectedColor}\n`;
+            msg += `\nProduct link: ${window.location.href}`;
+            window.open('https://wa.me/923000000000?text=' + encodeURIComponent(msg), '_blank');
+        }
+
+        // ========================================
+        // SOCIAL SHARING
+        // ========================================
+        function shareWhatsApp() {
+            const url = window.location.href;
+            const text = currentProduct ? `Check out ${currentProduct.name} on AURA! ${url}` : url;
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+        }
+
+        function shareFacebook() {
+            window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(window.location.href), '_blank');
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('Link copied to clipboard!');
+            }).catch(() => {
+                showToast('Could not copy link');
+            });
+        }
+
+        // ========================================
+        // DELIVERY ESTIMATE
+        // ========================================
+        function updateDeliveryEstimate() {
+            const today = new Date();
+            const minDays = 3;
+            const maxDays = 5;
+            const minDate = new Date(today);
+            minDate.setDate(minDate.getDate() + minDays);
+            const maxDate = new Date(today);
+            maxDate.setDate(maxDate.getDate() + maxDays);
+
+            const options = { month: 'short', day: 'numeric' };
+            const minStr = minDate.toLocaleDateString('en-US', options);
+            const maxStr = maxDate.toLocaleDateString('en-US', options);
+
+            document.getElementById('delivery-estimate').textContent = `Order now, get by ${minStr} – ${maxStr}`;
+        }
+
+        // ========================================
+        // MOBILE CTA
+        // ========================================
+        function showMobileCTA() {
+            if (!currentProduct) return;
+            const cta = document.getElementById('mobile-cta');
+            cta.style.display = '';
+            document.getElementById('mobile-price').textContent = 'Rs. ' + currentProduct.price.toLocaleString();
+            if (currentProduct.oldPrice && currentProduct.oldPrice > currentProduct.price) {
+                document.getElementById('mobile-old-price').textContent = 'Rs. ' + currentProduct.oldPrice.toLocaleString();
+            }
+            // Adjust floating WhatsApp position on mobile
+            const floatingWA = document.getElementById('floating-whatsapp');
+            if (window.innerWidth < 768) {
+                floatingWA.style.bottom = '80px';
+            }
+        }
+
+        // ========================================
+        // RECENTLY VIEWED
+        // ========================================
+        function saveToRecentlyViewed() {
+            if (!currentProduct) return;
+            const p = currentProduct;
+            let viewed = JSON.parse(localStorage.getItem('aura_recently_viewed') || '[]');
+            // Remove if already exists
+            viewed = viewed.filter(v => v.id !== p.id);
+            // Add to front
+            viewed.unshift({
+                id: p.id,
+                name: p.name,
+                brand: p.brand || 'AURA',
+                price: p.price,
+                oldPrice: p.oldPrice || null,
+                image: p.images ? p.images[0] : '',
+                category: p.category
+            });
+            // Keep max 10
+            viewed = viewed.slice(0, 10);
+            localStorage.setItem('aura_recently_viewed', JSON.stringify(viewed));
+        }
+
+        function renderRecentlyViewed() {
+            const viewed = JSON.parse(localStorage.getItem('aura_recently_viewed') || '[]');
+            const filtered = viewed.filter(v => !currentProduct || v.id !== currentProduct.id).slice(0, 4);
+
+            if (filtered.length === 0) return;
+
+            const section = document.getElementById('recently-viewed-section');
+            section.style.display = '';
+            const grid = document.getElementById('recently-viewed-grid');
             grid.innerHTML = '';
-            related.forEach(r=>{
-                const disc = r.oldPrice ? Math.round((1-r.price/r.oldPrice)*100) : null;
+
+            filtered.forEach(r => {
+                const disc = r.oldPrice ? Math.round((1 - r.price / r.oldPrice) * 100) : null;
                 const card = document.createElement('a');
-                card.href = 'product-detail.html?id='+r.id;
-                card.className = 'group cursor-pointer block';
+                card.href = 'product-detail.html?id=' + r.id;
+                card.className = 'product-card bg-white rounded-xl overflow-hidden cursor-pointer block border border-gray-100/80';
                 card.innerHTML = `
-                    <div class="relative bg-surface overflow-hidden mb-3 rounded-sm" style="aspect-ratio:1/1;">
-                        <img src="${r.images[0]}" alt="${r.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        ${disc?`<div class="absolute top-2 left-2 bg-black text-white text-[9px] font-bold px-2 py-0.5 rounded-full">-${disc}%</div>`:''}
+                    <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 aspect-[3/4]">
+                        <img src="${r.image}" alt="${r.name}" class="product-img w-full h-full object-cover" loading="lazy">
+                        ${disc ? `<div class="absolute top-2 left-2 badge-sale text-white text-[9px] font-bold px-2 py-0.5 rounded-full">-${disc}%</div>` : ''}
                     </div>
-                    <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-widest mb-1">${r.brand}</p>
-                    <h4 class="text-sm font-semibold text-primary group-hover:text-accent transition-colors leading-snug line-clamp-2 mb-1">${r.name}</h4>
-                    <p class="text-sm font-bold">Rs. ${r.price.toLocaleString()}</p>`;
+                    <div class="p-3 md:p-4">
+                        <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-[0.15em] mb-1">${r.brand || 'AURA'}</p>
+                        <h4 class="text-[11px] md:text-xs font-bold uppercase tracking-wide text-black mb-2 line-clamp-2 leading-relaxed">${r.name}</h4>
+                        <div class="flex items-center space-x-2">
+                            <span class="font-bold text-sm text-black">Rs. ${r.price.toLocaleString()}</span>
+                            ${r.oldPrice ? `<span class="text-gray-400 line-through text-[11px]">Rs. ${r.oldPrice.toLocaleString()}</span>` : ''}
+                        </div>
+                    </div>`;
                 grid.appendChild(card);
             });
         }
 
-        function changeQty(d){ qty=Math.max(1,qty+d); document.getElementById('qty-display').textContent=qty; }
-
-        function addToCart(){
+        // ========================================
+        // RELATED PRODUCTS
+        // ========================================
+        function renderRelated() {
             const p = currentProduct;
-            const cart = getCart();
-            const existing = cart.find(i => i.id === p.id);
-            if (existing) { existing.qty += qty; }
-            else { cart.push({ id: p.id, name: p.name, brand: p.brand, price: p.price, image: p.images[0], qty: qty }); }
-            saveCart(cart);
-            updateBadge();
-            showToast(qty+'x added to cart!');
+            let related = products.filter(x => x.id !== p.id && x.category === p.category).slice(0, 4);
+            if (related.length < 4) {
+                const extra = products.filter(x => x.id !== p.id && !related.find(r => r.id === x.id));
+                related = [...related, ...extra].slice(0, 4);
+            }
+
+            const grid = document.getElementById('related-grid');
+            grid.innerHTML = '';
+
+            related.forEach((r, index) => {
+                const disc = r.oldPrice ? Math.round((1 - r.price / r.oldPrice) * 100) : null;
+                const isWished = wishlist.includes(r.id);
+                const card = document.createElement('div');
+                card.className = 'product-card bg-white rounded-xl overflow-hidden cursor-pointer flex flex-col h-full border border-gray-100/80';
+                card.style.animationDelay = (index * 0.08) + 's';
+                card.style.opacity = '0';
+                card.style.animation = `fadeUp 0.5s ease ${index * 0.08}s forwards`;
+
+                card.innerHTML = `
+                    <a href="product-detail.html?id=${r.id}" class="flex flex-col h-full">
+                        <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 aspect-[3/4] shrink-0 w-full">
+                            <img src="${r.images[0]}" alt="${r.name}" class="product-img w-full h-full object-cover" loading="lazy">
+                            <div class="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
+                                ${disc ? `<div class="badge-sale text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">-${disc}%</div>` : ''}
+                                ${r.isNew ? `<div class="badge-new text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">NEW</div>` : ''}
+                            </div>
+                            <button onclick="toggleWishlist(event, '${r.id}')" class="wishlist-btn ${isWished ? 'active' : ''} absolute top-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-all z-10 hover:scale-110">
+                                <i class="${isWished ? 'fas' : 'far'} fa-heart text-sm ${isWished ? 'text-accent' : 'text-gray-500'}"></i>
+                            </button>
+                            <div class="quick-actions absolute bottom-0 left-0 right-0 p-3 z-10">
+                                <button onclick="quickAddToCart(event, '${r.id}')" class="w-full bg-black/90 backdrop-blur-sm text-white py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-darkRed transition-colors flex items-center justify-center gap-2 shadow-lg">
+                                    <i class="fas fa-shopping-bag text-[9px]"></i> Add to Bag
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3 md:p-4 flex flex-col flex-1">
+                            <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-[0.15em] mb-1">${r.brand || 'AURA'}</p>
+                            <h4 class="text-[11px] md:text-xs font-bold uppercase tracking-wide text-black mb-2 line-clamp-2 leading-relaxed">${r.name}</h4>
+                            <div class="flex items-center space-x-2 mt-auto pt-1">
+                                <span class="font-bold text-sm text-black">Rs. ${r.price.toLocaleString()}</span>
+                                ${r.oldPrice ? `<span class="text-gray-400 line-through text-[11px]">Rs. ${r.oldPrice.toLocaleString()}</span>` : ''}
+                            </div>
+                        </div>
+                    </a>`;
+                grid.appendChild(card);
+            });
         }
 
-        function showToast() {
+        function quickAddToCart(e, productId) {
+            e.preventDefault();
+            e.stopPropagation();
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+            const cart = getCart();
+            const existing = cart.find(i => i.id === productId);
+            if (existing) { existing.qty++; }
+            else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    brand: product.brand || 'AURA',
+                    price: product.price,
+                    image: product.images ? product.images[0] : '',
+                    qty: 1
+                });
+            }
+            saveCart(cart);
+            updateBadge();
+            showToast('Added to bag!');
+        }
+
+        // ========================================
+        // WISHLIST
+        // ========================================
+        function toggleWishlist(e, productId) {
+            e.preventDefault();
+            e.stopPropagation();
+            const idx = wishlist.indexOf(productId);
+            if (idx > -1) { wishlist.splice(idx, 1); }
+            else { wishlist.push(productId); }
+            localStorage.setItem('aura_wishlist', JSON.stringify(wishlist));
+            const btn = e.currentTarget;
+            btn.classList.toggle('active');
+            const icon = btn.querySelector('i');
+            if (icon) {
+                icon.classList.toggle('fas');
+                icon.classList.toggle('far');
+                icon.classList.toggle('text-accent');
+                icon.classList.toggle('text-gray-500');
+            }
+            showToast(idx > -1 ? 'Removed from wishlist' : 'Added to wishlist');
+        }
+
+        // ========================================
+        // SEO
+        // ========================================
+        function updateSEO() {
+            if (!currentProduct) return;
+            const p = currentProduct;
+            const url = window.location.href;
+
+            document.getElementById('page-title').textContent = p.name + ' - AURA';
+            document.getElementById('meta-desc').setAttribute('content', p.description || `Shop ${p.name} at AURA. Premium luxury accessories with free shipping over Rs. 10,000.`);
+            document.getElementById('og-title').setAttribute('content', p.name + ' - AURA');
+            document.getElementById('og-desc').setAttribute('content', p.description || `Shop ${p.name} at AURA.`);
+            document.getElementById('og-image').setAttribute('content', p.images ? p.images[0] : '');
+            document.getElementById('og-url').setAttribute('content', url);
+            document.getElementById('canonical-url').setAttribute('href', url);
+        }
+
+        // ========================================
+        // TOAST
+        // ========================================
+        function showToast(msg) {
             const toast = document.getElementById('toast');
+            document.getElementById('toast-msg').textContent = msg;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 3000);
         }
 
-        // Mobile Menu
+        // ========================================
+        // MOBILE MENU
+        // ========================================
         function openMobileMenu() {
             document.getElementById('mobile-menu-overlay').classList.add('active');
             document.getElementById('mobile-menu-panel').classList.add('active');
@@ -423,17 +1202,9 @@
         }
         document.getElementById('mobile-menu-btn').addEventListener('click', openMobileMenu);
 
-        function openZoom(){ document.getElementById('zoom-overlay').classList.add('open'); document.body.style.overflow='hidden'; }
-        function closeZoom(){ document.getElementById('zoom-overlay').classList.remove('open'); document.body.style.overflow=''; }
-
-        function toggleAccordion(key){
-            const c=document.getElementById('acc-'+key);
-            const icon=document.getElementById('icon-'+key);
-            c.classList.toggle('open');
-            icon.classList.toggle('fa-plus');
-            icon.classList.toggle('fa-minus');
-        }
-
+        // ========================================
+        // BOOT
+        // ========================================
         window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
