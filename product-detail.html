@@ -594,7 +594,7 @@
             oldPrice,
             description,
             colors,
-            "images": images[].asset->url,
+            "images": images[]{ "url": asset->url, "color": color },
             isNew
         }`;
 
@@ -730,21 +730,21 @@
 
             // Main image
             if (p.images && p.images.length) {
-                document.getElementById('main-img').src = p.images[0];
-                document.getElementById('zoom-img').src = p.images[0];
+                document.getElementById('main-img').src = p.images[0].url;
+                document.getElementById('zoom-img').src = p.images[0].url;
             }
 
             // Thumbnails
             const thumbRow = document.getElementById('thumb-row');
             thumbRow.innerHTML = '';
             if (p.images) {
-                p.images.forEach((src, i) => {
+                p.images.forEach((imgObj, i) => {
                     const div = document.createElement('div');
                     div.className = `thumb-item shrink-0 w-20 h-20 cursor-pointer border-2 overflow-hidden rounded-lg ${i === 0 ? 'active border-black' : 'border-gray-200 hover:border-gray-400'}`;
                     div.onclick = () => selectThumb(i);
                     div.id = 'thumb-' + i;
                     const img = document.createElement('img');
-                    img.src = src;
+                    img.src = imgObj.url;
                     img.alt = p.name + ' - Image ' + (i + 1);
                     img.className = 'w-full h-full object-cover';
                     img.loading = 'lazy';
@@ -758,14 +758,11 @@
         // THUMBNAIL SELECTION
         // ========================================
         function selectThumb(i) {
-            const p = currentProduct;
-            if (!p.images || !p.images[i]) return;
-
             const mainImg = document.getElementById('main-img');
             mainImg.style.opacity = '0';
             setTimeout(() => {
-                mainImg.src = p.images[i];
-                document.getElementById('zoom-img').src = p.images[i];
+                mainImg.src = currentProduct.images[i].url;
+                document.getElementById('zoom-img').src = currentProduct.images[i].url;
                 mainImg.style.opacity = '1';
             }, 150);
             mainImg.style.transition = 'opacity 0.15s ease';
@@ -819,6 +816,15 @@
             document.querySelectorAll('.color-swatch').forEach((s, i) => {
                 s.classList.toggle('active', i === index);
             });
+            
+            // Auto-select corresponding image if available
+            const p = currentProduct;
+            if (p && p.images) {
+                const imgIndex = p.images.findIndex(img => img.color && img.color.toLowerCase() === colorName.toLowerCase());
+                if (imgIndex !== -1) {
+                    selectThumb(imgIndex);
+                }
+            }
         }
 
         function isLightColor(hex) {
@@ -865,7 +871,7 @@
             if (newIdx < 0) newIdx = p.images.length - 1;
             if (newIdx >= p.images.length) newIdx = 0;
             selectThumb(newIdx);
-            document.getElementById('zoom-img').src = p.images[newIdx];
+            document.getElementById('zoom-img').src = p.images[newIdx].url;
         }
 
         // Keyboard navigation
@@ -925,6 +931,7 @@
             const p = currentProduct;
             const cart = getCart();
             const cartKey = selectedColor ? p.id + '-' + selectedColor.toLowerCase() : p.id;
+            const selectedImg = p.images ? (p.images.find(img => img.color && img.color.toLowerCase() === selectedColor?.toLowerCase())?.url || p.images[0]?.url) : '';
             const existing = cart.find(i => i.id === cartKey);
             if (existing) {
                 existing.qty += qty;
@@ -935,7 +942,7 @@
                     name: p.name,
                     brand: p.brand || 'AURA',
                     price: p.price,
-                    image: p.images ? p.images[0] : '',
+                    image: selectedImg,
                     color: selectedColor || null,
                     qty: qty
                 });
@@ -1034,7 +1041,7 @@
                 brand: p.brand || 'AURA',
                 price: p.price,
                 oldPrice: p.oldPrice || null,
-                image: p.images ? p.images[0] : '',
+                image: p.images ? (p.images[0]?.url || p.images[0]) : '',
                 category: p.category
             });
             // Keep max 10
@@ -1060,7 +1067,7 @@
                 card.className = 'product-card bg-white rounded-xl overflow-hidden cursor-pointer block border border-gray-100/80';
                 card.innerHTML = `
                     <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 aspect-[3/4]">
-                        <img src="${r.image}" alt="${r.name}" class="product-img w-full h-full object-cover" loading="lazy">
+                        <img src="${r.image?.url || r.image}" alt="${r.name}" class="product-img w-full h-full object-cover" loading="lazy">
                         ${disc ? `<div class="absolute top-2 left-2 badge-sale text-white text-[9px] font-bold px-2 py-0.5 rounded-full">-${disc}%</div>` : ''}
                     </div>
                     <div class="p-3 md:p-4">
@@ -1118,7 +1125,7 @@
                 card.innerHTML = `
                     <a href="product-detail.html?id=${r.id}" class="flex flex-col h-full">
                         <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 aspect-[3/4] shrink-0 w-full">
-                            <img src="${r.images[0]}" alt="${r.name}" class="product-img w-full h-full object-cover" loading="lazy">
+                            <img src="${r.images[0]?.url || r.images[0]}" alt="${r.name}" class="product-img w-full h-full object-cover" loading="lazy">
                             <div class="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
                                 ${disc ? `<div class="badge-sale text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">-${disc}%</div>` : ''}
                                 ${r.isNew ? `<div class="badge-new text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">NEW</div>` : ''}
@@ -1155,6 +1162,7 @@
             
             const color = relatedSelectedColors[productId] || (product.colors && product.colors.length > 0 ? product.colors[0] : null);
             const cartKey = color ? product.id + '-' + color.toLowerCase() : product.id;
+            const selectedImg = product.images ? (product.images.find(img => img.color && img.color.toLowerCase() === color?.toLowerCase())?.url || product.images[0]?.url || product.images[0]) : '';
 
             const existing = cart.find(i => i.id === cartKey);
             if (existing) { existing.qty++; }
@@ -1165,7 +1173,7 @@
                     name: product.name,
                     brand: product.brand || 'AURA',
                     price: product.price,
-                    image: product.images ? product.images[0] : '',
+                    image: selectedImg,
                     color: color,
                     qty: 1
                 });
@@ -1209,7 +1217,7 @@
             document.getElementById('meta-desc').setAttribute('content', p.description || `Shop ${p.name} at AURA. Premium luxury accessories with free shipping over Rs. 10,000.`);
             document.getElementById('og-title').setAttribute('content', p.name + ' - AURA');
             document.getElementById('og-desc').setAttribute('content', p.description || `Shop ${p.name} at AURA.`);
-            document.getElementById('og-image').setAttribute('content', p.images ? p.images[0] : '');
+            document.getElementById('og-image').setAttribute('content', p.images ? (p.images[0]?.url || p.images[0]) : '');
             document.getElementById('og-url').setAttribute('content', url);
             document.getElementById('canonical-url').setAttribute('href', url);
         }

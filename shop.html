@@ -482,7 +482,7 @@
             price,
             oldPrice,
             colors,
-            "images": images[].asset->url,
+            "images": images[]{ "url": asset->url, "color": color },
             isNew
         }`;
 
@@ -720,7 +720,7 @@
                     <a href="product-detail.html?id=${p.id}" class="flex flex-col h-full">
                         <!-- Image Container -->
                         <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 aspect-[3/4] shrink-0 w-full">
-                            <img src="${p.images[0]}" alt="${p.name}" class="product-img w-full h-full object-cover" loading="lazy">
+                            <img src="${p.images[0]?.url || p.images[0]}" alt="${p.name}" class="product-img w-full h-full object-cover" loading="lazy">
                             
                             <!-- Badges -->
                             <div class="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
@@ -769,13 +769,14 @@
             const existing = cart.find(i => i.id === cartKey);
             if (existing) { existing.qty++; }
             else { 
+                const selectedImg = product.images.find(img => img.color && img.color.toLowerCase() === selectedColor?.toLowerCase())?.url || product.images[0]?.url || product.images[0];
                 cart.push({ 
                     id: cartKey, 
                     productId: product.id, 
                     name: product.name, 
                     brand: product.brand, 
                     price: product.price, 
-                    image: product.images[0], 
+                    image: selectedImg, 
                     color: selectedColor,
                     qty: 1 
                 }); 
