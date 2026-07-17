@@ -467,7 +467,7 @@
         const SANITY_API_VERSION = '2023-05-03';
 
         async function sanityFetch(query) {
-            const url = `https://${SANITY_PROJECT_ID}.apicdn.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+            const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
             const res = await fetch(url);
             if (!res.ok) throw new Error('Sanity fetch failed: ' + res.status);
             const data = await res.json();
@@ -499,6 +499,7 @@
             'gray': '#808080', 'grey': '#808080', 'olive': '#556B2F',
             'cream': '#FFFDD0', 'camel': '#C19A6B', 'burgundy': '#800020',
             'navy': '#1B2A4A', 'blue': '#2563EB', 'green': '#16A34A',
+            'light brown': '#B5651D', 'dark brown': '#5C4033', 'mustard': '#FFDB58'
         };
 
         function isLightColor(hex) {
