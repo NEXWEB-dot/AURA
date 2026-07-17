@@ -606,6 +606,18 @@
         let qty = 1;
         let selectedColor = null;
         let wishlist = JSON.parse(localStorage.getItem('aura_wishlist') || '[]');
+        let relatedSelectedColors = {};
+
+        function selectRelatedColor(e, productId, color, btn) {
+            e.preventDefault();
+            e.stopPropagation();
+            relatedSelectedColors[productId] = color;
+            const card = btn.closest('.product-card');
+            card.querySelectorAll('.related-color-' + productId).forEach(b => {
+                b.classList.remove('ring-2', 'ring-black', 'ring-offset-1');
+            });
+            btn.classList.add('ring-2', 'ring-black', 'ring-offset-1');
+        }
 
         // ========================================
         // SANITY FETCH
@@ -1079,6 +1091,23 @@
             related.forEach((r, index) => {
                 const disc = r.oldPrice ? Math.round((1 - r.price / r.oldPrice) * 100) : null;
                 const isWished = wishlist.includes(r.id);
+
+                if (r.colors && r.colors.length > 0 && !relatedSelectedColors[r.id]) {
+                    relatedSelectedColors[r.id] = r.colors[0];
+                }
+
+                let colorHtml = '';
+                if (r.colors && r.colors.length > 0) {
+                    colorHtml = `<div class="flex gap-1.5 mt-2 mb-1" onclick="event.preventDefault(); event.stopPropagation();">`;
+                    r.colors.forEach((c, i) => {
+                        const hex = COLOR_MAP[c.toLowerCase()] || '#808080';
+                        const isLight = isLightColor(hex);
+                        const isSelected = relatedSelectedColors[r.id] === c;
+                        colorHtml += `<button onclick="selectRelatedColor(event, '${r.id}', '${c}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} related-color-${r.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${c}"></button>`;
+                    });
+                    colorHtml += `</div>`;
+                }
+
                 const card = document.createElement('div');
                 card.className = 'product-card bg-white rounded-xl overflow-hidden cursor-pointer flex flex-col h-full border border-gray-100/80';
                 card.style.animationDelay = (index * 0.08) + 's';
@@ -1105,6 +1134,7 @@
                         <div class="p-3 md:p-4 flex flex-col flex-1">
                             <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-[0.15em] mb-1">${r.brand || 'AURA'}</p>
                             <h4 class="text-[11px] md:text-xs font-bold uppercase tracking-wide text-black mb-2 line-clamp-2 leading-relaxed">${r.name}</h4>
+                            ${colorHtml}
                             <div class="flex items-center space-x-2 mt-auto pt-1">
                                 <span class="font-bold text-sm text-black">Rs. ${r.price.toLocaleString()}</span>
                                 ${r.oldPrice ? `<span class="text-gray-400 line-through text-[11px]">Rs. ${r.oldPrice.toLocaleString()}</span>` : ''}
@@ -1121,15 +1151,21 @@
             const product = products.find(p => p.id === productId);
             if (!product) return;
             const cart = getCart();
-            const existing = cart.find(i => i.id === productId);
+            
+            const color = relatedSelectedColors[productId] || (product.colors && product.colors.length > 0 ? product.colors[0] : null);
+            const cartKey = color ? product.id + '-' + color.toLowerCase() : product.id;
+
+            const existing = cart.find(i => i.id === cartKey);
             if (existing) { existing.qty++; }
             else {
                 cart.push({
-                    id: product.id,
+                    id: cartKey,
+                    productId: product.id,
                     name: product.name,
                     brand: product.brand || 'AURA',
                     price: product.price,
                     image: product.images ? product.images[0] : '',
+                    color: color,
                     qty: 1
                 });
             }

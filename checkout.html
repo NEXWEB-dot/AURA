@@ -465,6 +465,7 @@
                     <div class="flex-1 min-w-0">
                         <p class="text-[10px] text-gray-400 font-semibold uppercase tracking-widest">${item.brand}</p>
                         <p class="text-sm font-semibold text-black leading-snug mt-0.5 truncate">${item.name}</p>
+                        ${item.color ? `<p class="text-[10px] font-bold text-gray-500 mt-0.5">COLOR: ${item.color.toUpperCase()}</p>` : ''}
                         <p class="text-sm font-bold mt-1">Rs. ${item.price.toLocaleString()}</p>
                     </div>
                     <div class="flex flex-col items-end gap-3 shrink-0">
@@ -489,6 +490,7 @@
                     </div>
                     <div class="flex-1 min-w-0">
                         <p class="text-xs font-semibold truncate">${item.name}</p>
+                        ${item.color ? `<p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest">${item.color}</p>` : ''}
                         <p class="text-xs text-gray-400">Rs. ${(item.price * item.qty).toLocaleString()}</p>
                     </div>
                 </div>
