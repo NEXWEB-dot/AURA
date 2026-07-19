@@ -134,13 +134,18 @@
                     <a href="shop.html" class="inline-block mt-4 bg-black text-white px-6 py-2.5 text-xs font-bold tracking-widest hover:bg-gray-800 transition-colors rounded-sm">Start Shopping</a>
                 </div>
 
-                <div id="cart-actions" class="hidden mt-5 pt-5 border-t border-gray-100 flex justify-between items-center">
-                    <button onclick="clearCart()" class="text-xs text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1.5">
+                <div id="cart-actions" class="hidden mt-5 pt-5 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <button onclick="clearCart()" class="text-xs text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1.5 self-start sm:self-center">
                         <i class="fas fa-trash-alt text-[11px]"></i> Clear Cart
                     </button>
-                    <button onclick="goToStep(2)" id="to-delivery-btn" class="bg-black text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center gap-2">
-                        Proceed to Delivery <i class="fas fa-arrow-right text-[11px]"></i>
-                    </button>
+                    <div class="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
+                        <button onclick="checkoutViaWhatsapp()" class="bg-[#25D366] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-[#1DA851] transition-colors rounded-sm flex items-center justify-center gap-2">
+                            <i class="fab fa-whatsapp text-sm"></i> WhatsApp Checkout
+                        </button>
+                        <button onclick="goToStep(2)" id="to-delivery-btn" class="bg-black text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center justify-center gap-2">
+                            Proceed to Delivery <i class="fas fa-arrow-right text-[11px]"></i>
+                        </button>
+                    </div>
                 </div>
             </section>
 
@@ -406,9 +411,93 @@
                 <div class="flex justify-between"><span class="text-gray-500">Payment</span><span class="font-semibold" id="success-payment">Cash on Delivery</span></div>
             </div>
             <a href="shop.html" class="block w-full bg-black text-white py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm">Continue Shopping</a>
-            <a href="#" class="mt-3 block w-full border border-green-500 text-green-600 py-3 text-xs font-semibold rounded-sm hover:bg-green-50 transition-colors flex items-center justify-center gap-2">
+            <button onclick="showReceipt()" class="mt-3 block w-full border border-black text-black py-3.5 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gray-50 transition-colors">
+                <i class="fas fa-file-invoice mr-2"></i> View Digital Receipt
+            </button>
+            <a href="https://wa.me/923002757988" target="_blank" class="mt-3 block w-full border border-green-500 text-green-600 py-3 text-xs font-semibold rounded-sm hover:bg-green-50 transition-colors flex items-center justify-center gap-2">
                 <i class="fab fa-whatsapp text-base"></i> Track via WhatsApp
             </a>
+        </div>
+    </div>
+
+    <!-- RECEIPT MODAL -->
+    <div id="receipt-modal" class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white max-w-lg w-full rounded-sm shadow-2xl flex flex-col max-h-[90vh]">
+            <div class="flex justify-between items-center p-5 border-b border-gray-100">
+                <h2 class="font-serif text-xl tracking-wider">Digital Receipt</h2>
+                <button onclick="closeReceipt()" class="text-gray-400 hover:text-black transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="p-6 overflow-y-auto flex-1 bg-[#FDFDFD]" id="receipt-content">
+                <!-- Printable Area -->
+                <div id="printable-receipt" class="bg-white p-8 border border-gray-200 shadow-sm relative">
+                    <!-- Brand -->
+                    <div class="text-center mb-8">
+                        <h1 class="font-serif text-3xl font-bold tracking-widest mb-1">AURA</h1>
+                        <p class="text-[10px] text-gray-500 uppercase tracking-widest">Premium Luxury Accessories</p>
+                        <p class="text-[10px] text-gray-400 mt-2">WhatsApp: 0300-2757988</p>
+                    </div>
+                    
+                    <!-- Order Info -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-gray-200 pb-4 mb-4 gap-4">
+                        <div>
+                            <p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Billed To</p>
+                            <p class="text-sm font-semibold text-black" id="receipt-name">—</p>
+                            <p class="text-xs text-gray-600 mt-0.5" id="receipt-phone">—</p>
+                            <p class="text-xs text-gray-600 mt-0.5" id="receipt-address">—</p>
+                        </div>
+                        <div class="sm:text-right">
+                            <p class="text-sm font-bold text-black" id="receipt-order-id">#AUR-00000</p>
+                            <p class="text-xs text-gray-500 mt-0.5" id="receipt-date">—</p>
+                            <span class="inline-block mt-2 text-[10px] bg-green-50 text-green-700 font-bold px-2 py-0.5 rounded border border-green-200 uppercase tracking-wide" id="receipt-payment">—</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Items Table -->
+                    <table class="w-full text-left text-sm mb-6">
+                        <thead>
+                            <tr class="border-b border-gray-200 text-[10px] uppercase tracking-widest text-gray-400">
+                                <th class="py-2 font-semibold">Item</th>
+                                <th class="py-2 font-semibold text-center">Qty</th>
+                                <th class="py-2 font-semibold text-right">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody id="receipt-items-tbody">
+                            <!-- Items -->
+                        </tbody>
+                    </table>
+                    
+                    <!-- Totals -->
+                    <div class="border-t border-gray-200 pt-4 space-y-2 text-sm ml-auto w-48">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Subtotal</span>
+                            <span id="receipt-subtotal">—</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Shipping</span>
+                            <span id="receipt-shipping">—</span>
+                        </div>
+                        <div class="flex justify-between font-bold text-base border-t border-gray-200 pt-2 mt-2">
+                            <span>Total</span>
+                            <span id="receipt-total">—</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Footer Message -->
+                    <div class="mt-12 text-center text-[10px] text-gray-400 border-t border-gray-100 pt-4">
+                        <p>Thank you for your purchase!</p>
+                        <p class="mt-1">Returns & Exchanges accepted within 30 days of delivery.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="p-4 border-t border-gray-100 bg-gray-50 flex gap-3 justify-end">
+                <button onclick="printReceipt()" class="bg-black text-white px-6 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center gap-2">
+                    <i class="fas fa-print"></i> Print
+                </button>
+            </div>
         </div>
     </div>
 
@@ -626,7 +715,7 @@
             const total = getTotal();
             const orderId = '#AUR-' + String(Math.floor(Math.random() * 90000) + 10000);
             const whatsappMsg = encodeURIComponent(`Hi! I've placed order ${orderId}. Here's my payment screenshot.`);
-            const whatsappUrl = `https://wa.me/923001234567?text=${whatsappMsg}`;
+            const whatsappUrl = `https://wa.me/923002757988?text=${whatsappMsg}`;
 
             if (paymentMethod === 'bank') {
                 placeBtn.classList.add('hidden');
@@ -680,6 +769,32 @@
             document.getElementById('success-total').textContent = orderTotal;
             document.getElementById('success-payment').textContent = payLabel;
 
+            // Populate Receipt
+            const d = new Date();
+            const dateStr = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            document.getElementById('receipt-name').textContent = customerName;
+            document.getElementById('receipt-phone').textContent = customerPhone;
+            document.getElementById('receipt-address').textContent = customerAddr;
+            document.getElementById('receipt-order-id').textContent = orderId;
+            document.getElementById('receipt-date').textContent = dateStr;
+            document.getElementById('receipt-payment').textContent = payLabel;
+            
+            const tbody = document.getElementById('receipt-items-tbody');
+            tbody.innerHTML = cart.map(item => `
+                <tr class="border-b border-gray-100 last:border-0">
+                    <td class="py-3">
+                        <p class="font-semibold text-black">${item.name}</p>
+                        ${item.color ? `<p class="text-[9px] font-bold text-gray-400 uppercase mt-0.5">COLOR: ${item.color}</p>` : ''}
+                    </td>
+                    <td class="py-3 text-center text-gray-600">${item.qty}</td>
+                    <td class="py-3 text-right font-medium">Rs. ${(item.price * item.qty).toLocaleString()}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('receipt-subtotal').textContent = 'Rs. ' + getSubtotal().toLocaleString();
+            document.getElementById('receipt-shipping').textContent = shipLabel;
+            document.getElementById('receipt-total').textContent = orderTotal;
+
             // Disable place order button to prevent double submit
             const placeBtn = document.querySelector('button[onclick="placeOrder()"]');
             if (placeBtn) { placeBtn.disabled = true; placeBtn.textContent = 'Sending…'; }
@@ -731,6 +846,66 @@
             const overlay = document.getElementById('success-overlay');
             overlay.classList.add('show');
             document.body.style.overflow = 'hidden';
+        }
+
+        // ---- RECEIPT MODAL LOGIC ----
+        function showReceipt() {
+            document.getElementById('receipt-modal').classList.remove('hidden');
+            document.getElementById('receipt-modal').classList.add('flex');
+        }
+
+        function closeReceipt() {
+            document.getElementById('receipt-modal').classList.add('hidden');
+            document.getElementById('receipt-modal').classList.remove('flex');
+        }
+
+        function printReceipt() {
+            const printContent = document.getElementById('printable-receipt').outerHTML;
+            const originalContent = document.body.innerHTML;
+            
+            // Create a temporary print view
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>AURA Receipt</title>
+                    <script src="https://cdn.tailwindcss.com"></` + `script>
+                    <style>
+                        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:ital,wght@0,700&display=swap');
+                        body { font-family: 'Inter', sans-serif; padding: 20px; color: black; }
+                        .font-serif { font-family: 'Playfair Display', serif; }
+                        @media print {
+                            body { -webkit-print-color-adjust: exact; padding: 0; }
+                            #printable-receipt { border: none !important; box-shadow: none !important; margin: 0; padding: 0; }
+                        }
+                    </style>
+                </head>
+                <body onload="window.print(); window.close();">
+                    <div style="max-w: 600px; margin: 0 auto;">
+                        ${printContent}
+                    </div>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+        }
+
+        // ---- WHATSAPP CHECKOUT ----
+        function checkoutViaWhatsapp() {
+            const cart = getCart();
+            if (cart.length === 0) { alert('Your cart is empty!'); return; }
+
+            let msg = `Hi AURA! I'd like to place an order:%0A%0A`;
+            cart.forEach(item => {
+                msg += `${item.qty}x ${item.name}`;
+                if (item.color) msg += ` (Color: ${item.color})`;
+                msg += ` - Rs. ${(item.price * item.qty).toLocaleString()}%0A`;
+            });
+            
+            msg += `%0A*Total: Rs. ${getSubtotal().toLocaleString()}* (Excluding Shipping)%0A%0A`;
+            msg += `Please let me know the next steps.`;
+
+            window.open(`https://wa.me/923002757988?text=${msg}`, '_blank');
         }
 
         // ---- INIT ----
