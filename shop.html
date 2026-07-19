@@ -709,17 +709,19 @@
                 const isWished = wishlist.includes(p.id);
 
                 if (p.colors && p.colors.length > 0 && !shopSelectedColors[p.id]) {
-                    shopSelectedColors[p.id] = p.colors[0];
+                    const firstColor = p.colors[0];
+                    shopSelectedColors[p.id] = typeof firstColor === 'string' ? firstColor : (firstColor.name || 'Unknown');
                 }
 
                 let colorHtml = '';
                 if (p.colors && p.colors.length > 0) {
                     colorHtml = `<div class="flex gap-1.5 mt-2 mb-1" onclick="event.preventDefault(); event.stopPropagation();">`;
                     p.colors.forEach((c, i) => {
-                        const hex = COLOR_MAP[c.toLowerCase()] || '#808080';
+                        const colorName = typeof c === 'string' ? c : (c.name || 'Unknown');
+                        const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.toLowerCase()] || '#808080');
                         const isLight = isLightColor(hex);
-                        const isSelected = shopSelectedColors[p.id] === c;
-                        colorHtml += `<button onclick="selectShopColor(event, '${p.id}', '${c}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} shop-color-${p.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${c}"></button>`;
+                        const isSelected = shopSelectedColors[p.id] === colorName;
+                        colorHtml += `<button onclick="selectShopColor(event, '${p.id}', '${colorName}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} shop-color-${p.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${colorName}"></button>`;
                     });
                     colorHtml += `</div>`;
                 }
@@ -776,7 +778,9 @@
             const product = products.find(p => p.id === productId);
             if (!product) return;
             const cart = getCart();
-            const selectedColor = shopSelectedColors[productId] || (product.colors && product.colors.length > 0 ? product.colors[0] : null);
+            const firstColor = product.colors && product.colors.length > 0 ? product.colors[0] : null;
+            const firstColorName = firstColor ? (typeof firstColor === 'string' ? firstColor : (firstColor.name || 'Unknown')) : null;
+            const selectedColor = shopSelectedColors[productId] || firstColorName;
             const cartKey = selectedColor ? product.id + '-' + selectedColor.toLowerCase() : product.id;
             const existing = cart.find(i => i.id === cartKey);
             if (existing) { existing.qty++; }

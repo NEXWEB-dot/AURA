@@ -793,21 +793,21 @@
             const container = document.getElementById('color-swatches');
             container.innerHTML = '';
 
-            p.colors.forEach((colorName, i) => {
-                const hex = COLOR_MAP[colorName.toLowerCase()] || '#808080';
+            p.colors.forEach((c, i) => {
+                const colorName = typeof c === 'string' ? c : (c.name || 'Unknown');
+                const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.toLowerCase()] || '#808080');
                 const isLight = isLightColor(hex);
                 const btn = document.createElement('button');
                 btn.className = `color-swatch w-8 h-8 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} ${i === 0 ? 'active' : ''}`;
                 btn.style.backgroundColor = hex;
                 btn.title = colorName;
-                btn.setAttribute('aria-label', 'Select color: ' + colorName);
                 btn.onclick = () => selectColor(colorName, i);
                 container.appendChild(btn);
             });
-
-            // Default first color
-            selectedColor = p.colors[0];
-            document.getElementById('selected-color-name').textContent = p.colors[0];
+            
+            const firstColor = p.colors[0];
+            selectedColor = typeof firstColor === 'string' ? firstColor : (firstColor.name || 'Unknown');
+            document.getElementById('selected-color-name').textContent = selectedColor;
         }
 
         function selectColor(colorName, index) {
@@ -1101,17 +1101,19 @@
                 const isWished = wishlist.includes(r.id);
 
                 if (r.colors && r.colors.length > 0 && !relatedSelectedColors[r.id]) {
-                    relatedSelectedColors[r.id] = r.colors[0];
+                    const firstColor = r.colors[0];
+                    relatedSelectedColors[r.id] = typeof firstColor === 'string' ? firstColor : (firstColor.name || 'Unknown');
                 }
 
                 let colorHtml = '';
                 if (r.colors && r.colors.length > 0) {
                     colorHtml = `<div class="flex gap-1.5 mt-2 mb-1" onclick="event.preventDefault(); event.stopPropagation();">`;
                     r.colors.forEach((c, i) => {
-                        const hex = COLOR_MAP[c.toLowerCase()] || '#808080';
+                        const colorName = typeof c === 'string' ? c : (c.name || 'Unknown');
+                        const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.toLowerCase()] || '#808080');
                         const isLight = isLightColor(hex);
-                        const isSelected = relatedSelectedColors[r.id] === c;
-                        colorHtml += `<button onclick="selectRelatedColor(event, '${r.id}', '${c}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} related-color-${r.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${c}"></button>`;
+                        const isSelected = relatedSelectedColors[r.id] === colorName;
+                        colorHtml += `<button onclick="selectRelatedColor(event, '${r.id}', '${colorName}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} related-color-${r.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${colorName}"></button>`;
                     });
                     colorHtml += `</div>`;
                 }
@@ -1159,8 +1161,9 @@
             const product = products.find(p => p.id === productId);
             if (!product) return;
             const cart = getCart();
-            
-            const color = relatedSelectedColors[productId] || (product.colors && product.colors.length > 0 ? product.colors[0] : null);
+            const firstColor = product.colors && product.colors.length > 0 ? product.colors[0] : null;
+            const firstColorName = firstColor ? (typeof firstColor === 'string' ? firstColor : (firstColor.name || 'Unknown')) : null;
+            const color = relatedSelectedColors[productId] || firstColorName;
             const cartKey = color ? product.id + '-' + color.toLowerCase() : product.id;
             const selectedImg = product.images ? (product.images.find(img => img.color && img.color.toLowerCase() === color?.toLowerCase())?.url || product.images[0]?.url || product.images[0]) : '';
 
