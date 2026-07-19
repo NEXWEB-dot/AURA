@@ -518,6 +518,18 @@
                 b.classList.remove('ring-2', 'ring-black', 'ring-offset-1');
             });
             btn.classList.add('ring-2', 'ring-black', 'ring-offset-1');
+            
+            // Find product and update image
+            const product = products.find(p => p.id === productId);
+            if (product && product.images) {
+                const targetImg = product.images.find(img => img.color && img.color.toLowerCase() === color.toLowerCase());
+                if (targetImg && targetImg.url) {
+                    const imgEl = card.querySelector('.product-img');
+                    if (imgEl) {
+                        imgEl.src = targetImg.url;
+                    }
+                }
+            }
         }
 
         // ---- LOADING SKELETON ----
