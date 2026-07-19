@@ -446,59 +446,9 @@
         <h3 class="font-serif text-2xl italic text-gray-500 mb-2">Our Top</h3>
         <h2 class="font-serif text-4xl text-primary uppercase tracking-wide mb-12">Trendy Handbags</h2>
         
-        <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
-            <div class="group cursor-pointer">
-                <div class="relative bg-surface aspect-[4/5] mb-3 sm:mb-5 overflow-hidden flex items-center justify-center p-4 sm:p-8">
-                    <img src="images/3.jpg" alt="Product" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
-                        <button class="bg-white text-primary text-[8px] sm:text-[10px] uppercase tracking-widest px-3 py-2 sm:px-8 sm:py-3 font-bold hover:bg-accent hover:text-white transition-colors shadow-lg transform translate-y-4 group-hover:translate-y-0 duration-300">Quick View</button>
-                    </div>
-                </div>
-                <div class="text-left">
-                    <h4 class="font-semibold text-primary uppercase text-sm mb-1 group-hover:text-accent transition-colors tracking-wide">Classic Leather Tote</h4>
-                    <p class="text-gray-500 text-sm font-medium">Rs. 12,000</p>
-                </div>
-            </div>
-            
-            <div class="group cursor-pointer">
-                <div class="relative bg-surface aspect-[4/5] mb-3 sm:mb-5 overflow-hidden flex items-center justify-center p-4 sm:p-8">
-                    <img src="images/4.jpg" alt="Product" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
-                        <button class="bg-white text-primary text-[8px] sm:text-[10px] uppercase tracking-widest px-3 py-2 sm:px-8 sm:py-3 font-bold hover:bg-accent hover:text-white transition-colors shadow-lg transform translate-y-4 group-hover:translate-y-0 duration-300">Quick View</button>
-                    </div>
-                </div>
-                <div class="text-left">
-                    <h4 class="font-semibold text-primary uppercase text-sm mb-1 group-hover:text-accent transition-colors tracking-wide">Quilted Shoulder Bag</h4>
-                    <p class="text-gray-500 text-sm font-medium">Rs. 14,500</p>
-                </div>
-            </div>
-            
-            <div class="group cursor-pointer">
-                <div class="relative bg-surface aspect-[4/5] mb-3 sm:mb-5 overflow-hidden flex items-center justify-center p-4 sm:p-8">
-                    <img src="images/5.jpg" alt="Product" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute top-4 left-4 bg-accent text-white text-[10px] px-3 py-1 uppercase font-bold tracking-widest">Sale</div>
-                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
-                        <button class="bg-white text-primary text-[8px] sm:text-[10px] uppercase tracking-widest px-3 py-2 sm:px-8 sm:py-3 font-bold hover:bg-accent hover:text-white transition-colors shadow-lg transform translate-y-4 group-hover:translate-y-0 duration-300">Quick View</button>
-                    </div>
-                </div>
-                <div class="text-left">
-                    <h4 class="font-semibold text-primary uppercase text-sm mb-1 group-hover:text-accent transition-colors tracking-wide">Mini Crossbody</h4>
-                    <p class="text-sm font-medium"><span class="text-gray-400 line-through mr-2">Rs. 9,500</span> <span class="text-accent">Rs. 7,500</span></p>
-                </div>
-            </div>
-            
-            <div class="group cursor-pointer">
-                <div class="relative bg-surface aspect-[4/5] mb-3 sm:mb-5 overflow-hidden flex items-center justify-center p-4 sm:p-8">
-                    <img src="images/6.jpg" alt="Product" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700">
-                    <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
-                        <button class="bg-white text-primary text-[8px] sm:text-[10px] uppercase tracking-widest px-3 py-2 sm:px-8 sm:py-3 font-bold hover:bg-accent hover:text-white transition-colors shadow-lg transform translate-y-4 group-hover:translate-y-0 duration-300">Quick View</button>
-                    </div>
-                </div>
-                <div class="text-left">
-                    <h4 class="font-semibold text-primary uppercase text-sm mb-1 group-hover:text-accent transition-colors tracking-wide">Structured Satchel</h4>
-                    <p class="text-gray-500 text-sm font-medium">Rs. 18,000</p>
-                </div>
-            </div>
+        <div id="trendy-grid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
+            <!-- Dynamic products will be injected here -->
+            <div class="col-span-full text-center text-gray-400 text-sm py-12">Loading trendy styles...</div>
         </div>
         
         <div class="mt-16">
@@ -533,22 +483,8 @@
         <h2 class="font-serif text-4xl text-primary uppercase tracking-wide mb-12">Collection Gallery</h2>
         
         <div class="w-full overflow-hidden relative group">
-            <div class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar space-x-4 pb-8 items-center max-w-7xl mx-auto">
-                <div class="snap-center shrink-0 w-[70vw] sm:w-[40vw] lg:w-[25vw] aspect-[4/5] relative bg-surface p-4 group-hover/slide:scale-105 transition-transform">
-                    <img src="images/2.jpg" class="w-full h-full object-contain mix-blend-multiply hover:scale-110 transition-transform duration-500" alt="Bag 1">
-                </div>
-                <div class="snap-center shrink-0 w-[70vw] sm:w-[40vw] lg:w-[25vw] aspect-[4/5] relative bg-surface p-4">
-                    <img src="images/3.jpg" class="w-full h-full object-contain mix-blend-multiply hover:scale-110 transition-transform duration-500" alt="Bag 2">
-                </div>
-                <div class="snap-center shrink-0 w-[70vw] sm:w-[40vw] lg:w-[25vw] aspect-[4/5] relative bg-surface p-4">
-                    <img src="images/13.jpg" class="w-full h-full object-contain mix-blend-multiply hover:scale-110 transition-transform duration-500" alt="Bag 3">
-                </div>
-                <div class="snap-center shrink-0 w-[70vw] sm:w-[40vw] lg:w-[25vw] aspect-[4/5] relative bg-surface p-4">
-                    <img src="images/14.jpg" class="w-full h-full object-contain mix-blend-multiply hover:scale-110 transition-transform duration-500" alt="Bag 4">
-                </div>
-                <div class="snap-center shrink-0 w-[70vw] sm:w-[40vw] lg:w-[25vw] aspect-[4/5] relative bg-surface p-4">
-                    <img src="images/4.jpg" class="w-full h-full object-contain mix-blend-multiply hover:scale-110 transition-transform duration-500" alt="Bag 5">
-                </div>
+            <div id="collection-slider" class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar space-x-4 pb-8 items-center max-w-7xl mx-auto">
+                <!-- Dynamic slider products will load here -->
             </div>
             <p class="text-xs text-gray-400 mt-2 italic flex justify-center items-center gap-2">
                 <i class="fas fa-chevron-left text-[10px]"></i> Swipe to explore <i class="fas fa-chevron-right text-[10px]"></i>
@@ -697,6 +633,84 @@
         else { btn.style.opacity='0'; btn.style.pointerEvents='none'; }
     });
     </script>
+    <script>
+        const SANITY_PROJECT_ID = '8uqf5doi';
+        const SANITY_DATASET = 'production';
+        const SANITY_API_VERSION = '2023-05-03';
 
+        async function sanityFetch(query) {
+            const url = `https://${SANITY_PROJECT_ID}.api.sanity.io/v${SANITY_API_VERSION}/data/query/${SANITY_DATASET}?query=${encodeURIComponent(query)}`;
+            const res = await fetch(url);
+            if (!res.ok) throw new Error('Sanity fetch failed: ' + res.status);
+            const data = await res.json();
+            return data.result;
+        }
+
+        const PRODUCTS_QUERY = `*[_type == "product"] | order(_createdAt desc){
+            "id": slug.current,
+            name,
+            brand,
+            category,
+            price,
+            oldPrice,
+            "images": images[]{ "url": asset->url, "color": color },
+            isNew
+        }[0...10]`;
+
+        async function loadHomeProducts() {
+            try {
+                const products = await sanityFetch(PRODUCTS_QUERY);
+                
+                // Trendy Grid (first 4 products)
+                const trendyGrid = document.getElementById('trendy-grid');
+                if (trendyGrid) {
+                    trendyGrid.innerHTML = '';
+                    products.slice(0, 4).forEach(p => {
+                        const imgUrl = p.images && p.images.length ? (p.images[0].url || p.images[0]) : '';
+                        const card = document.createElement('div');
+                        card.className = 'group cursor-pointer';
+                        card.onclick = () => window.location.href = `product-detail.html?id=${p.id}`;
+                        
+                        const saleBadge = (p.oldPrice && p.oldPrice > p.price) ? `<div class="absolute top-4 left-4 bg-accent text-white text-[10px] px-3 py-1 uppercase font-bold tracking-widest">Sale</div>` : '';
+                        
+                        card.innerHTML = `
+                            <div class="relative bg-surface aspect-[4/5] mb-3 sm:mb-5 overflow-hidden flex items-center justify-center p-4 sm:p-8">
+                                <img src="${imgUrl}" alt="${p.name}" class="w-full h-full object-contain mix-blend-multiply group-hover:scale-110 transition-transform duration-700">
+                                ${saleBadge}
+                                <div class="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-8">
+                                    <button class="bg-white text-primary text-[8px] sm:text-[10px] uppercase tracking-widest px-3 py-2 sm:px-8 sm:py-3 font-bold hover:bg-accent hover:text-white transition-colors shadow-lg transform translate-y-4 group-hover:translate-y-0 duration-300">View Details</button>
+                                </div>
+                            </div>
+                            <div class="text-left">
+                                <h4 class="font-semibold text-primary uppercase text-sm mb-1 group-hover:text-accent transition-colors tracking-wide">${p.name}</h4>
+                                <p class="text-gray-500 text-sm font-medium">
+                                    ${p.oldPrice ? `<span class="text-gray-400 line-through mr-2">Rs. ${p.oldPrice.toLocaleString()}</span> <span class="text-accent">Rs. ${p.price.toLocaleString()}</span>` : `Rs. ${p.price.toLocaleString()}`}
+                                </p>
+                            </div>
+                        `;
+                        trendyGrid.appendChild(card);
+                    });
+                }
+                
+                // Collection Slider (next 6 products)
+                const slider = document.getElementById('collection-slider');
+                if (slider) {
+                    slider.innerHTML = '';
+                    products.slice(0, 6).forEach(p => {
+                        const imgUrl = p.images && p.images.length ? (p.images[0].url || p.images[0]) : '';
+                        const item = document.createElement('div');
+                        item.className = 'snap-center shrink-0 w-[70vw] sm:w-[40vw] lg:w-[25vw] aspect-[4/5] relative bg-surface p-4 group-hover/slide:scale-105 transition-transform cursor-pointer';
+                        item.onclick = () => window.location.href = `product-detail.html?id=${p.id}`;
+                        item.innerHTML = `<img src="${imgUrl}" class="w-full h-full object-contain mix-blend-multiply hover:scale-110 transition-transform duration-500" alt="${p.name}">`;
+                        slider.appendChild(item);
+                    });
+                }
+            } catch(e) {
+                console.error("Could not load products", e);
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', loadHomeProducts);
+    </script>
 </body>
 </html>
