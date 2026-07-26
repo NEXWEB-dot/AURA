@@ -1,0 +1,5 @@
+User-agent: *
+Disallow: /checkout.html
+Disallow: /*?*
+
+Sitemap: https://auraaccessories.com/sitemap.xml
