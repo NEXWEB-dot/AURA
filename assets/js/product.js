@@ -78,8 +78,7 @@
         function getCategoryLabel(cat) {
             const map = {
                 'handbag': 'Handbags', 'shoulder': 'Shoulder Bags', 'tote': 'Tote Bags',
-                'crossbody': 'Crossbody Bags', 'glasses': 'Glasses', 'wallets': 'Wallets',
-                'shoes': 'Shoes', 'scarfs': 'Scarfs'
+                'crossbody': 'Crossbody Bags', 'wallets': 'Wallets'
             };
             return map[cat] || (cat ? cat.charAt(0).toUpperCase() + cat.slice(1) : 'All');
         }
@@ -226,7 +225,7 @@
 
             p.colors.forEach((c, i) => {
                 const colorName = typeof c === 'string' ? c : (c.name || 'Unknown');
-                const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.toLowerCase()] || '#808080');
+                const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.trim().toLowerCase()] || '#808080');
                 const isLight = isLightColor(hex);
                 const btn = document.createElement('button');
                 btn.className = `color-swatch w-8 h-8 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} ${i === 0 ? 'active' : ''}`;
@@ -251,7 +250,7 @@
             // Auto-select corresponding image if available
             const p = currentProduct;
             if (p && p.images) {
-                const imgIndex = p.images.findIndex(img => img.color && img.color.toLowerCase() === colorName.toLowerCase());
+                const imgIndex = p.images.findIndex(img => img.color && img.color.trim().toLowerCase() === colorName.trim().toLowerCase());
                 if (imgIndex !== -1) {
                     selectThumb(imgIndex);
                 }
@@ -362,7 +361,7 @@
             const p = currentProduct;
             const cart = getCart();
             const cartKey = selectedColor ? p.id + '-' + selectedColor.toLowerCase() : p.id;
-            const selectedImg = p.images ? (p.images.find(img => img.color && img.color.toLowerCase() === selectedColor?.toLowerCase())?.url || p.images[0]?.url) : '';
+            const selectedImg = p.images ? (p.images.find(img => img.color && img.color.trim().toLowerCase() === selectedColor?.trim().toLowerCase())?.url || p.images[0]?.url) : '';
             const existing = cart.find(i => i.id === cartKey);
             if (existing) {
                 existing.qty += qty;
@@ -541,7 +540,7 @@
                     colorHtml = `<div class="flex gap-1.5 mt-2 mb-1" onclick="event.preventDefault(); event.stopPropagation();">`;
                     r.colors.forEach((c, i) => {
                         const colorName = typeof c === 'string' ? c : (c.name || 'Unknown');
-                        const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.toLowerCase()] || '#808080');
+                        const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.trim().toLowerCase()] || '#808080');
                         const isLight = isLightColor(hex);
                         const isSelected = relatedSelectedColors[r.id] === colorName;
                         colorHtml += `<button onclick="selectRelatedColor(event, '${r.id}', '${colorName}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} related-color-${r.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${colorName}"></button>`;
@@ -596,7 +595,7 @@
             const firstColorName = firstColor ? (typeof firstColor === 'string' ? firstColor : (firstColor.name || 'Unknown')) : null;
             const color = relatedSelectedColors[productId] || firstColorName;
             const cartKey = color ? product.id + '-' + color.toLowerCase() : product.id;
-            const selectedImg = product.images ? (product.images.find(img => img.color && img.color.toLowerCase() === color?.toLowerCase())?.url || product.images[0]?.url || product.images[0]) : '';
+            const selectedImg = product.images ? (product.images.find(img => img.color && img.color.trim().toLowerCase() === color?.trim().toLowerCase())?.url || product.images[0]?.url || product.images[0]) : '';
 
             const existing = cart.find(i => i.id === cartKey);
             if (existing) { existing.qty++; }

@@ -60,7 +60,7 @@
             // Find product and update image
             const product = products.find(p => p.id === productId);
             if (product && product.images) {
-                const targetImg = product.images.find(img => img.color && img.color.toLowerCase() === color.toLowerCase());
+                const targetImg = product.images.find(img => img.color && img.color.trim().toLowerCase() === color.trim().toLowerCase());
                 if (targetImg && targetImg.url) {
                     const imgEl = card.querySelector('.product-img');
                     if (imgEl) {
@@ -256,7 +256,7 @@
                     colorHtml = `<div class="flex gap-1.5 mt-2 mb-1" onclick="event.preventDefault(); event.stopPropagation();">`;
                     p.colors.forEach((c, i) => {
                         const colorName = typeof c === 'string' ? c : (c.name || 'Unknown');
-                        const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.toLowerCase()] || '#808080');
+                        const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.trim().toLowerCase()] || '#808080');
                         const isLight = isLightColor(hex);
                         const isSelected = shopSelectedColors[p.id] === colorName;
                         colorHtml += `<button onclick="selectShopColor(event, '${p.id}', '${colorName}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} shop-color-${p.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${colorName}"></button>`;
@@ -323,7 +323,7 @@
             const existing = cart.find(i => i.id === cartKey);
             if (existing) { existing.qty++; }
             else { 
-                const selectedImg = product.images.find(img => img.color && img.color.toLowerCase() === selectedColor?.toLowerCase())?.url || product.images[0]?.url || product.images[0];
+                const selectedImg = product.images.find(img => img.color && img.color.trim().toLowerCase() === selectedColor?.trim().toLowerCase())?.url || product.images[0]?.url || product.images[0];
                 cart.push({ 
                     id: cartKey, 
                     productId: product.id, 
