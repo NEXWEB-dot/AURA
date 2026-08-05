@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Shop - AURA</title>
+<meta content="Shop AURA's premium collection of hand bags, shoulder bags, tote bags, crossbody bags, and wallets. Free national delivery on orders over Rs. 10,000." name="description"/>
+<meta content="Shop - AURA" property="og:title"/>
+<meta content="Shop AURA's premium collection of hand bags, shoulder bags, tote bags, crossbody bags, and wallets." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://auraaccessories.com/shop.html" property="og:url"/>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+
+<link href="assets/css/style.css" rel="stylesheet"/><script defer="True" src="assets/js/shop.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://cdnjs.cloudflare.com" rel="preconnect"/><link href="https://8uqf5doi.api.sanity.io" rel="preconnect"/><meta content="index, follow" name="robots"/><link href="https://auraaccessories.com/shop.html" rel="canonical"/><meta content="summary_large_image" name="twitter:card"/></head>
+<body class="bg-white text-primary font-sans antialiased overflow-x-hidden">
+<!-- Top Bar -->
+<div class="w-full bg-white border-b border-gray-100 py-2 px-4 sm:px-8 text-[10px] sm:text-[11px] font-medium text-gray-500 flex justify-between items-center flex-wrap gap-y-2">
+<div class="flex items-center space-x-4 hidden sm:flex">
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-facebook-f"></i></a>
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-instagram"></i></a>
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-twitter"></i></a>
+</div>
+<div class="text-center flex-grow text-[9px] sm:text-xs tracking-wider font-bold">
+<span>FREE SHIPPING OVER Rs. 10,000 &amp; FREE RETURNS</span>
+</div>
+<div class="flex items-center space-x-4 hidden sm:flex">
+<a class="hover:text-black transition-colors" href="#">About</a>
+<span class="text-gray-300">|</span>
+<a class="hover:text-black transition-colors" href="#">Contact</a>
+</div>
+</div>
+<!-- Header -->
+<header class="w-full bg-white px-4 sm:px-8 py-4 flex justify-between items-center sticky top-0 z-50 shadow-sm border-b border-gray-100">
+<button aria-label="Open menu" class="xl:hidden text-gray-700 hover:text-black text-xl transition-colors" id="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<a class="flex items-center space-x-2 cursor-pointer w-auto flex-grow xl:flex-grow-0 justify-center xl:justify-start" href="index.html">
+<div class="text-2xl font-serif font-bold tracking-widest text-black">AURA</div>
+</a>
+<nav class="hidden xl:flex space-x-4 xl:space-x-6 text-[10px] font-bold tracking-widest uppercase flex-1 justify-center whitespace-nowrap">
+<a class="hover:text-gray-600 transition-colors" href="index.html">HOME</a>
+<a class="text-accent hover:text-gray-600 transition-colors" href="shop.html">LADIES BAGS</a>
+<a class="hover:text-gray-600 transition-colors" href="shop.html">BAGS PACK</a>
+<a class="hover:text-gray-600 transition-colors" href="shop.html?cat=wallets">WALLETS</a>
+<a class="hover:text-gray-600 transition-colors" href="#">CONTACT</a>
+</nav>
+<div class="flex items-center space-x-4 sm:space-x-5 text-lg w-auto justify-end">
+<button class="hover:text-gray-600 transition-colors hidden sm:block"><i class="far fa-user"></i></button>
+<button class="hover:text-gray-600 transition-colors hidden sm:block"><i class="far fa-heart"></i></button>
+<button class="hover:text-gray-600 transition-colors relative" onclick="window.location.href='checkout.html'">
+<i class="fas fa-shopping-bag"></i>
+<span class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold cart-counter-badge">0</span>
+</button>
+</div>
+</header>
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay fixed inset-0 bg-black/50 z-[60] backdrop-blur-sm" id="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+<!-- Mobile Menu Panel -->
+<div class="mobile-menu-panel fixed top-0 left-0 h-full w-[280px] max-w-[80vw] bg-white z-[70] shadow-2xl overflow-y-auto" id="mobile-menu-panel">
+<div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+<span class="text-xl font-serif font-bold tracking-widest">AURA</span>
+<button aria-label="Close menu" class="w-9 h-9 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors" onclick="closeMobileMenu()">
+<i class="fas fa-times text-sm"></i>
+</button>
+</div>
+<nav class="flex flex-col px-6 py-4 space-y-1 overflow-y-auto">
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors" href="index.html">Home</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors" href="shop.html">Ladies Bags</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors" href="shop.html">Bags Pack</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors" href="shop.html?cat=wallets">Wallets</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-black transition-colors" href="#">Contact</a>
+</nav>
+<div class="px-6 pb-6 flex items-center space-x-5 text-lg text-gray-500">
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-facebook-f"></i></a>
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-instagram"></i></a>
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-twitter"></i></a>
+</div>
+</div>
+<!-- Hero Section -->
+<section class="relative w-full h-[200px] md:h-[340px] overflow-hidden bg-[#1a1a1a]">
+<img alt="Hero Background" class="absolute inset-0 w-full h-full object-cover opacity-50" src="images/3.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent"></div>
+<div class="relative z-10 h-full flex flex-col justify-center px-6 md:px-16 lg:px-24">
+<p class="text-white/60 text-xs md:text-sm font-medium mb-3 tracking-wider uppercase">
+<a class="hover:text-white transition-colors" href="index.html">Home</a>
+<span class="mx-2">/</span>
+<span>Collections</span>
+<span class="mx-2">/</span>
+<span class="text-white/90">Shop All</span>
+</p>
+<h1 class="text-white font-serif text-4xl md:text-6xl font-bold tracking-wide">Collections</h1>
+<p class="text-white/50 text-xs md:text-sm mt-3 max-w-md tracking-wide">Discover our curated collection of premium accessories crafted with elegance and sophistication.</p>
+</div>
+</section>
+<!-- Search Bar Section -->
+<div class="w-full bg-white border-b border-gray-100 py-5 px-4 md:px-8">
+<div class="max-w-2xl mx-auto relative">
+<input class="search-input w-full border border-gray-200 rounded-full pl-12 pr-5 py-3 text-sm outline-none focus:border-gray-400 transition-all bg-gray-50/50 focus:bg-white" id="search-input" placeholder="Search by name, brand, or category..." type="text"/>
+<i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-black transition-colors hidden" id="search-clear">
+<i class="fas fa-times text-sm"></i>
+</button>
+</div>
+</div>
+<!-- Categories Strip -->
+<div class="w-full py-6 md:py-8 px-4 flex justify-center items-center overflow-x-auto no-scrollbar space-x-3 md:space-x-5 bg-white border-b border-gray-100">
+<div class="cat-chip active flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all" data-category="all" onclick="setCategory('all', this)">
+<div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+<i class="fas fa-th-large text-lg text-gray-500 group-hover:text-black transition-colors"></i>
+</div>
+<span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">All</span>
+</div>
+<div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="crossbody" onclick="setCategory('crossbody', this)">
+<div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="images/4.jpg"/>
+</div>
+<span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Cross Body</span>
+</div>
+<div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="handbag" onclick="setCategory('handbag', this)">
+<div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="images/5.jpg"/>
+</div>
+<span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Hand Bags</span>
+</div>
+<div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="shoulder" onclick="setCategory('shoulder', this)">
+<div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="images/6.jpg"/>
+</div>
+<span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Shoulder</span>
+</div>
+<div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="tote" onclick="setCategory('tote', this)">
+<div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+<img class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" src="images/8.jpg"/>
+</div>
+<span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Tote Bags</span>
+</div>
+<div class="cat-chip flex flex-col items-center group cursor-pointer min-w-[75px] md:min-w-[90px] shrink-0 px-2 py-2 rounded-xl transition-all hover:bg-gray-50" data-category="wallets" onclick="setCategory('wallets', this)">
+<div class="cat-img-wrap w-14 h-14 md:w-[72px] md:h-[72px] bg-gray-50 flex items-center justify-center mb-2.5 rounded-full overflow-hidden border-2 border-transparent transition-all">
+<i class="fas fa-wallet text-lg text-gray-500 group-hover:text-black transition-colors"></i>
+</div>
+<span class="text-[9px] md:text-[10px] font-bold tracking-wide text-center uppercase transition-colors">Wallets</span>
+</div>
+</div>
+<!-- Filter & Sort Bar -->
+<div class="w-full px-4 md:px-8 py-4 flex justify-between items-center bg-white border-b border-gray-100 flex-wrap gap-4">
+<div class="flex items-center space-x-3">
+<button class="flex items-center space-x-2 text-xs font-bold px-5 py-2.5 hover:bg-black hover:text-white transition-all rounded-full border border-gray-300 hover:border-black" id="filter-btn">
+<i class="fas fa-sliders-h text-[10px]"></i>
+<span>FILTER</span>
+</button>
+<span class="text-xs text-gray-400 font-medium hidden sm:inline-block" id="product-count">0 products</span>
+<span class="text-xs text-accent font-semibold hidden" id="active-filters"></span>
+</div>
+<div class="flex items-center space-x-3">
+<span class="text-[10px] text-gray-400 font-medium uppercase tracking-wider hidden sm:inline">Sort by</span>
+<div class="flex items-center border border-gray-200 px-4 py-2.5 hover:border-black transition-colors rounded-full cursor-pointer relative min-w-[160px]">
+<select class="w-full text-xs text-gray-700 outline-none cursor-pointer bg-transparent appearance-none pr-6 font-semibold" id="sort-select" onchange="renderGrid()">
+<option value="featured">Featured</option>
+<option value="newest">Newest</option>
+<option value="name-asc">Alphabetically, A-Z</option>
+<option value="name-desc">Alphabetically, Z-A</option>
+<option value="price-asc">Price, Low to High</option>
+<option value="price-desc">Price, High to Low</option>
+</select>
+<i class="fas fa-chevron-down text-[10px] absolute right-4 pointer-events-none text-gray-400"></i>
+</div>
+</div>
+</div>
+<!-- Filter Sidebar Overlay -->
+<div class="filter-overlay fixed inset-0 bg-black/40 z-[60] backdrop-blur-sm" id="filter-overlay" onclick="closeFilter()"></div>
+<div class="filter-panel fixed top-0 left-0 h-full w-[320px] max-w-[85vw] bg-white z-[70] shadow-2xl overflow-y-auto" id="filter-panel">
+<div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+<h3 class="font-serif text-xl font-bold tracking-wide">Filters</h3>
+<button class="w-8 h-8 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors" onclick="closeFilter()">
+<i class="fas fa-times text-sm"></i>
+</button>
+</div>
+<!-- Category Filter -->
+<div class="px-6 py-5 border-b border-gray-100">
+<h4 class="text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">Category</h4>
+<div class="space-y-2.5">
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input checked="" class="accent-black w-4 h-4" name="sidebar-cat" onchange="setSidebarCategory(this.value)" type="radio" value="all"/>
+<span class="text-sm text-gray-700 group-hover:text-black transition-colors">All Categories</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="accent-black w-4 h-4" name="sidebar-cat" onchange="setSidebarCategory(this.value)" type="radio" value="handbag"/>
+<span class="text-sm text-gray-700 group-hover:text-black transition-colors">Hand Bags</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="accent-black w-4 h-4" name="sidebar-cat" onchange="setSidebarCategory(this.value)" type="radio" value="shoulder"/>
+<span class="text-sm text-gray-700 group-hover:text-black transition-colors">Shoulder Bags</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="accent-black w-4 h-4" name="sidebar-cat" onchange="setSidebarCategory(this.value)" type="radio" value="tote"/>
+<span class="text-sm text-gray-700 group-hover:text-black transition-colors">Tote Bags</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="accent-black w-4 h-4" name="sidebar-cat" onchange="setSidebarCategory(this.value)" type="radio" value="crossbody"/>
+<span class="text-sm text-gray-700 group-hover:text-black transition-colors">Cross Body Bags</span>
+</label>
+<label class="flex items-center space-x-3 cursor-pointer group">
+<input class="accent-black w-4 h-4" name="sidebar-cat" onchange="setSidebarCategory(this.value)" type="radio" value="wallets"/>
+<span class="text-sm text-gray-700 group-hover:text-black transition-colors">Wallets</span>
+</label>
+</div>
+</div>
+<!-- Price Range Filter -->
+<div class="px-6 py-5 border-b border-gray-100">
+<h4 class="text-xs font-bold uppercase tracking-widest mb-4 text-gray-500">Price Range</h4>
+<div class="space-y-4">
+<div>
+<div class="flex justify-between text-xs text-gray-500 mb-2">
+<span>Rs. 0</span>
+<span class="font-semibold text-black" id="price-range-label">Rs. 50,000</span>
+</div>
+<input id="price-range" max="50000" min="0" oninput="updatePriceRange(this.value)" step="500" type="range" value="50000"/>
+</div>
+</div>
+</div>
+<!-- Apply / Clear Buttons -->
+<div class="px-6 py-5 flex space-x-3">
+<button class="flex-1 border border-gray-300 text-gray-700 py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:border-black hover:text-black transition-all" onclick="clearAllFilters()">
+                Clear All
+            </button>
+<button class="flex-1 bg-black text-white py-3 text-xs font-bold uppercase tracking-widest rounded-full hover:bg-darkRed transition-colors" onclick="closeFilter()">
+                Apply
+            </button>
+</div>
+</div>
+<!-- Product Grid -->
+<section class="w-full px-4 md:px-8 py-8 relative">
+<!-- Floating WhatsApp -->
+<a class="fixed right-6 bottom-6 w-[52px] h-[52px] bg-[#25D366] text-white rounded-full flex items-center justify-center text-3xl shadow-xl z-50 hover:scale-110 transition-transform" href="#">
+<i class="fab fa-whatsapp"></i>
+</a>
+<!-- No Results Message -->
+<div class="hidden text-center py-20" id="no-results">
+<i class="fas fa-search text-4xl text-gray-200 mb-4"></i>
+<h3 class="font-serif text-2xl text-gray-300 mb-2">No Products Found</h3>
+<p class="text-sm text-gray-400 mb-6">Try adjusting your search or filter to find what you're looking for.</p>
+<button class="text-xs font-bold uppercase tracking-widest border-b-2 border-black pb-1 hover:text-accent hover:border-accent transition-colors" onclick="clearAllFilters()">Clear All Filters</button>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6" id="product-grid">
+<!-- Dynamic products will load here -->
+</div>
+</section>
+<!-- Toast -->
+<div class="fixed bottom-20 right-6 bg-[#111] text-white px-6 py-3.5 rounded-full text-[13px] font-semibold tracking-wide opacity-0 translate-y-4 transition-all z-[999] flex items-center gap-3 pointer-events-none shadow-2xl" id="toast">
+<i class="fas fa-check-circle text-green-400"></i><span id="toast-msg">Added!</span>
+</div>
+
+<!-- Footer -->
+<footer class="bg-[#111] text-white">
+<div class="max-w-7xl mx-auto px-6 md:px-12 py-16">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+<div>
+<h3 class="text-2xl font-serif font-bold tracking-widest mb-4">AURA</h3>
+<p class="text-gray-400 text-sm leading-relaxed">Discover premium luxury accessories — handbags &amp; wallets. Crafted for those who appreciate elegance.</p>
+<div class="flex items-center space-x-4 mt-6 text-gray-400">
+<a class="hover:text-white transition-colors" href="#"><i class="fab fa-facebook-f"></i></a>
+<a class="hover:text-white transition-colors" href="#"><i class="fab fa-instagram"></i></a>
+<a class="hover:text-white transition-colors" href="#"><i class="fab fa-twitter"></i></a>
+<a class="hover:text-white transition-colors" href="#"><i class="fab fa-pinterest-p"></i></a>
+</div>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-5 text-white/80">Quick Links</h4>
+<ul class="space-y-3 text-sm text-gray-400">
+<li><a class="hover:text-white transition-colors" href="index.html">Home</a></li>
+<li><a class="hover:text-white transition-colors" href="shop.html">Shop All</a></li>
+<li><a class="hover:text-white transition-colors" href="shop.html?cat=handbag">Hand Bags</a></li>
+
+<li><a class="hover:text-white transition-colors" href="shop.html?cat=wallets">Wallets</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-5 text-white/80">Customer Service</h4>
+<ul class="space-y-3 text-sm text-gray-400">
+<li><a class="hover:text-white transition-colors" href="#">Shipping &amp; Delivery</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Returns &amp; Exchanges</a></li>
+<li><a class="hover:text-white transition-colors" href="#">FAQs</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Contact Us</a></li>
+<li><a class="hover:text-white transition-colors" href="#">Track Order</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-5 text-white/80">Newsletter</h4>
+<p class="text-sm text-gray-400 mb-4">Subscribe for exclusive offers and new arrivals.</p>
+<form class="flex" onsubmit="event.preventDefault(); showToast('Subscribed successfully!');">
+<input class="flex-1 bg-white/10 border border-white/20 rounded-l-full px-4 py-2.5 text-sm text-white placeholder-gray-500 outline-none focus:border-white/40 transition-colors" placeholder="Your email" type="email"/>
+<button class="bg-white text-black px-5 py-2.5 rounded-r-full text-xs font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors" type="submit">Join</button>
+</form>
+</div>
+</div>
+<div class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+<p>© 2025 AURA. All rights reserved.</p>
+<div class="flex space-x-6 mt-4 md:mt-0">
+<a class="hover:text-white transition-colors" href="#">Privacy Policy</a>
+<a class="hover:text-white transition-colors" href="#">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<meta content="AURA — Premium luxury accessories. Shop our curated collection of handbags and wallets. Free shipping across Pakistan on orders over Rs. 10,000." name="description"/>
+<meta content="index, follow" name="robots"/>
+<meta content="AURA — Premium Luxury Accessories" property="og:title"/>
+<meta content="Shop our curated collection of premium handbags and wallets." property="og:description"/>
+<meta content="website" property="og:type"/>
+<link href="https://auraaccessories.com/" rel="canonical"/>
+<title>AURA — Premium Luxury Accessories</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+
+<link href="assets/css/style.css" rel="stylesheet"/><script defer="True" src="assets/js/home.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://cdnjs.cloudflare.com" rel="preconnect"/><link href="https://8uqf5doi.api.sanity.io" rel="preconnect"/><meta content="summary_large_image" name="twitter:card"/></head>
+<body class="bg-background text-primary font-sans antialiased overflow-x-hidden">
+<!-- Top Bar -->
+<div class="w-full bg-white border-b border-gray-100 py-2 px-4 sm:px-8 text-[10px] sm:text-[11px] font-medium text-gray-500 flex justify-between items-center flex-wrap gap-y-2">
+<div class="flex items-center space-x-4 hidden sm:flex">
+<a class="hover:text-primary transition-colors" href="#"><i class="fab fa-facebook-f"></i></a>
+<a class="hover:text-primary transition-colors" href="#"><i class="fab fa-instagram"></i></a>
+<a class="hover:text-primary transition-colors" href="#"><i class="fab fa-twitter"></i></a>
+</div>
+<div class="text-center flex-grow text-xs tracking-wider">
+<span>FREE SHIPPING OVER Rs. 10,000 &amp; FREE RETURNS</span>
+</div>
+<div class="flex items-center space-x-4">
+<select class="bg-transparent border-none outline-none cursor-pointer hover:text-primary transition-colors">
+<option>PKR</option>
+<option>EUR</option>
+<option>GBP</option>
+</select>
+<span class="text-gray-300">|</span>
+<select class="bg-transparent border-none outline-none cursor-pointer hover:text-primary transition-colors">
+<option>ENG</option>
+<option>FRA</option>
+</select>
+</div>
+</div>
+<!-- Header -->
+<header class="w-full bg-white px-4 sm:px-8 py-4 md:py-5 flex justify-between items-center sticky top-0 z-50 shadow-sm">
+<button aria-label="Open menu" class="lg:hidden text-gray-700 hover:text-accent text-xl transition-colors" id="mobile-menu-btn">
+<i class="fas fa-bars"></i>
+</button>
+<a class="text-xl sm:text-2xl font-serif font-bold tracking-widest text-primary text-center flex-grow lg:flex-grow-0 lg:text-left" href="index.html">
+            AURA
+        </a>
+<nav class="hidden lg:flex space-x-4 xl:space-x-6 text-[10px] font-bold tracking-widest uppercase">
+<a class="hover:text-accent transition-colors" href="index.html">HOME</a>
+<a class="hover:text-accent transition-colors" href="shop.html">LADIES BAGS</a>
+<a class="hover:text-accent transition-colors" href="shop.html">BAGS PACK</a>
+<a class="hover:text-accent transition-colors" href="shop.html?cat=wallets">WALLETS</a>
+<a class="hover:text-accent transition-colors" href="#">CONTACT</a>
+</nav>
+<div class="flex items-center space-x-5 text-lg">
+<button class="hover:text-accent transition-colors hidden sm:block"><i class="far fa-user"></i></button>
+<button class="hover:text-accent transition-colors hidden sm:block"><i class="far fa-heart"></i></button>
+<button class="hover:text-accent transition-colors relative" onclick="window.location.href='checkout.html'">
+<i class="fas fa-shopping-bag"></i>
+<span class="absolute -top-1.5 -right-2 bg-accent text-white text-[10px] w-[18px] h-[18px] flex items-center justify-center rounded-full font-bold cart-counter-badge">0</span>
+</button>
+</div>
+</header>
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay fixed inset-0 bg-black/50 z-[60] backdrop-blur-sm" id="mobile-menu-overlay" onclick="closeMobileMenu()"></div>
+<!-- Mobile Menu Panel -->
+<div class="mobile-menu-panel fixed top-0 left-0 h-full w-[280px] max-w-[80vw] bg-white z-[70] shadow-2xl overflow-y-auto" id="mobile-menu-panel">
+<div class="flex items-center justify-between px-6 py-5 border-b border-gray-100">
+<span class="text-xl font-serif font-bold tracking-widest">AURA</span>
+<button aria-label="Close menu" class="w-9 h-9 rounded-full hover:bg-gray-100 flex items-center justify-center transition-colors" onclick="closeMobileMenu()">
+<i class="fas fa-times text-sm"></i>
+</button>
+</div>
+<nav class="flex flex-col px-6 py-4 space-y-1 overflow-y-auto">
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-accent transition-colors" href="index.html">Home</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-accent transition-colors" href="shop.html">Ladies Bags</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-accent transition-colors" href="shop.html">Bags Pack</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-accent transition-colors" href="shop.html?cat=wallets">Wallets</a>
+<a class="py-2.5 text-sm font-bold uppercase tracking-widest border-b border-gray-100 hover:text-accent transition-colors" href="#">Contact</a>
+</nav>
+<div class="px-6 pb-6 flex items-center space-x-5 text-lg text-gray-500">
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-facebook-f"></i></a>
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-instagram"></i></a>
+<a class="hover:text-black transition-colors" href="#"><i class="fab fa-twitter"></i></a>
+</div>
+</div>
+
+<!-- Categories Bar -->
+<div class="w-full bg-white border-b border-gray-100 py-3 sm:py-4 px-2 sm:px-8">
+<div class="flex justify-center items-center overflow-x-auto no-scrollbar space-x-6 sm:space-x-8 md:space-x-12">
+<a class="flex flex-col items-center min-w-[70px] cursor-pointer group" href="shop.html?cat=handbag">
+<div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img alt="Handbags" class="w-full h-full object-cover rounded-full mix-blend-multiply" src="images/1.jpg"/></div>
+<span class="text-[10px] font-semibold tracking-wide uppercase group-hover:text-accent transition-colors">Handbags</span>
+</a>
+<a class="flex flex-col items-center min-w-[70px] cursor-pointer group" href="shop.html?cat=shoulder">
+<div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img alt="Shoulder Bags" class="w-full h-full object-cover rounded-full mix-blend-multiply" src="images/2.jpg"/></div>
+<span class="text-[10px] font-semibold tracking-wide uppercase group-hover:text-accent transition-colors">Shoulder Bags</span>
+</a>
+<a class="flex flex-col items-center min-w-[70px] cursor-pointer group" href="shop.html?cat=tote">
+<div class="w-12 h-12 mb-2 opacity-80 group-hover:opacity-100 transition-opacity bg-surface rounded-full flex items-center justify-center p-2"><img alt="Tote Bags" class="w-full h-full object-cover rounded-full mix-blend-multiply" src="images/3.jpg"/></div>
+<span class="text-[10px] font-semibold tracking-wide uppercase group-hover:text-accent transition-colors">Tote Bags</span>
+</a>
+</div>
+</div>
+<!-- Hero Section: Premium Model Carousel -->
+<section class="hero-carousel relative w-full h-[560px] sm:h-[640px] md:h-[780px] overflow-hidden bg-black" id="heroCarousel">
+<!-- Slides -->
+<div class="hero-slides absolute inset-0 w-full h-full">
+<div class="hero-slide active absolute inset-0 w-full h-full" data-index="0">
+<img alt="AURA model wearing new collection" class="hero-slide-img w-full h-full object-cover object-top md:object-center" src="images/1.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+</div>
+<div class="hero-slide absolute inset-0 w-full h-full" data-index="1">
+<img alt="AURA model wearing new collection" class="hero-slide-img w-full h-full object-cover object-top md:object-center" src="images/15.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+</div>
+<div class="hero-slide absolute inset-0 w-full h-full" data-index="2">
+<img alt="AURA model wearing new collection" class="hero-slide-img w-full h-full object-cover object-top md:object-center" src="images/16.jpg"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-black/30"></div>
+</div>
+</div>
+<!-- Clickable Background Overlay -->
+<a aria-label="Shop new collection" class="absolute inset-0 z-10 cursor-pointer" href="shop.html"></a>
+<!-- Text Overlay -->
+<div class="absolute inset-0 z-20 flex flex-col justify-end md:justify-center px-6 sm:px-10 md:px-16 pb-16 md:pb-0 pointer-events-none">
+<div class="max-w-md text-white pointer-events-auto">
+<h3 class="font-serif text-2xl md:text-3xl italic text-white/70 mb-1 md:mb-2 fade-in">Newly</h3>
+<h1 class="font-serif text-5xl sm:text-6xl md:text-7xl mb-3 md:mb-5 tracking-wider uppercase drop-shadow-lg fade-in">ARRIVED</h1>
+<p class="text-[10px] sm:text-xs font-semibold text-white/80 mb-6 md:mb-8 uppercase tracking-[0.2em] fade-in">Shop the latest collection</p>
+<a class="inline-block bg-white text-[#5E1B1C] px-8 md:px-10 py-3 md:py-3.5 text-[10px] md:text-xs font-bold tracking-widest uppercase hover:bg-[#5E1B1C] hover:text-white transition-colors shadow-lg" href="shop.html">Shop Now</a>
+</div>
+</div>
+<!-- Slide Counter (editorial style) -->
+<div class="absolute top-6 sm:top-8 left-6 sm:left-10 md:left-16 z-30 text-white font-serif tracking-widest text-xs sm:text-sm flex items-center gap-2">
+<span class="hero-counter-current text-base sm:text-lg">01</span>
+<span class="w-6 h-px bg-white/50"></span>
+<span class="hero-counter-total">03</span>
+</div>
+<!-- Prev / Next Arrows -->
+<button aria-label="Previous slide" class="hero-prev absolute left-4 sm:left-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white hover:text-[#5E1B1C] hover:border-white transition-colors backdrop-blur-sm">
+<i class="fas fa-chevron-left text-sm"></i>
+</button>
+<button aria-label="Next slide" class="hero-next absolute right-4 sm:right-6 top-1/2 -translate-y-1/2 z-30 w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/40 text-white flex items-center justify-center hover:bg-white hover:text-[#5E1B1C] hover:border-white transition-colors backdrop-blur-sm">
+<i class="fas fa-chevron-right text-sm"></i>
+</button>
+<!-- Click-to-select Thumbnail Rail -->
+<div class="hero-thumbs absolute z-30 bottom-6 sm:bottom-8 right-4 sm:right-8 md:right-12 flex flex-row md:flex-col gap-3">
+<button aria-label="View slide 1" class="hero-thumb active" data-index="0">
+<img alt="Look 1" src="images/1.jpg"/>
+</button>
+<button aria-label="View slide 2" class="hero-thumb" data-index="1">
+<img alt="Look 2" src="images/15.jpg"/>
+</button>
+<button aria-label="View slide 3" class="hero-thumb" data-index="2">
+<img alt="Look 3" src="images/16.jpg"/>
+</button>
+</div>
+<!-- Progress Bar -->
+<div class="absolute bottom-0 left-0 z-30 h-[3px] bg-white/90 hero-progress" style="width:0%;"></div>
+</section>
+
+
+<!-- Grid Banners -->
+<section class="w-full p-2 sm:p-4 grid grid-cols-1 md:grid-cols-4 gap-2 sm:gap-4 bg-white">
+<!-- Left Large Banner -->
+<a class="md:col-span-1 relative bg-[#F9F7F1] h-[250px] sm:h-[350px] md:h-[480px] group overflow-hidden cursor-pointer flex flex-col justify-between items-center p-6 sm:p-8" href="shop.html">
+<div class="z-10 text-center relative bg-white/90 backdrop-blur-md px-6 py-5 inline-block shadow-md rounded border border-white/50">
+<h3 class="font-serif text-xl italic text-gray-500">The</h3>
+<h2 class="font-serif text-3xl text-[#5E1B1C] uppercase tracking-wide">BAG PACK</h2>
+<p class="text-[10px] font-semibold text-gray-500 uppercase tracking-widest mt-2 border-b border-gray-300 inline-block pb-1">Shop Collection</p>
+</div>
+<img alt="Backpack" class="absolute inset-0 w-full h-full object-cover md:object-center object-bottom mix-blend-multiply group-hover:scale-105 transition-transform duration-700" src="images/12.jpg"/>
+</a>
+<!-- Middle Large Banner -->
+<a class="md:col-span-2 relative bg-[#F5F0EA] h-[250px] sm:h-[350px] md:h-[480px] group overflow-hidden cursor-pointer p-6 sm:p-8 flex flex-col justify-end block" href="shop.html">
+<img alt="Our Bags" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700" src="images/13.jpg"/>
+<div class="z-10 bg-white/80 backdrop-blur-sm p-6 inline-block self-start shadow-sm">
+<h2 class="font-serif text-3xl md:text-4xl text-[#5E1B1C] uppercase tracking-wide mb-1">OUR BAGS</h2>
+<span class="text-[10px] font-semibold text-gray-700 uppercase tracking-widest border-b border-gray-700 pb-0.5 group-hover:text-accent group-hover:border-accent transition-colors">Discover Now</span>
+</div>
+</a>
+<!-- Right Column -->
+<a class="md:col-span-1 relative bg-[#F7F4EB] h-[250px] sm:h-[350px] md:h-[480px] group overflow-hidden cursor-pointer p-6 flex flex-col justify-end items-end text-right block" href="shop.html">
+<img alt="New Arrivals" class="absolute inset-0 w-full h-full object-cover mix-blend-multiply group-hover:scale-105 transition-transform duration-700" src="images/2.jpg"/>
+<div class="z-10 relative bg-white/70 backdrop-blur-sm p-4 inline-block shadow-sm rounded mb-2">
+<h3 class="font-serif text-lg italic text-gray-500">The</h3>
+<h2 class="font-serif text-2xl text-[#5E1B1C] uppercase tracking-wide -mt-1 leading-tight">NEW<br/>ARRIVALS</h2>
+</div>
+</a>
+</section>
+<!-- Info Bar -->
+<section class="w-full bg-white border-y border-gray-100 py-6 md:py-8 px-4 flex flex-col md:flex-row justify-center items-center gap-6 md:gap-10 lg:gap-20 text-[10px] md:text-xs font-bold tracking-widest uppercase">
+<div class="flex flex-row items-center space-x-4 text-primary group hover:text-accent cursor-pointer transition-colors text-left w-full sm:w-auto justify-start sm:justify-center">
+<i class="fas fa-truck text-xl md:text-2xl text-gray-400 group-hover:text-accent transition-colors shrink-0 w-8 text-center"></i>
+<span>Free National Delivery</span>
+</div>
+<div class="hidden md:block w-px h-8 bg-gray-200"></div>
+<div class="flex flex-row items-center space-x-4 text-primary group hover:text-accent cursor-pointer transition-colors text-left w-full sm:w-auto justify-start sm:justify-center">
+<i class="fas fa-exchange-alt text-xl md:text-2xl text-gray-400 group-hover:text-accent transition-colors shrink-0 w-8 text-center"></i>
+<span>Hassle Free Return &amp; Exchange 30 Days</span>
+</div>
+<div class="hidden lg:block w-px h-8 bg-gray-200"></div>
+<div class="flex flex-row items-center space-x-4 text-primary group hover:text-accent cursor-pointer transition-colors text-left w-full sm:w-auto justify-start sm:justify-center">
+<i class="fas fa-shield-alt text-xl md:text-2xl text-gray-400 group-hover:text-accent transition-colors shrink-0 w-8 text-center"></i>
+<span>Secure Checkout</span>
+</div>
+</section>
+<!-- Trendy Handbags -->
+<section class="w-full py-20 px-4 sm:px-8 bg-white text-center">
+<h3 class="font-serif text-2xl italic text-gray-500 mb-2">Our Top</h3>
+<h2 class="font-serif text-4xl text-primary uppercase tracking-wide mb-12">Trendy Handbags</h2>
+<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8" id="trendy-grid">
+<!-- Dynamic products will be injected here -->
+<div class="col-span-full text-center text-gray-400 text-sm py-12">Loading trendy styles...</div>
+</div>
+<div class="mt-16">
+<a class="inline-block border-b-2 border-primary text-primary font-bold uppercase tracking-widest text-xs pb-1 hover:text-accent hover:border-accent transition-colors" href="shop.html">View All Collection</a>
+</div>
+</section>
+<!-- Marquee Text Section -->
+<section class="w-full py-20 overflow-hidden bg-white border-y border-gray-100 flex items-center">
+<div class="marquee-container w-full">
+<div class="marquee-content flex items-center space-x-16">
+<!-- Repeated content for infinite effect -->
+<div class="flex items-center space-x-16 text-6xl md:text-8xl font-serif text-gray-100 uppercase tracking-wider whitespace-nowrap">
+<span class="text-gray-800">Luxe, Beautiful, Iconic</span>
+<i class="fas fa-certificate text-3xl text-gray-300"></i>
+<span class="text-transparent" style="-webkit-text-stroke: 1px #d1d5db;">The Women's Collection</span>
+<i class="fas fa-certificate text-3xl text-gray-300"></i>
+</div>
+<div class="flex items-center space-x-16 text-6xl md:text-8xl font-serif text-gray-100 uppercase tracking-wider whitespace-nowrap">
+<span class="text-gray-800">Luxe, Beautiful, Iconic</span>
+<i class="fas fa-certificate text-3xl text-gray-300"></i>
+<span class="text-transparent" style="-webkit-text-stroke: 1px #d1d5db;">The Women's Collection</span>
+<i class="fas fa-certificate text-3xl text-gray-300"></i>
+</div>
+</div>
+</div>
+</section>
+<!-- Handbag Slider -->
+<section class="w-full py-20 px-4 sm:px-8 bg-white text-center">
+<h3 class="font-serif text-2xl italic text-gray-500 mb-2">Exclusive</h3>
+<h2 class="font-serif text-4xl text-primary uppercase tracking-wide mb-12">Collection Gallery</h2>
+<div class="w-full overflow-hidden relative group">
+<div class="flex overflow-x-auto snap-x snap-mandatory no-scrollbar space-x-4 pb-8 items-center max-w-7xl mx-auto" id="collection-slider">
+<!-- Dynamic slider products will load here -->
+</div>
+<p class="text-xs text-gray-400 mt-2 italic flex justify-center items-center gap-2">
+<i class="fas fa-chevron-left text-[10px]"></i> Swipe to explore <i class="fas fa-chevron-right text-[10px]"></i>
+</p>
+<div class="mt-8">
+<a class="inline-block border-b-2 border-primary text-primary font-bold uppercase tracking-widest text-xs pb-1 hover:text-accent hover:border-accent transition-colors" href="shop.html">Shop All Bags</a>
+</div>
+</div>
+</section>
+<!-- Customer Reviews -->
+<section class="w-full py-20 px-4 sm:px-8 bg-surface">
+<div class="text-center mb-16">
+<h2 class="font-serif text-3xl md:text-4xl text-primary uppercase tracking-wide">Customer Reviews</h2>
+<div class="w-16 h-0.5 bg-primary mx-auto mt-6"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+<div class="bg-white p-10 rounded shadow-sm text-center">
+<div class="flex justify-center mb-4 text-accent text-sm space-x-1">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<h4 class="font-bold text-primary uppercase tracking-wide mb-4">Great Quality</h4>
+<p class="text-gray-600 text-sm mb-6 leading-relaxed">"These are the most comfortable shoes I've ever owned. The quality is exceptional and they match perfectly with everything. Highly recommended!"</p>
+<p class="font-serif italic text-gray-800 text-lg">- Sarah M.</p>
+</div>
+<div class="bg-white p-10 rounded shadow-md text-center transform md:-translate-y-4 border-t-4 border-accent">
+<div class="flex justify-center mb-4 text-accent text-sm space-x-1">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+</div>
+<h4 class="font-bold text-primary uppercase tracking-wide mb-4">Very Comfortable</h4>
+<p class="text-gray-600 text-sm mb-6 leading-relaxed">"The leather is so soft and the design is stunning. I've received so many compliments. Definitely my new favorite brand. Will buy more."</p>
+<p class="font-serif italic text-gray-800 text-lg">- Jessica L.</p>
+</div>
+<div class="bg-white p-10 rounded shadow-sm text-center">
+<div class="flex justify-center mb-4 text-accent text-sm space-x-1">
+<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+</div>
+<h4 class="font-bold text-primary uppercase tracking-wide mb-4">Perfect Fit</h4>
+<p class="text-gray-600 text-sm mb-6 leading-relaxed">"Great customer service and fast shipping. The bag is exactly as pictured. I love it and will be ordering again soon! Thank you."</p>
+<p class="font-serif italic text-gray-800 text-lg">- Emily R.</p>
+</div>
+</div>
+</section>
+<!-- Style Community -->
+<section class="w-full py-20 text-center bg-white">
+<h2 class="font-serif text-3xl md:text-4xl text-primary uppercase tracking-wide mb-4">Be Part Of Our Style Community</h2>
+<a class="text-gray-500 font-medium text-sm mb-12 inline-block hover:text-accent transition-colors border-b border-gray-400 pb-0.5" href="#">@aura on Instagram</a>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-0 w-full max-w-full overflow-hidden">
+<div class="group relative aspect-square overflow-hidden cursor-pointer bg-surface">
+<img alt="Instagram 1" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 mix-blend-multiply" src="images/11.jpg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<i class="fab fa-instagram text-white text-4xl transform scale-50 group-hover:scale-100 transition-transform duration-500"></i>
+</div>
+</div>
+<div class="group relative aspect-square overflow-hidden cursor-pointer bg-surface">
+<img alt="Instagram 2" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 mix-blend-multiply" src="images/12.jpg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<i class="fab fa-instagram text-white text-4xl transform scale-50 group-hover:scale-100 transition-transform duration-500"></i>
+</div>
+</div>
+<div class="group relative aspect-square overflow-hidden cursor-pointer bg-surface">
+<img alt="Instagram 3" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 mix-blend-multiply" src="images/13.jpg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<i class="fab fa-instagram text-white text-4xl transform scale-50 group-hover:scale-100 transition-transform duration-500"></i>
+</div>
+</div>
+<div class="group relative aspect-square overflow-hidden cursor-pointer bg-surface">
+<img alt="Instagram 4" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 mix-blend-multiply" src="images/14.jpg"/>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+<i class="fab fa-instagram text-white text-4xl transform scale-50 group-hover:scale-100 transition-transform duration-500"></i>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="w-full bg-[#111111] text-white pt-20 pb-8 px-4 sm:px-8">
+<div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-16">
+<div class="col-span-1 md:col-span-1">
+<div class="text-3xl font-serif font-bold tracking-widest mb-6">AURA</div>
+<p class="text-gray-400 text-sm mb-8 leading-relaxed pr-4">Your ultimate destination for premium luxury accessories — handbags &amp; wallets. Discover the perfect blend of luxury and comfort for your everyday style.</p>
+<div class="flex space-x-4">
+<a class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors" href="#"><i class="fab fa-facebook-f"></i></a>
+<a class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors" href="#"><i class="fab fa-instagram"></i></a>
+<a class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors" href="#"><i class="fab fa-twitter"></i></a>
+<a class="w-10 h-10 rounded-full border border-gray-700 flex items-center justify-center hover:bg-accent hover:border-accent transition-colors" href="#"><i class="fab fa-pinterest-p"></i></a>
+</div>
+</div>
+<div>
+<h4 class="font-serif text-xl uppercase tracking-wider mb-6">Quick Links</h4>
+<ul class="space-y-4 text-sm text-gray-400">
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">About Us</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Contact Us</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Our Blogs</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">FAQ's</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Store Locator</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-serif text-xl uppercase tracking-wider mb-6">Customer Care</h4>
+<ul class="space-y-4 text-sm text-gray-400">
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Shipping Policy</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Returns &amp; Exchanges</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Track Order</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Size Guide</a></li>
+<li><a class="hover:text-white hover:translate-x-1 inline-block transition-transform duration-300" href="#">Privacy Policy</a></li>
+</ul>
+</div>
+<div>
+<h4 class="font-serif text-xl uppercase tracking-wider mb-6">Newsletter</h4>
+<p class="text-gray-400 text-sm mb-6 leading-relaxed">Subscribe to receive updates, access to exclusive deals, and more.</p>
+<form class="flex flex-col space-y-4">
+<input class="bg-transparent border border-gray-700 px-4 py-3 outline-none text-sm text-white placeholder-gray-500 focus:border-white transition-colors" placeholder="Enter your email address" type="email"/>
+<button class="bg-white text-primary px-4 py-3 text-sm font-bold uppercase tracking-widest hover:bg-accent hover:text-white transition-colors" type="submit">Subscribe</button>
+</form>
+</div>
+</div>
+<div class="max-w-7xl mx-auto mt-20 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500 font-medium tracking-wide">
+<p>© 2026 AURA. ALL RIGHTS RESERVED.</p>
+<div class="flex space-x-6 mt-6 md:mt-0 text-2xl">
+<i class="fab fa-cc-visa hover:text-white transition-colors cursor-pointer"></i>
+<i class="fab fa-cc-mastercard hover:text-white transition-colors cursor-pointer"></i>
+<i class="fab fa-cc-paypal hover:text-white transition-colors cursor-pointer"></i>
+<i class="fab fa-cc-amex hover:text-white transition-colors cursor-pointer"></i>
+</div>
+</div>
+</footer>
+<!-- Back to Top -->
+<button aria-label="Back to top" class="fixed bottom-6 right-6 w-12 h-12 bg-black text-white rounded-full flex items-center justify-center shadow-xl z-50 opacity-0 pointer-events-none transition-all duration-300 hover:bg-darkRed hover:scale-110" id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+<i class="fas fa-chevron-up"></i>
+</button>
+
+
+</body>
+</html>

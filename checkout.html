@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Checkout — AURA</title>
+<meta content="Complete your purchase at AURA — Pakistan's premium luxury bags destination." name="description"/>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+
+
+<link href="assets/css/style.css" rel="stylesheet"/><script defer="True" src="assets/js/checkout.js"></script><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://cdnjs.cloudflare.com" rel="preconnect"/><link href="https://8uqf5doi.api.sanity.io" rel="preconnect"/><meta content="index, follow" name="robots"/><link href="https://auraaccessories.com/" rel="canonical"/><meta content="summary_large_image" name="twitter:card"/></head>
+<body class="bg-[#f8f8f8] font-sans text-black antialiased min-h-screen">
+<!-- Top bar -->
+<div class="w-full bg-black text-white text-[11px] font-medium text-center py-2.5 tracking-widest">
+        FREE SHIPPING OVER Rs. 10,000 &amp; FREE RETURNS
+    </div>
+<!-- Header -->
+<header class="w-full bg-white px-4 sm:px-8 py-4 flex justify-between items-center border-b border-gray-100 sticky top-0 z-40 shadow-sm">
+<a class="text-2xl font-serif font-bold tracking-widest text-black" href="index.html">AURA</a>
+<div class="flex items-center gap-6 text-xs text-gray-500">
+<a class="flex items-center gap-2 hover:text-black transition-colors" href="shop.html">
+<i class="fas fa-arrow-left text-[10px]"></i> <span class="hidden sm:inline">Continue Shopping</span><span class="sm:hidden">Back</span>
+</a>
+<div class="relative">
+<i class="fas fa-shopping-bag text-lg text-black"></i>
+<span class="absolute -top-1.5 -right-2 bg-black text-white text-[9px] w-[16px] h-[16px] flex items-center justify-center rounded-full font-bold" id="cart-badge">0</span>
+</div>
+</div>
+</header>
+<!-- Steps -->
+<div class="max-w-3xl mx-auto px-4 pt-8 pb-4">
+<div class="flex items-center gap-0">
+<div class="flex flex-col items-center" id="step-1-indicator">
+<div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold">1</div>
+<span class="text-[10px] font-semibold mt-1 tracking-wide uppercase text-black">Cart</span>
+</div>
+<div class="step-line done mx-2" id="line-1"></div>
+<div class="flex flex-col items-center" id="step-2-indicator">
+<div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center text-xs font-bold" id="step-2-circle">2</div>
+<span class="text-[10px] font-semibold mt-1 tracking-wide uppercase text-black">Delivery</span>
+</div>
+<div class="step-line mx-2" id="line-2"></div>
+<div class="flex flex-col items-center" id="step-3-indicator">
+<div class="w-8 h-8 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center text-xs font-bold" id="step-3-circle">3</div>
+<span class="text-[10px] font-semibold mt-1 tracking-wide uppercase text-gray-400" id="step-3-label">Payment</span>
+</div>
+</div>
+</div>
+<!-- Main Content -->
+<main class="max-w-6xl mx-auto px-4 pb-20 mt-6 grid grid-cols-1 lg:grid-cols-[1fr_380px] gap-8">
+<!-- LEFT: Forms -->
+<div>
+<!-- STEP 1: Cart Review -->
+<section class="bg-white rounded-lg border border-gray-100 p-6 mb-6 fade-up" id="section-cart">
+<h2 class="font-serif text-xl mb-5 flex items-center gap-3">
+<span class="w-7 h-7 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold">1</span>
+                    Your Cart
+                </h2>
+<div id="cart-items-list">
+<!-- filled by JS -->
+</div>
+<div class="hidden text-center py-12" id="empty-cart-msg">
+<i class="fas fa-shopping-bag text-5xl text-gray-200 mb-4"></i>
+<p class="text-gray-400 font-medium text-sm">Your cart is empty</p>
+<a class="inline-block mt-4 bg-black text-white px-6 py-2.5 text-xs font-bold tracking-widest hover:bg-gray-800 transition-colors rounded-sm" href="shop.html">Start Shopping</a>
+</div>
+<div class="hidden mt-5 pt-5 border-t border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4" id="cart-actions">
+<button class="text-xs text-gray-400 hover:text-red-500 transition-colors flex items-center gap-1.5 self-start sm:self-center" onclick="clearCart()">
+<i class="fas fa-trash-alt text-[11px]"></i> Clear Cart
+                    </button>
+<div class="flex flex-col sm:flex-row w-full sm:w-auto gap-3">
+<button class="bg-[#25D366] text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-[#1DA851] transition-colors rounded-sm flex items-center justify-center gap-2" onclick="checkoutViaWhatsapp()">
+<i class="fab fa-whatsapp text-sm"></i> WhatsApp Checkout
+                        </button>
+<button class="bg-black text-white px-8 py-3 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center justify-center gap-2" id="to-delivery-btn" onclick="goToStep(2)">
+                            Proceed to Delivery <i class="fas fa-arrow-right text-[11px]"></i>
+</button>
+</div>
+</div>
+</section>
+<!-- STEP 2: Delivery -->
+<section class="bg-white rounded-lg border border-gray-100 p-6 mb-6 fade-up-d1 hidden" id="section-delivery">
+<h2 class="font-serif text-xl mb-6 flex items-center gap-3">
+<span class="w-7 h-7 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold">2</span>
+                    Delivery Information
+                </h2>
+<form class="space-y-4" id="delivery-form" onsubmit="return false;">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="form-label" for="first-name">First Name *</label>
+<input class="form-input" id="first-name" placeholder="Aisha" required="" type="text"/>
+</div>
+<div>
+<label class="form-label" for="last-name">Last Name *</label>
+<input class="form-input" id="last-name" placeholder="Khan" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="form-label" for="phone">Phone Number *</label>
+<input class="form-input" id="phone" placeholder="+92 3XX XXXXXXX" required="" type="tel"/>
+</div>
+<div>
+<label class="form-label" for="email">Email Address</label>
+<input class="form-input" id="email" placeholder="aisha@email.com" type="email"/>
+</div>
+<div>
+<label class="form-label" for="address">Street Address *</label>
+<input class="form-input" id="address" placeholder="House #, Street #, Area" required="" type="text"/>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div>
+<label class="form-label" for="city">City *</label>
+<select class="form-input" id="city" required="">
+<option value="">Select City</option>
+<option>Karachi</option>
+<option>Lahore</option>
+<option>Islamabad</option>
+<option>Rawalpindi</option>
+<option>Faisalabad</option>
+<option>Peshawar</option>
+<option>Quetta</option>
+<option>Multan</option>
+<option>Hyderabad</option>
+<option>Other</option>
+</select>
+</div>
+<div>
+<label class="form-label" for="postal">Postal Code</label>
+<input class="form-input" id="postal" placeholder="75500" type="text"/>
+</div>
+</div>
+<div>
+<label class="form-label" for="notes">Order Notes (Optional)</label>
+<textarea class="form-input resize-none" id="notes" placeholder="Special instructions, colour preference, etc." rows="3"></textarea>
+</div>
+<!-- Shipping Method -->
+<div>
+<label class="form-label mb-3 block">Shipping Method</label>
+<div class="space-y-3">
+<label class="radio-card selected" id="ship-standard-card" onclick="selectShipping('standard', this)">
+<input checked="" name="shipping" type="radio" value="standard"/>
+<div class="flex-1 flex justify-between items-center">
+<div>
+<p class="text-sm font-semibold">Standard Delivery</p>
+<p class="text-xs text-gray-400 mt-0.5">3–5 business days</p>
+</div>
+<span class="text-sm font-bold text-green-600" id="ship-standard-price">FREE</span>
+</div>
+</label>
+<label class="radio-card" id="ship-express-card" onclick="selectShipping('express', this)">
+<input name="shipping" type="radio" value="express"/>
+<div class="flex-1 flex justify-between items-center">
+<div>
+<p class="text-sm font-semibold">Express Delivery</p>
+<p class="text-xs text-gray-400 mt-0.5">1–2 business days</p>
+</div>
+<span class="text-sm font-bold">Rs. 350</span>
+</div>
+</label>
+</div>
+</div>
+<div class="pt-2 flex gap-3">
+<button class="border border-gray-300 text-gray-600 px-6 py-3 text-xs font-bold tracking-widest uppercase hover:border-black hover:text-black transition-colors rounded-sm flex items-center gap-2" onclick="goToStep(1)">
+<i class="fas fa-arrow-left text-[11px]"></i> Back
+                        </button>
+<button class="flex-1 bg-black text-white py-3 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center justify-center gap-2" onclick="submitDelivery()">
+                            Continue to Payment <i class="fas fa-arrow-right text-[11px]"></i>
+</button>
+</div>
+</form>
+</section>
+<!-- STEP 3: Payment -->
+<section class="bg-white rounded-lg border border-gray-100 p-6 mb-6 fade-up-d2 hidden" id="section-payment">
+<h2 class="font-serif text-xl mb-6 flex items-center gap-3">
+<span class="w-7 h-7 bg-black text-white rounded-full flex items-center justify-center text-xs font-bold">3</span>
+                    Payment Method
+                </h2>
+<div class="space-y-3 mb-6">
+<label class="radio-card selected" id="pay-cod-card" onclick="selectPayment('cod', this)">
+<input checked="" name="payment" type="radio" value="cod"/>
+<div class="flex items-center gap-3 flex-1">
+<i class="fas fa-money-bill-wave text-green-600 text-xl"></i>
+<div>
+<p class="text-sm font-semibold">Cash on Delivery</p>
+<p class="text-xs text-gray-400 mt-0.5">Pay when your order arrives</p>
+</div>
+</div>
+<span class="text-[10px] bg-green-50 text-green-700 font-bold px-2 py-1 rounded-full border border-green-200">POPULAR</span>
+</label>
+<label class="radio-card" id="pay-bank-card" onclick="selectPayment('bank', this)">
+<input name="payment" type="radio" value="bank"/>
+<div class="flex items-center gap-3 flex-1">
+<i class="fas fa-university text-blue-600 text-xl"></i>
+<div>
+<p class="text-sm font-semibold">Bank Transfer</p>
+<p class="text-xs text-gray-400 mt-0.5">Transfer to our account &amp; send screenshot</p>
+</div>
+</div>
+</label>
+<label class="radio-card" id="pay-easypaisa-card" onclick="selectPayment('easypaisa', this)">
+<input name="payment" type="radio" value="easypaisa"/>
+<div class="flex items-center gap-3 flex-1">
+<div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center shrink-0">
+<i class="fas fa-mobile-alt text-white text-sm"></i>
+</div>
+<div>
+<p class="text-sm font-semibold">EasyPaisa / JazzCash</p>
+<p class="text-xs text-gray-400 mt-0.5">Pay via mobile wallet</p>
+</div>
+</div>
+</label>
+</div>
+<!-- Bank details (shown conditionally) -->
+<div class="hidden bg-blue-50 border border-blue-100 rounded-lg p-4 mb-6 text-sm" id="bank-details">
+<p class="font-bold text-blue-800 mb-2 text-xs uppercase tracking-widest">Bank Account Details</p>
+<div class="space-y-1 text-gray-700">
+<p><span class="font-semibold">Bank:</span> Bank AL Habib</p>
+<p><span class="font-semibold">Account Title:</span> aura glame enterprise</p>
+<p><span class="font-semibold">Account No:</span> 56480081001211012</p>
+<p><span class="font-semibold">IBAN:</span> PK78BAHL5648008100121101</p>
+</div>
+<p class="text-xs text-blue-600 mt-3 font-medium">Please WhatsApp your payment screenshot to confirm your order.</p>
+</div>
+<!-- EasyPaisa details (shown conditionally) -->
+<div class="hidden bg-green-50 border border-green-100 rounded-lg p-4 mb-6 text-sm" id="easypaisa-details">
+<p class="font-bold text-green-800 mb-2 text-xs uppercase tracking-widest">Mobile Wallet Details</p>
+<div class="space-y-1 text-gray-700">
+<p><span class="font-semibold">EasyPaisa / JazzCash:</span> 0312-0378695</p>
+<p><span class="font-semibold">Account Name:</span> AURA</p>
+</div>
+<p class="text-xs text-green-700 mt-3 font-medium">Send the payment screenshot via WhatsApp to confirm your order.</p>
+</div>
+<!-- Delivery summary -->
+<div class="bg-surface rounded-lg p-4 mb-6 text-sm space-y-1" id="delivery-summary">
+<p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Delivery To</p>
+<p class="font-semibold" id="summary-name">—</p>
+<p class="text-gray-500" id="summary-address">—</p>
+<p class="text-gray-500" id="summary-phone">—</p>
+<button class="text-xs text-black font-bold underline underline-offset-2 mt-2 hover:text-accent transition-colors" onclick="goToStep(2)">Edit</button>
+</div>
+<div class="pt-2 flex gap-3">
+<button class="border border-gray-300 text-gray-600 px-6 py-3 text-xs font-bold tracking-widest uppercase hover:border-black hover:text-black transition-colors rounded-sm flex items-center gap-2" onclick="goToStep(2)">
+<i class="fas fa-arrow-left text-[11px]"></i> Back
+                    </button>
+<button class="flex-1 bg-black text-white py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-accent transition-colors rounded-sm flex items-center justify-center gap-2" id="place-order-btn" onclick="placeOrder()">
+<i class="fas fa-lock text-[11px]"></i> Place Order
+                    </button>
+</div>
+<!-- Online Payment Instructions (shown for bank/easypaisa) -->
+<div class="hidden mt-4 bg-amber-50 border border-amber-200 rounded-lg p-5 text-sm" id="online-payment-instructions">
+<div class="flex items-start gap-3 mb-4">
+<i class="fas fa-info-circle text-amber-500 text-lg mt-0.5"></i>
+<p class="text-gray-700 leading-relaxed" id="payment-instruction-text"></p>
+</div>
+<a class="flex items-center justify-center gap-2 w-full bg-green-500 text-white py-3 rounded-sm text-xs font-bold tracking-widest uppercase hover:bg-green-600 transition-colors" href="#" id="whatsapp-payment-link" target="_blank">
+<i class="fab fa-whatsapp text-base"></i> Send Payment Screenshot via WhatsApp
+                    </a>
+</div>
+</section>
+</div>
+<!-- RIGHT: Order Summary -->
+<aside class="fade-up-d1">
+<div class="bg-white rounded-lg border border-gray-100 p-6 sticky top-24">
+<h3 class="font-serif text-lg mb-4 border-b border-gray-100 pb-4">Order Summary</h3>
+<div class="space-y-3 mb-4 max-h-72 overflow-y-auto pr-1" id="summary-items">
+<!-- filled by JS -->
+</div>
+<div class="border-t border-gray-100 pt-4 space-y-2.5 text-sm">
+<div class="flex justify-between text-gray-500">
+<span>Subtotal</span>
+<span id="subtotal-display">Rs. 0</span>
+</div>
+<div class="flex justify-between text-gray-500">
+<span>Shipping</span>
+<span class="text-green-600 font-semibold" id="shipping-display">FREE</span>
+</div>
+<div class="flex justify-between font-bold text-base border-t border-gray-100 pt-3 mt-1">
+<span>Total</span>
+<span id="total-display">Rs. 0</span>
+</div>
+</div>
+<!-- Trust badges -->
+<div class="mt-6 grid grid-cols-3 gap-3 text-center border-t border-gray-100 pt-5">
+<div>
+<i class="fas fa-lock text-gray-300 text-xl mb-1.5"></i>
+<p class="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Secure</p>
+</div>
+<div>
+<i class="fas fa-truck text-gray-300 text-xl mb-1.5"></i>
+<p class="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Fast Delivery</p>
+</div>
+<div>
+<i class="fas fa-exchange-alt text-gray-300 text-xl mb-1.5"></i>
+<p class="text-[9px] font-semibold text-gray-400 uppercase tracking-wide">Easy Returns</p>
+</div>
+</div>
+<!-- Need help -->
+<a class="mt-5 flex items-center justify-center gap-2 w-full border border-green-500 text-green-600 py-2.5 rounded-sm text-xs font-semibold hover:bg-green-50 transition-colors" href="#">
+<i class="fab fa-whatsapp text-base"></i> Need help? WhatsApp us
+                </a>
+</div>
+</aside>
+</main>
+<!-- SUCCESS OVERLAY -->
+<div class="fixed inset-0 bg-white z-50 flex-col items-center justify-center text-center px-6" id="success-overlay">
+<div class="max-w-sm mx-auto">
+<div class="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+<i class="fas fa-check text-green-500 text-3xl"></i>
+</div>
+<h1 class="font-serif text-3xl mb-3">Order Placed!</h1>
+<p class="text-gray-500 text-sm mb-2">Thank you for shopping with <strong class="text-black font-serif">AURA</strong>.</p>
+<p class="text-gray-400 text-xs mb-8">Your order has been confirmed. We'll contact you shortly to confirm delivery details.</p>
+<div class="bg-surface rounded-lg p-4 text-sm text-left mb-8 space-y-1.5">
+<div class="flex justify-between"><span class="text-gray-500">Order ID</span><span class="font-bold" id="order-id">#AUR-00001</span></div>
+<div class="flex justify-between"><span class="text-gray-500">Items</span><span class="font-semibold" id="success-items">—</span></div>
+<div class="flex justify-between"><span class="text-gray-500">Total</span><span class="font-semibold" id="success-total">—</span></div>
+<div class="flex justify-between"><span class="text-gray-500">Payment</span><span class="font-semibold" id="success-payment">Cash on Delivery</span></div>
+</div>
+<a class="block w-full bg-black text-white py-3.5 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm" href="shop.html">Continue Shopping</a>
+<button class="mt-3 block w-full border border-black text-black py-3.5 text-xs font-bold tracking-widest uppercase rounded-sm hover:bg-gray-50 transition-colors" onclick="showReceipt()">
+<i class="fas fa-file-invoice mr-2"></i> View Digital Receipt
+            </button>
+<a class="mt-3 block w-full border border-green-500 text-green-600 py-3 text-xs font-semibold rounded-sm hover:bg-green-50 transition-colors flex items-center justify-center gap-2" href="https://wa.me/923120378695" target="_blank">
+<i class="fab fa-whatsapp text-base"></i> Track via WhatsApp
+            </a>
+</div>
+</div>
+<!-- RECEIPT MODAL -->
+<div class="fixed inset-0 bg-black/60 z-[100] hidden items-center justify-center p-4 backdrop-blur-sm" id="receipt-modal">
+<div class="bg-white max-w-lg w-full rounded-sm shadow-2xl flex flex-col max-h-[90vh]">
+<div class="flex justify-between items-center p-5 border-b border-gray-100">
+<h2 class="font-serif text-xl tracking-wider">Digital Receipt</h2>
+<button class="text-gray-400 hover:text-black transition-colors w-8 h-8 flex items-center justify-center rounded-full hover:bg-gray-100" onclick="closeReceipt()">
+<i class="fas fa-times"></i>
+</button>
+</div>
+<div class="p-6 overflow-y-auto flex-1 bg-[#FDFDFD]" id="receipt-content">
+<!-- Printable Area -->
+<div class="bg-white p-8 border border-gray-200 shadow-sm relative" id="printable-receipt">
+<!-- Brand -->
+<div class="text-center mb-8">
+<h1 class="font-serif text-3xl font-bold tracking-widest mb-1">AURA</h1>
+<p class="text-[10px] text-gray-500 uppercase tracking-widest">Premium Luxury Accessories</p>
+<p class="text-[10px] text-gray-400 mt-2">WhatsApp: 0312-0378695</p>
+</div>
+<!-- Order Info -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-end border-b border-gray-200 pb-4 mb-4 gap-4">
+<div>
+<p class="text-[9px] font-bold text-gray-400 uppercase tracking-widest mb-1">Billed To</p>
+<p class="text-sm font-semibold text-black" id="receipt-name">—</p>
+<p class="text-xs text-gray-600 mt-0.5" id="receipt-phone">—</p>
+<p class="text-xs text-gray-600 mt-0.5" id="receipt-address">—</p>
+</div>
+<div class="sm:text-right">
+<p class="text-sm font-bold text-black" id="receipt-order-id">#AUR-00000</p>
+<p class="text-xs text-gray-500 mt-0.5" id="receipt-date">—</p>
+<span class="inline-block mt-2 text-[10px] bg-green-50 text-green-700 font-bold px-2 py-0.5 rounded border border-green-200 uppercase tracking-wide" id="receipt-payment">—</span>
+</div>
+</div>
+<!-- Items Table -->
+<table class="w-full text-left text-sm mb-6">
+<thead>
+<tr class="border-b border-gray-200 text-[10px] uppercase tracking-widest text-gray-400">
+<th class="py-2 font-semibold">Item</th>
+<th class="py-2 font-semibold text-center">Qty</th>
+<th class="py-2 font-semibold text-right">Price</th>
+</tr>
+</thead>
+<tbody id="receipt-items-tbody">
+<!-- Items -->
+</tbody>
+</table>
+<!-- Totals -->
+<div class="border-t border-gray-200 pt-4 space-y-2 text-sm ml-auto w-48">
+<div class="flex justify-between text-gray-600">
+<span>Subtotal</span>
+<span id="receipt-subtotal">—</span>
+</div>
+<div class="flex justify-between text-gray-600">
+<span>Shipping</span>
+<span id="receipt-shipping">—</span>
+</div>
+<div class="flex justify-between font-bold text-base border-t border-gray-200 pt-2 mt-2">
+<span>Total</span>
+<span id="receipt-total">—</span>
+</div>
+</div>
+<!-- Footer Message -->
+<div class="mt-12 text-center text-[10px] text-gray-400 border-t border-gray-100 pt-4">
+<p>Thank you for your purchase!</p>
+<p class="mt-1">Returns &amp; Exchanges accepted within 30 days of delivery.</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-gray-100 bg-gray-50 flex gap-3 justify-end">
+<button class="bg-black text-white px-6 py-2.5 text-xs font-bold tracking-widest uppercase hover:bg-gray-800 transition-colors rounded-sm flex items-center gap-2" onclick="printReceipt()">
+<i class="fas fa-print"></i> Print
+                </button>
+</div>
+</div>
+</div>
+
+</body>
+</html>
