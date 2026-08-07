@@ -53,10 +53,10 @@
             shopSelectedColors[productId] = color;
             const card = btn.closest('.product-card');
             card.querySelectorAll('.shop-color-' + productId).forEach(b => {
-                b.classList.remove('ring-2', 'ring-black', 'ring-offset-1');
+                b.classList.remove('shop-color-active');
             });
-            btn.classList.add('ring-2', 'ring-black', 'ring-offset-1');
-            
+            btn.classList.add('shop-color-active');
+
             // Find product and update image
             const product = products.find(p => p.id === productId);
             if (product && product.images) {
@@ -76,12 +76,12 @@
             let skeletonHTML = '';
             for (let i = 0; i < 8; i++) {
                 skeletonHTML += `
-                    <div class="bg-white rounded-xl overflow-hidden">
-                        <div class="skeleton aspect-[3/4] w-full rounded-t-xl"></div>
-                        <div class="p-4 space-y-2.5">
-                            <div class="skeleton h-3 w-16 rounded-full"></div>
-                            <div class="skeleton h-4 w-full rounded-full"></div>
-                            <div class="skeleton h-3 w-24 rounded-full"></div>
+                    <div class="bg-white overflow-hidden">
+                        <div class="skeleton aspect-[3/4] w-full"></div>
+                        <div class="pt-4 pb-2 space-y-2.5">
+                            <div class="skeleton h-2.5 w-14"></div>
+                            <div class="skeleton h-3 w-full"></div>
+                            <div class="skeleton h-2.5 w-20"></div>
                         </div>
                     </div>`;
             }
@@ -253,55 +253,55 @@
 
                 let colorHtml = '';
                 if (p.colors && p.colors.length > 0) {
-                    colorHtml = `<div class="flex gap-1.5 mt-2 mb-1" onclick="event.preventDefault(); event.stopPropagation();">`;
+                    colorHtml = `<div class="flex gap-1.5 mt-2.5 mb-1" onclick="event.preventDefault(); event.stopPropagation();">`;
                     p.colors.forEach((c, i) => {
                         const colorName = typeof c === 'string' ? c : (c.name || 'Unknown');
                         const hex = (typeof c === 'object' && c.value && c.value.hex) ? c.value.hex : (COLOR_MAP[colorName.trim().toLowerCase()] || '#808080');
                         const isLight = isLightColor(hex);
                         const isSelected = shopSelectedColors[p.id] === colorName;
-                        colorHtml += `<button onclick="selectShopColor(event, '${p.id}', '${colorName}', this)" class="w-4 h-4 rounded-full border ${isLight ? 'border-gray-300' : 'border-transparent'} shop-color-${p.id} ${isSelected ? 'ring-2 ring-black ring-offset-1' : ''}" style="background-color: ${hex}" title="${colorName}"></button>`;
+                        colorHtml += `<button onclick="selectShopColor(event, '${p.id}', '${colorName}', this)" class="w-3.5 h-3.5 rounded-full ${isLight ? 'border border-[#EEEEEE]' : ''} shop-color-${p.id} ${isSelected ? 'shop-color-active' : ''}" style="background-color: ${hex}" title="${colorName}" aria-label="Color: ${colorName}"></button>`;
                     });
                     colorHtml += `</div>`;
                 }
 
                 const card = document.createElement('div');
-                card.className = 'product-card bg-white rounded-xl overflow-hidden cursor-pointer flex flex-col h-full border border-gray-100/80';
+                card.className = 'product-card bg-white overflow-hidden cursor-pointer flex flex-col h-full';
                 card.style.animationDelay = (index * 0.06) + 's';
 
                 card.innerHTML = `
                     <a href="product-detail.html?id=${p.id}" class="flex flex-col h-full">
                         <!-- Image Container -->
-                        <div class="relative overflow-hidden bg-gradient-to-b from-gray-50 to-gray-100 aspect-[3/4] shrink-0 w-full">
+                        <div class="relative overflow-hidden bg-[#F8F8F4] aspect-[3/4] shrink-0 w-full">
                             <img src="${p.images[0]?.url || p.images[0]}" alt="${p.name}" class="product-img w-full h-full object-cover" loading="lazy">
-                            
+
                             <!-- Badges -->
                             <div class="absolute top-3 left-3 flex flex-col gap-1.5 z-10">
-                                ${disc ? `<div class="badge-sale text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">-${disc}%</div>` : ''}
-                                ${p.isNew ? `<div class="badge-new text-white text-[9px] font-bold px-2.5 py-1 rounded-full shadow-sm">NEW</div>` : ''}
+                                ${disc ? `<div class="badge-sale text-white text-[10px] font-semibold px-2.5 py-1">-${disc}%</div>` : ''}
+                                ${p.isNew ? `<div class="badge-new text-white text-[10px] font-semibold px-2.5 py-1 uppercase">New</div>` : ''}
                             </div>
 
                             <!-- Wishlist Button -->
-                            <button onclick="toggleWishlist(event, '${p.id}')" class="wishlist-btn ${isWished ? 'active' : ''} absolute top-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-sm hover:shadow-md transition-all z-10 hover:scale-110">
-                                <i class="${isWished ? 'fas' : 'far'} fa-heart text-sm ${isWished ? 'text-accent' : 'text-gray-500'}"></i>
+                            <button onclick="toggleWishlist(event, '${p.id}')" class="wishlist-btn ${isWished ? 'active' : ''} absolute top-3 right-3 w-9 h-9 bg-white/90 backdrop-blur-sm flex items-center justify-center transition-all z-10 hover:scale-110" style="border-radius: 9999px;" aria-label="Toggle wishlist">
+                                <i class="${isWished ? 'fas' : 'far'} fa-heart text-sm" style="color: ${isWished ? '#DA3F3F' : '#4B4D38'};"></i>
                             </button>
 
                             <!-- Quick Add Overlay -->
                             <div class="quick-actions absolute bottom-0 left-0 right-0 p-3 z-10">
-                                <button onclick="addToCart(event, '${p.id}')" class="w-full bg-black/90 backdrop-blur-sm text-white py-2.5 text-[10px] font-bold uppercase tracking-widest rounded-lg hover:bg-darkRed transition-colors flex items-center justify-center gap-2 shadow-lg">
+                                <button onclick="addToCart(event, '${p.id}')" class="w-full bg-[#222222]/95 backdrop-blur-sm text-white py-3 text-[10px] font-semibold uppercase tracking-[0.22em] hover:bg-[#4B4D38] transition-colors flex items-center justify-center gap-2">
                                     <i class="fas fa-shopping-bag text-[9px]"></i>
                                     Add to Bag
                                 </button>
                             </div>
                         </div>
-                        
+
                         <!-- Product Info -->
-                        <div class="p-3 md:p-4 flex flex-col flex-1">
-                            <p class="text-[9px] text-gray-400 font-semibold uppercase tracking-[0.15em] mb-1">${p.brand || 'AURA'}</p>
-                            <h3 class="text-[11px] md:text-xs font-bold uppercase tracking-wide text-black mb-2 line-clamp-2 leading-relaxed">${p.name}</h3>
+                        <div class="pt-4 pb-3 px-1 flex flex-col flex-1">
+                            <p class="text-[9px] text-[#4B4D38] font-medium uppercase tracking-[0.22em] mb-1.5">${p.brand || 'AURA'}</p>
+                            <h3 class="text-[12px] md:text-[13px] font-semibold uppercase tracking-[0.04em] text-[#222222] mb-1 line-clamp-2 leading-snug">${p.name}</h3>
                             ${colorHtml}
-                            <div class="flex items-center space-x-2 mt-auto pt-1">
-                                <span class="font-bold text-sm text-black">Rs. ${p.price.toLocaleString()}</span>
-                                ${p.oldPrice ? `<span class="text-gray-400 line-through text-[11px]">Rs. ${p.oldPrice.toLocaleString()}</span>` : ''}
+                            <div class="flex items-baseline space-x-2 mt-auto pt-2.5">
+                                <span class="font-semibold text-[14px] text-[#222222]">Rs. ${p.price.toLocaleString()}</span>
+                                ${p.oldPrice ? `<span class="text-[#4B4D38]/50 line-through text-[11px]">Rs. ${p.oldPrice.toLocaleString()}</span>` : ''}
                             </div>
                         </div>
                     </a>
